@@ -44,7 +44,7 @@ export function VideoProvider({ children }: { children: React.ReactNode }) {
             type="button"
             aria-label="Close video"
             onClick={close}
-            className="absolute right-5 top-5 grid size-12 place-items-center rounded-full border border-snow/25 text-snow transition-colors hover:bg-snow hover:text-ink"
+            className="absolute right-5 top-5 grid size-12 place-items-center rounded-sm border border-snow/25 text-snow transition-colors hover:bg-snow hover:text-ink"
           >
             <Close />
           </button>
@@ -102,7 +102,7 @@ export function PlayButton({ label, onClick, size = 56, className }: { label: st
       }}
       style={{ width: size, height: size }}
       className={
-        "grid place-items-center rounded-full border border-white/25 bg-white/10 text-white shadow-[0_10px_30px_rgba(0,0,0,.35)] backdrop-blur-md transition-transform duration-300 hover:scale-110 hover:bg-white hover:text-ink " +
+        "grid place-items-center rounded-sm border border-white/25 bg-white/10 text-white shadow-[0_10px_30px_rgba(0,0,0,.35)] backdrop-blur-md transition-transform duration-300 hover:scale-110 hover:bg-white hover:text-ink " +
         (className ?? "")
       }
     >

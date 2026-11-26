@@ -118,10 +118,10 @@ export default function Programs() {
                   </div>
                   <a
                     href={p.href}
-                    className="inline-flex shrink-0 items-center gap-2 rounded-full bg-ink py-1.5 pl-4 pr-1.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] text-snow transition-colors hover:bg-gold hover:text-gold-ink"
+                    className="inline-flex shrink-0 items-center gap-2 rounded-sm bg-ink py-1.5 pl-4 pr-1.5 text-[11.5px] font-semibold uppercase tracking-[0.12em] text-snow transition-colors hover:bg-gold hover:text-gold-ink"
                   >
                     Explore
-                    <span className="grid size-7 place-items-center rounded-full bg-snow/15 transition-transform duration-300 group-hover:rotate-45">
+                    <span className="grid size-7 place-items-center rounded-xs bg-snow/15 transition-transform duration-300 group-hover:rotate-45">
                       <ArrowUpRight width={14} height={14} />
                     </span>
                   </a>

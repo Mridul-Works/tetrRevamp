@@ -223,9 +223,9 @@ export default function TenThings() {
                           e.stopPropagation();
                           watch(i);
                         }}
-                        className="group/btn inline-flex cursor-pointer items-center gap-3 rounded-full bg-gold py-1.5 pl-1.5 pr-5 text-[13px] font-semibold text-gold-ink transition-transform duration-300 hover:scale-[1.04]"
+                        className="group/btn inline-flex cursor-pointer items-center gap-3 rounded-sm bg-gold py-1.5 pl-1.5 pr-5 text-[13px] font-semibold text-gold-ink transition-transform duration-300 hover:scale-[1.04]"
                       >
-                        <span className="grid size-8 place-items-center rounded-full bg-ink text-gold transition-transform duration-500 group-hover/btn:rotate-[120deg]">
+                        <span className="grid size-8 place-items-center rounded-xs bg-ink text-gold transition-transform duration-500 group-hover/btn:rotate-[120deg]">
                           <svg viewBox="0 0 24 24" className="size-3.5 translate-x-px" fill="currentColor" aria-hidden="true">
                             <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" />
                           </svg>
@@ -281,7 +281,7 @@ export default function TenThings() {
             type="button"
             onClick={() => setPaused((p) => !p)}
             aria-label={paused ? "Resume autoplay" : "Pause autoplay"}
-            className="grid size-11 shrink-0 place-items-center rounded-full border border-snow/20 text-snow transition-colors hover:border-mint hover:text-mint"
+            className="grid size-11 shrink-0 place-items-center rounded-sm border border-snow/20 text-snow transition-colors hover:border-mint hover:text-mint"
           >
             {paused ? (
               <svg viewBox="0 0 24 24" className="size-4" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>

@@ -76,7 +76,7 @@ function TileCard({ t, ratio }: { t: Tile; ratio: string }) {
       </div>
       <div className="flex items-center justify-between">
         <span className="text-[13px] font-semibold uppercase tracking-[0.12em]">{careerLabs.cta.label}</span>
-        <span className="grid size-10 place-items-center rounded-full bg-ink text-mint transition-transform duration-300 group-hover:rotate-45">
+        <span className="grid size-10 place-items-center rounded-xs bg-ink text-mint transition-transform duration-300 group-hover:rotate-45">
           <ArrowUpRight width={16} height={16} />
         </span>
       </div>

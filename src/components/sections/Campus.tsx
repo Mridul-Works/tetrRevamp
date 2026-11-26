@@ -19,7 +19,7 @@ export default function Campus() {
       <div className="container-x relative">
         <Heading breakLine {...campusHeading} />
 
-        <div className="mt-14 overflow-hidden rounded-[24px] border border-snow/10 bg-forest/70">
+        <div className="mt-14 overflow-hidden rounded-sm border border-snow/10 bg-forest/70">
           <div role="tablist" aria-label="Cities" className="no-scrollbar flex overflow-x-auto border-b border-snow/10">
             {campusCities.map((ct, i) => (
               <button
@@ -43,7 +43,7 @@ export default function Campus() {
           </div>
 
           <div className="grid gap-5 p-4 md:p-6 lg:grid-cols-[minmax(0,1fr)_340px]">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-[18px] bg-ink">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-xs bg-ink">
               {current?.src && (
                 <Image
                   key={current.src}
@@ -77,7 +77,7 @@ export default function Campus() {
                     aria-pressed={current?.slug === v.slug}
                     onClick={() => setView(n)}
                     className={cn(
-                      "group relative h-[92px] overflow-hidden rounded-xl border text-left transition-colors disabled:cursor-not-allowed disabled:opacity-35",
+                      "group relative h-[92px] overflow-hidden rounded-xs border text-left transition-colors disabled:cursor-not-allowed disabled:opacity-35",
                       current?.slug === v.slug ? "border-mint" : "border-snow/15 hover:border-snow/50",
                     )}
                   >

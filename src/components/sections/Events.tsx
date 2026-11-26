@@ -84,7 +84,7 @@ export default function Events() {
                   <a
                     href={eventsLink}
                     aria-label={`Open ${e.title}`}
-                    className="grid size-11 shrink-0 place-items-center rounded-full bg-deep text-snow transition-[transform,background-color,color] duration-300 group-hover:rotate-45 hover:bg-gold hover:text-gold-ink"
+                    className="grid size-11 shrink-0 place-items-center rounded-sm bg-deep text-snow transition-[transform,background-color,color] duration-300 group-hover:rotate-45 hover:bg-gold hover:text-gold-ink"
                   >
                     <ArrowUpRight width={16} height={16} />
                   </a>

@@ -10,6 +10,7 @@ import { chapters, outcomesHeading, type Chapter, type Company, type Story, type
 import { useWordReveal, Words } from "@/components/ui/Heading";
 import { Bold } from "@/components/ui/RichText";
 import Counter from "@/components/ui/Counter";
+import CountryDoodle from "@/components/ui/Doodle";
 import { NavArrows } from "@/components/ui/Button";
 import { ArrowUpRight, Download } from "@/components/ui/icons";
 import { PlayButton, usePlayVideo } from "@/components/ui/VideoModal";
@@ -153,7 +154,7 @@ export default function Outcomes() {
           aria-label="Chapters"
           className="pointer-events-none sticky top-20 z-30 mx-auto mt-10 w-fit max-w-full -translate-y-3 opacity-0 transition-all duration-500 [&.is-on]:pointer-events-auto [&.is-on]:translate-y-0 [&.is-on]:opacity-100"
         >
-          <div role="tablist" className="no-scrollbar flex gap-1 overflow-x-auto rounded-full border border-ink/10 bg-paper/85 p-1.5 shadow-[0_12px_40px_rgba(8,18,14,.12)] backdrop-blur-xl">
+          <div role="tablist" className="no-scrollbar flex gap-1 overflow-x-auto rounded-sm border border-ink/10 bg-paper/85 p-1.5 shadow-[0_12px_40px_rgba(8,18,14,.12)] backdrop-blur-xl">
             {chapters.map((c, i) => (
               <button
                 key={c.country}
@@ -162,7 +163,7 @@ export default function Outcomes() {
                 aria-selected={i === active}
                 onClick={() => goTo(i)}
                 className={cn(
-                  "flex shrink-0 items-baseline gap-2 rounded-full px-4 py-2.5 transition-colors duration-300",
+                  "flex shrink-0 items-baseline gap-2 rounded-xs px-4 py-2.5 transition-colors duration-300",
                   i === active ? "bg-deep text-snow" : "text-ink/70 hover:bg-ink/5",
                 )}
               >
@@ -221,7 +222,7 @@ function ChapterRail({ pos, onSelect }: { pos: number; onSelect: (i: number) => 
                 aria-label={`Chapter ${i + 1}: ${c.country}, ${c.model}`}
                 aria-current={isCurrent ? "step" : undefined}
                 className={cn(
-                  "absolute left-1/2 grid size-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border font-mono text-[10px] font-semibold transition-[background-color,border-color,color,box-shadow] duration-300",
+                  "absolute left-1/2 grid size-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-xs border font-mono text-[10px] font-semibold transition-[background-color,border-color,color,box-shadow] duration-300",
                   reached ? "border-deep bg-deep text-snow" : "border-ink/20 bg-paper text-ink/55 hover:border-ink/50",
                   isCurrent && "shadow-[0_0_0_5px_rgba(122,209,156,.28)]",
                 )}
@@ -309,13 +310,16 @@ function ChapterBlock({ c, last }: { c: Chapter; last: boolean }) {
 
       {/* Who backs you + showcase */}
       {c.showcase.kind === "stories" ? (
-        <Stories stories={c.showcase.stories} heading={c.partB.line1} />
+        <Stories stories={c.showcase.stories} heading={c.partB.line1} country={c.country} />
       ) : (
         <>
-          <div className="mt-12 max-w-[760px]">
-            <h4 className="text-[clamp(22px,2vw,28px)] font-semibold tracking-tight">{c.partB.line1}</h4>
-            {c.partB.line2 && <p className="mt-3 text-[17px] text-ink/85">{c.partB.line2}</p>}
-            {c.partB.line3 && <p className="mt-2 text-[15px] leading-[1.65] text-byline-light">{c.partB.line3}</p>}
+          <div className="mt-12 flex items-end justify-between gap-10">
+            <div className="max-w-[760px]">
+              <h4 className="text-[clamp(22px,2vw,28px)] font-semibold tracking-tight">{c.partB.line1}</h4>
+              {c.partB.line2 && <p className="mt-3 text-[17px] text-ink/85">{c.partB.line2}</p>}
+              {c.partB.line3 && <p className="mt-2 text-[15px] leading-[1.65] text-byline-light">{c.partB.line3}</p>}
+            </div>
+            <CountryDoodle country={c.country} className="-mt-14 mb-2 hidden w-[230px] shrink-0 md:block lg:-mt-20 lg:w-[270px] xl:w-[300px]" />
           </div>
           <div className="mt-8">
             {c.showcase.kind === "companies" && <Companies list={c.showcase.companies} />}
@@ -381,7 +385,7 @@ function Companies({ list }: { list: Company[] }) {
                 </div>
               )}
               {co.href && (
-                <span className="absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-ink/80 text-snow transition-transform duration-300 group-hover:rotate-45">
+                <span className="absolute right-3 top-3 grid size-8 place-items-center rounded-xs bg-ink/80 text-snow transition-transform duration-300 group-hover:rotate-45">
                   <ArrowUpRight width={14} height={14} />
                 </span>
               )}
@@ -436,14 +440,17 @@ function Thumbs({ list }: { list: Thumb[] }) {
   );
 }
 
-function Stories({ stories, heading }: { stories: Story[]; heading: string }) {
+function Stories({ stories, heading, country }: { stories: Story[]; heading: string; country: string }) {
   const car = useCarousel<HTMLUListElement>();
   useDragScroll(car.ref);
   return (
     <div className="mt-12">
       <div className="flex flex-wrap items-end justify-between gap-5">
         <h4 className="text-[clamp(22px,2vw,28px)] font-semibold tracking-tight">{heading}</h4>
-        <NavArrows name="impact story" tone="light" onPrev={car.prev} onNext={car.next} prevDisabled={car.edges.start} nextDisabled={car.edges.end} />
+        <div className="flex items-end gap-8">
+          <CountryDoodle country={country} className="-mt-14 mb-2 hidden w-[230px] md:block lg:-mt-20 lg:w-[270px] xl:w-[300px]" />
+          <NavArrows name="impact story" tone="light" onPrev={car.prev} onNext={car.next} prevDisabled={car.edges.start} nextDisabled={car.edges.end} />
+        </div>
       </div>
       <ul ref={car.ref} className="no-scrollbar mt-8 flex cursor-grab snap-x gap-4 overflow-x-auto pb-2 active:cursor-grabbing" aria-label="Ghana impact stories">
         {stories.map((s) => (

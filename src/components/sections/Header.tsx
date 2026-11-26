@@ -98,13 +98,13 @@ export default function Header() {
           <a
             href="#scholarships"
             onClick={(e) => (e.preventDefault(), jump("#scholarships"))}
-            className="hidden h-10 items-center rounded-md bg-gold px-4 text-[13.5px] font-semibold text-gold-ink transition-colors hover:bg-[#ffd75e] sm:inline-flex"
+            className="hidden h-10 items-center rounded-sm bg-gold px-4 text-[13.5px] font-semibold text-gold-ink transition-colors hover:bg-[#ffd75e] sm:inline-flex"
           >
             Apply now
           </a>
           <a
             href="https://tetr.com/contact-us"
-            className="hidden h-10 items-center rounded-md border border-snow/25 px-4 text-[13.5px] font-semibold text-snow transition-colors hover:bg-snow hover:text-ink sm:inline-flex"
+            className="hidden h-10 items-center rounded-sm border border-snow/25 px-4 text-[13.5px] font-semibold text-snow transition-colors hover:bg-snow hover:text-ink sm:inline-flex"
           >
             Contact us
           </a>
@@ -112,7 +112,7 @@ export default function Header() {
             type="button"
             aria-label={mobile ? "Close menu" : "Open menu"}
             onClick={() => setMobile((m) => !m)}
-            className="grid size-10 place-items-center rounded-md border border-snow/25 text-snow lg:hidden"
+            className="grid size-10 place-items-center rounded-sm border border-snow/25 text-snow lg:hidden"
           >
             {mobile ? <Close /> : <Menu />}
           </button>
@@ -209,11 +209,11 @@ export default function Header() {
             <a
               href="#scholarships"
               onClick={(e) => (e.preventDefault(), jump("#scholarships"))}
-              className="grid h-12 place-items-center rounded-md bg-gold font-semibold text-gold-ink"
+              className="grid h-12 place-items-center rounded-sm bg-gold font-semibold text-gold-ink"
             >
               Apply now
             </a>
-            <a href="https://tetr.com/contact-us" className="grid h-12 place-items-center rounded-md border border-snow/25 font-semibold">
+            <a href="https://tetr.com/contact-us" className="grid h-12 place-items-center rounded-sm border border-snow/25 font-semibold">
               Contact us
             </a>
           </div>

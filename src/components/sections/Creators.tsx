@@ -74,7 +74,7 @@ export default function Creators() {
                 {center && (
                   // the card itself is the play button, so this is purely visual
                   <span aria-hidden className="absolute inset-0 grid place-items-center">
-                    <span className="grid size-[72px] place-items-center rounded-full border border-white/25 bg-white/10 text-white shadow-[0_10px_30px_rgba(0,0,0,.35)] backdrop-blur-md transition-transform duration-300 hover:scale-110">
+                    <span className="grid size-[72px] place-items-center rounded-sm border border-white/25 bg-white/10 text-white shadow-[0_10px_30px_rgba(0,0,0,.35)] backdrop-blur-md transition-transform duration-300 hover:scale-110">
                       <Play width={24} height={24} className="translate-x-[1px]" />
                     </span>
                   </span>

@@ -106,7 +106,7 @@ export default function Immersions() {
               type="button"
               aria-label="Previous country"
               onClick={() => step(-1)}
-              className="grid size-12 place-items-center rounded-full border border-snow/25 transition-colors hover:border-[var(--acc)] hover:text-[var(--acc)]"
+              className="grid size-12 place-items-center rounded-sm border border-snow/25 transition-colors hover:border-[var(--acc)] hover:text-[var(--acc)]"
             >
               <ChevronLeft />
             </button>
@@ -117,7 +117,7 @@ export default function Immersions() {
               type="button"
               aria-label="Next country"
               onClick={() => step(1)}
-              className="grid size-12 place-items-center rounded-full text-ink transition-transform hover:scale-105"
+              className="grid size-12 place-items-center rounded-sm text-ink transition-transform hover:scale-105"
               style={{ background: "var(--acc)" }}
             >
               <ChevronRight />

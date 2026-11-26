@@ -76,7 +76,7 @@ function Stage({ list }: { list: Episode[] }) {
         >
           <Image key={ep.image} src={ep.image} alt="" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover transition-transform duration-1000 [animation:fade-in_.6s_ease] group-hover:scale-[1.03]" />
           <span className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-          <span className="absolute bottom-5 left-5 grid size-16 place-items-center rounded-full bg-ink/40 text-snow backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-gold-ink">
+          <span className="absolute bottom-5 left-5 grid size-16 place-items-center rounded-sm bg-ink/40 text-snow backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-gold-ink">
             <Play width={26} height={26} />
           </span>
         </button>
@@ -95,7 +95,7 @@ function Stage({ list }: { list: Episode[] }) {
           <button
             type="button"
             onClick={() => start(ep)}
-            className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-gold px-6 text-[13px] font-semibold uppercase tracking-[0.12em] text-gold-ink transition-colors hover:bg-[#ffd75e]"
+            className="inline-flex h-12 shrink-0 items-center gap-2 rounded-sm bg-gold px-6 text-[13px] font-semibold uppercase tracking-[0.12em] text-gold-ink transition-colors hover:bg-[#ffd75e]"
           >
             <Play width={14} height={14} />
             Play Episode
@@ -116,7 +116,7 @@ function Stage({ list }: { list: Episode[] }) {
                 type="button"
                 onClick={() => start(e)}
                 aria-label={`Play ${e.title}`}
-                className="absolute bottom-3 right-3 grid size-9 place-items-center rounded-full bg-snow/20 text-snow backdrop-blur transition-colors hover:bg-gold hover:text-gold-ink"
+                className="absolute bottom-3 right-3 grid size-9 place-items-center rounded-sm bg-snow/20 text-snow backdrop-blur transition-colors hover:bg-gold hover:text-gold-ink"
               >
                 <Play width={13} height={13} />
               </button>
