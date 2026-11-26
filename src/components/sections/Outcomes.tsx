@@ -152,7 +152,7 @@ export default function Outcomes() {
         <nav
           data-chapter-nav
           aria-label="Chapters"
-          className="pointer-events-none sticky top-20 z-30 mx-auto mt-10 w-fit max-w-full -translate-y-3 opacity-0 transition-all duration-500 [&.is-on]:pointer-events-auto [&.is-on]:translate-y-0 [&.is-on]:opacity-100"
+          className="pointer-events-none fixed inset-x-0 bottom-5 z-40 mx-auto w-fit max-w-[calc(100vw-24px)] translate-y-6 opacity-0 transition-all duration-500 ease-out-expo [&.is-on]:pointer-events-auto [&.is-on]:translate-y-0 [&.is-on]:opacity-100"
         >
           <div role="tablist" className="no-scrollbar flex gap-1 overflow-x-auto rounded-sm border border-ink/10 bg-paper/85 p-1.5 shadow-[0_12px_40px_rgba(8,18,14,.12)] backdrop-blur-xl">
             {chapters.map((c, i) => (
@@ -313,13 +313,13 @@ function ChapterBlock({ c, last }: { c: Chapter; last: boolean }) {
         <Stories stories={c.showcase.stories} heading={c.partB.line1} country={c.country} />
       ) : (
         <>
-          <div className="mt-12 flex items-end justify-between gap-10">
+          <div className="mt-14 flex items-center justify-between gap-10">
             <div className="max-w-[760px]">
               <h4 className="text-[clamp(22px,2vw,28px)] font-semibold tracking-tight">{c.partB.line1}</h4>
               {c.partB.line2 && <p className="mt-3 text-[17px] text-ink/85">{c.partB.line2}</p>}
               {c.partB.line3 && <p className="mt-2 text-[15px] leading-[1.65] text-byline-light">{c.partB.line3}</p>}
             </div>
-            <CountryDoodle country={c.country} className="-mt-14 mb-2 hidden w-[230px] shrink-0 md:block lg:-mt-20 lg:w-[270px] xl:w-[300px]" />
+            <CountryDoodle country={c.country} className="my-6 mr-6 hidden w-[200px] shrink-0 md:block lg:w-[230px] xl:w-[250px]" />
           </div>
           <div className="mt-8">
             {c.showcase.kind === "companies" && <Companies list={c.showcase.companies} />}
@@ -445,10 +445,10 @@ function Stories({ stories, heading, country }: { stories: Story[]; heading: str
   useDragScroll(car.ref);
   return (
     <div className="mt-12">
-      <div className="flex flex-wrap items-end justify-between gap-5">
+      <div className="flex flex-wrap items-center justify-between gap-5">
         <h4 className="text-[clamp(22px,2vw,28px)] font-semibold tracking-tight">{heading}</h4>
-        <div className="flex items-end gap-8">
-          <CountryDoodle country={country} className="-mt-14 mb-2 hidden w-[230px] md:block lg:-mt-20 lg:w-[270px] xl:w-[300px]" />
+        <div className="flex items-center gap-8">
+          <CountryDoodle country={country} className="my-6 mr-6 hidden w-[200px] shrink-0 md:block lg:w-[230px] xl:w-[250px]" />
           <NavArrows name="impact story" tone="light" onPrev={car.prev} onNext={car.next} prevDisabled={car.edges.start} nextDisabled={car.edges.end} />
         </div>
       </div>

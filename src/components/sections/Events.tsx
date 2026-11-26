@@ -21,7 +21,7 @@ export default function Events() {
   const list = events.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE);
 
   return (
-    <section id="events" aria-label="Events" className="relative bg-paper py-[clamp(96px,9vw,144px)] text-ink">
+    <section id="events" aria-label="Events" className="relative overflow-x-clip bg-paper py-[clamp(96px,9vw,144px)] text-ink">
       <div className="container-x">
         <Heading tone="light" breakLine {...eventsHeading}>
           <NavArrows name="events" tone="light" onPrev={() => setPage((p) => p - 1)} onNext={() => setPage((p) => p + 1)} prevDisabled={page === 0} nextDisabled={page >= pages - 1} />

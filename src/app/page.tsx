@@ -1,6 +1,7 @@
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
 import TenThings from "@/components/sections/TenThings";
+import TenThingsPasses from "@/components/sections/TenThingsPasses";
 import Route from "@/components/sections/Route";
 import Programs from "@/components/sections/Programs";
 import Outcomes from "@/components/sections/Outcomes";
@@ -27,6 +28,7 @@ export default function Home() {
       <main>
         <Hero />
         <TenThings />
+        <TenThingsPasses />
         <Route />
         <Programs />
         <Outcomes />
