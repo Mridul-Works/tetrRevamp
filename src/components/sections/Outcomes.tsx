@@ -18,22 +18,68 @@ import { cn } from "@/lib/cn";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
+/** Where on each chapter its rail node sits: the chapter label row inside the feature card. */
+const MARK_OFFSET = 100;
+/** The scroll "reading line", as a share of the viewport height. */
+const READ_LINE = "45%";
+
 export default function Outcomes() {
-  const [active, setActive] = useState(0);
+  // -1 until the reading line reaches the first chapter
+  const [pos, setPos] = useState(-1);
+  const active = Math.max(0, pos);
   const root = useRef<HTMLElement>(null);
   const head = useWordReveal<HTMLDivElement>();
   const lenis = useLenis();
 
   useGSAP(
     () => {
-      gsap.utils.toArray<HTMLElement>("[data-chapter]").forEach((el, i) => {
-        ScrollTrigger.create({
-          trigger: el,
-          start: "top 45%",
-          end: "bottom 45%",
-          onToggle: (self) => self.isActive && setActive(i),
-        });
+      const scope = root.current;
+      const content = scope?.querySelector<HTMLElement>("[data-chapters]");
+      if (!scope || !content) return;
+      const chaptersEls = gsap.utils.toArray<HTMLElement>("[data-chapter]");
+      const nodes = gsap.utils.toArray<HTMLElement>("[data-rail-node]");
+      const fill = scope.querySelector<HTMLElement>("[data-rail-fill]");
+      const ribbon = scope.querySelector<HTMLElement>("[data-rail-head]");
+      const setFill = fill ? gsap.quickSetter(fill, "scaleY") : null;
+      const setRibbon = ribbon ? gsap.quickSetter(ribbon, "y", "px") : null;
+
+      let height = 0;
+      let ribbonH = 0;
+      let marks: number[] = [];
+      let last = -2;
+
+      const measure = () => {
+        height = content.offsetHeight;
+        ribbonH = ribbon?.offsetHeight ?? 0;
+        marks = chaptersEls.map((el) => el.offsetTop + MARK_OFFSET);
+        nodes.forEach((n, i) => (n.style.top = `${marks[i] ?? 0}px`));
+      };
+
+      // One reading line drives the rail fill, the ribbon, the nodes and the pill nav.
+      const update = (progress: number) => {
+        const tip = progress * height;
+        setFill?.(progress);
+        setRibbon?.(Math.max(0, Math.min(tip, height - ribbonH)));
+        let cur = -1;
+        marks.forEach((m, i) => tip >= m && (cur = i));
+        if (cur !== last) {
+          last = cur;
+          setPos(cur);
+        }
+      };
+
+      const st = ScrollTrigger.create({
+        trigger: content,
+        start: `top ${READ_LINE}`,
+        end: `bottom ${READ_LINE}`,
+        onRefresh: (self) => {
+          measure();
+          update(self.progress);
+        },
+        onUpdate: (self) => update(self.progress),
       });
+      measure();
+      update(st.progress);
       gsap.fromTo(
         "[data-stage-img]",
         { yPercent: -8, scale: 1.12 },
@@ -129,13 +175,86 @@ export default function Outcomes() {
           </div>
         </nav>
 
-        <div data-chapters className="mt-6">
-          {chapters.map((c, i) => (
-            <ChapterBlock key={c.country} c={c} last={i === chapters.length - 1} />
-          ))}
+        <div className="mt-6 lg:grid lg:grid-cols-[40px_minmax(0,1fr)] lg:gap-x-10 xl:gap-x-14">
+          <ChapterRail pos={pos} onSelect={goTo} />
+          <div data-chapters className="relative">
+            {chapters.map((c, i) => (
+              <ChapterBlock key={c.country} c={c} last={i === chapters.length - 1} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Vertical progress ribbon beside the chapters (desktop only). The track spans the
+ * full chapter column; the fill and the ribbon tag are positioned by the ScrollTrigger
+ * in Outcomes, and node `top` values are measured from each chapter's offset.
+ */
+function ChapterRail({ pos, onSelect }: { pos: number; onSelect: (i: number) => void }) {
+  const current = chapters[Math.max(0, pos)];
+  const num = String(Math.max(0, pos) + 1).padStart(2, "0");
+  return (
+    <div className="relative hidden lg:block">
+      {/* track */}
+      <span aria-hidden className="absolute inset-y-0 left-1/2 -ml-[2px] w-1 rounded-full bg-ink/[0.08]" />
+      {/* fill, scaled from the top */}
+      <span
+        data-rail-fill
+        aria-hidden
+        className="absolute inset-y-0 left-1/2 -ml-[2px] w-1 origin-top scale-y-0 rounded-full bg-gradient-to-b from-mint via-deep to-deep"
+      />
+
+      {/* chapter nodes */}
+      <ol aria-label="Chapter progress">
+        {chapters.map((c, i) => {
+          const reached = i <= pos;
+          const isCurrent = i === pos;
+          return (
+            <li key={c.country}>
+              <button
+                data-rail-node
+                type="button"
+                onClick={() => onSelect(i)}
+                aria-label={`Chapter ${i + 1}: ${c.country}, ${c.model}`}
+                aria-current={isCurrent ? "step" : undefined}
+                className={cn(
+                  "absolute left-1/2 grid size-7 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border font-mono text-[10px] font-semibold transition-[background-color,border-color,color,box-shadow] duration-300",
+                  reached ? "border-deep bg-deep text-snow" : "border-ink/20 bg-paper text-ink/55 hover:border-ink/50",
+                  isCurrent && "shadow-[0_0_0_5px_rgba(122,209,156,.28)]",
+                )}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </button>
+            </li>
+          );
+        })}
+      </ol>
+
+      {/* the ribbon tag that rides the reading line */}
+      <div data-rail-head aria-hidden className="pointer-events-none absolute left-1/2 top-0 z-10 -ml-[18px] w-9 will-change-transform">
+        <span className="absolute left-1/2 top-0 -ml-[7px] -mt-[7px] size-3.5 rounded-full bg-mint ring-[3px] ring-paper">
+          <span className="absolute inset-0 rounded-full bg-mint [animation:ping-slow_1.8s_ease-out_infinite]" />
+        </span>
+        <div
+          className="flex h-[136px] flex-col items-center bg-deep pb-5 pt-4 text-snow shadow-[0_14px_30px_rgba(8,18,14,.22)]"
+          style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 50% calc(100% - 11px), 0 100%)" }}
+        >
+          <span key={`n${num}`} className="font-mono text-[11px] font-semibold text-mint [animation:rise-in_.6s_var(--ease-out-expo)_both]">
+            {num}
+          </span>
+          <span className="mt-2.5 h-px w-4 bg-snow/25" />
+          <span
+            key={`c${current.country}`}
+            className="mt-3 text-[11px] font-semibold uppercase tracking-[0.2em] [writing-mode:vertical-rl] [animation:rise-in_.6s_var(--ease-out-expo)_both]"
+          >
+            {current.country}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
 
