@@ -68,10 +68,10 @@ export default function Hero() {
       </div>
 
       <div data-hero-content className="container-x relative z-10 flex h-full flex-col justify-end pb-10 md:pb-12">
-        <h1 className="max-w-[1100px] text-[clamp(40px,6.2vw,96px)] font-semibold leading-[1.02] tracking-[-0.025em]">
+        <h1 className="max-w-[1080px] text-[clamp(38px,4.2vw,64px)] font-semibold leading-[1.08] tracking-[-0.01em] text-snow">
           <Words text={hero.titleA} />
           <br />
-          <Words text={hero.titleB} className="accent text-[1.05em] text-snow" />
+          <Words text={hero.titleB} className="accent" />
         </h1>
         <p data-hero-fade className="mt-6 max-w-[640px] text-[16px] leading-[1.6] text-snow/85 md:text-[18px]">
           {hero.body}
