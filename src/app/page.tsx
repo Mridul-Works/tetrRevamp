@@ -1,6 +1,6 @@
 import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
-import TenThings from "@/components/sections/TenThings";
+// import TenThings from "@/components/sections/TenThings"; // hidden for now
 import TenThingsPasses from "@/components/sections/TenThingsPasses";
 import Route from "@/components/sections/Route";
 import Programs from "@/components/sections/Programs";
@@ -27,7 +27,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <TenThings />
+        {/* <TenThings /> hidden for now */}
         <TenThingsPasses />
         <Route />
         <Programs />
