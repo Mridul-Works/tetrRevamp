@@ -1,3 +1,4 @@
+import Counter from "@/components/ui/Counter";
 import { v2LastYear } from "@/data/v2";
 
 export default function LastYear() {
@@ -15,7 +16,7 @@ export default function LastYear() {
       <div className="mt-12 grid border-t v2-rule md:grid-cols-2">
         {v2LastYear.stats.map((s, i) => (
           <div key={s.label} className={i > 0 ? "border-t v2-rule py-8 md:border-t-0 md:border-l md:pl-8" : "py-8"}>
-            <p className="v2-display text-[clamp(72px,11vw,176px)]">{s.value}</p>
+            <Counter value={s.value} className="v2-display block text-[clamp(72px,11vw,176px)]" />
             <p className="v2-mono mt-2">{s.label}</p>
           </div>
         ))}

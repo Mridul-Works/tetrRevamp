@@ -164,7 +164,7 @@ function BoardingPass() {
         <div data-ticket-fade className="flex min-w-0 flex-1 flex-col p-[clamp(26px,2.6vw,40px)]">
           <div className="flex items-center justify-between gap-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/media/tetr/logo-header.png" alt="" className="h-[clamp(30px,2.6vw,38px)] w-auto" />
+            <img src="https://cdn.tetr.com/assets/lovable/images/logo-header.webp" alt="" className="h-[clamp(30px,2.6vw,38px)] w-auto" />
             <span className="eyebrow text-deep">{t.eyebrow}</span>
           </div>
 

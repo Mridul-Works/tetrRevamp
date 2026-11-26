@@ -8,8 +8,10 @@ export type Link = { label: string; href: string };
 
 /* ───────────────────────────── Navigation ───────────────────────────── */
 
-export const LOGO = "/media/tetr/logo-header.png";
-export const QS_BADGE = "/media/qs-gold-winner.png";
+/** Flat image bucket behind tetr.com. Paths that still start with /media or /img have no CDN copy yet and are served from /public. */
+const CDN = "https://cdn.tetr.com/assets/lovable/images/";
+export const LOGO = "https://cdn.tetr.com/assets/lovable/images/logo-header.webp";
+export const QS_BADGE = "https://cdn.tetr.com/assets/lovable/images/qs-gold-winner.webp";
 
 export const programMenu: { label: string; items: Link[] }[] = [
   {
@@ -73,7 +75,18 @@ export const hero = {
   eyebrow: "Tetr College of Business",
   scrollCue: "Scroll to begin the route",
   /** People first: classroom, students on the move, then campuses and wins. */
-  images: [4, 8, 5, 1, 9, 6, 2, 10, 7, 3].map((n) => `/media/tetr/hero/tetr-hero-${String(n).padStart(2, "0")}.jpg`),
+  images: [
+    "https://cdn.tetr.com/assets/lovable/images/tetr-hero-04.webp",
+    "/media/tetr/hero/tetr-hero-08.jpg",
+    "/media/tetr/hero/tetr-hero-05.jpg",
+    "/media/tetr/hero/tetr-hero-01.jpg",
+    "/media/tetr/hero/tetr-hero-09.jpg",
+    "https://cdn.tetr.com/assets/lovable/images/tetr-hero-06.webp",
+    "https://cdn.tetr.com/assets/lovable/images/tetr-hero-02.webp",
+    "https://cdn.tetr.com/assets/lovable/images/tetr-hero-10.webp",
+    "https://cdn.tetr.com/assets/lovable/images/tetr-hero-07.webp",
+    "https://cdn.tetr.com/assets/lovable/images/tetr-hero-03.webp",
+  ],
 };
 
 /* ───────────────────────────── 10 Things ───────────────────────────── */
@@ -108,7 +121,7 @@ export const tenThings: {
     tag: "D2C Bazaars",
     title: "*1.4 Billion* Ways to Get It *Right*. Or Wrong",
     body: "Different people, preferences, price points and reasons to buy. Tetr students learn to navigate all of them by launching their own D2C brands in India, where the consumer is always the final judge.",
-    image: "/media/tetr/tenthings/D2C_Bazaar-2.jpg",
+    image: "https://cdn.tetr.com/assets/lovable/images/D2C_Bazaar-2.webp",
     stats: [
       { value: "$190K+", label: "Revenue generated" },
       { value: "30.6%", label: "Average profit margin" },
@@ -142,7 +155,7 @@ export const tenThings: {
     tag: "Faculty",
     title: "Learn From People Who Are *Making the Case Studies*",
     body: "Founders, business leaders and industry experts teach in the classroom, so you learn directly from people who made the decisions you're studying.",
-    image: "/media/tetr/tenthings/Faculty-3.jpg",
+    image: "https://cdn.tetr.com/assets/lovable/images/Faculty-3.webp",
     stats: [
       { value: "40%", label: "Industry practitioners" },
       { value: "30%", label: "Visiting faculty" },
@@ -162,7 +175,7 @@ export const tenThings: {
     tag: "Founders Connect",
     title: "From “We Have an Idea” to “*People Paid for It*”",
     body: "Students took products from prototype to live Kickstarter campaigns. Across 17 campaigns, 1,100+ backers pledged more than $79,000.",
-    image: "/media/tetr/tenthings/founders_connect-2.jpg",
+    image: "https://cdn.tetr.com/assets/lovable/images/founders_connect-2.webp",
     stats: [
       { value: "1,100+", label: "Backers" },
       { value: "$79.5K+", label: "Raised" },
@@ -217,7 +230,7 @@ export type Country = {
 };
 
 const gallery = (c: string) =>
-  ["Campus", "Business", "Cultural", "StudentLife", "Acad"].map((t) => `/media/tetr/gallery/${c}_${t}.jpg`);
+  ["Campus", "Business", "Cultural", "StudentLife", "Acad"].map((t) => `${CDN}${c}_${t}.webp`);
 
 export const routeTabs = [
   { key: "courses", label: "Courses & Workshops" },
@@ -348,11 +361,11 @@ export const countries: Country[] = [
     pitch: "More of the world's technology companies and venture capital are concentrated in the US than anywhere else, and its pace sets the standard.",
     build: "A tech startup chasing venture-scale growth. Ship a product, win early users and learn how capital backs ambitious companies.",
     photos: [
-      "/media/tetr/United_States.jpg",
-      "/media/tetr/build7/Tech_StartUp_United_States.jpg",
-      "/media/tetr/locations/tech-startup.jpg",
-      "/media/tetr/homes/usa-common-areas.jpg",
-      "/media/tetr/homes/usa-outdoors.jpg",
+      "https://cdn.tetr.com/assets/lovable/images/United_States.webp",
+      "https://cdn.tetr.com/assets/lovable/images/Tech_StartUp_United_States.webp",
+      "https://cdn.tetr.com/assets/lovable/images/tech-startup.webp",
+      "https://cdn.tetr.com/assets/lovable/images/usa-common-areas.webp",
+      "https://cdn.tetr.com/assets/lovable/images/usa-outdoors.webp",
     ],
     courses: [
       { title: "MAT 107", description: "Mathematics for real-world systems" },
@@ -383,9 +396,9 @@ export const countries: Country[] = [
     pitch: "Argentina pairs vast farmland with some of the strongest wind and solar resources in the Americas, and founders who build through constant change.",
     build: "A green venture with sustainable cash flow, built inside a volatile economy where every assumption gets tested.",
     photos: [
-      "/media/tetr/Argentina.jpg",
-      "/media/tetr/build7/Green_Venture_Argentina.jpg",
-      "/media/tetr/locations/green-venture.jpg",
+      "https://cdn.tetr.com/assets/lovable/images/Argentina.webp",
+      "https://cdn.tetr.com/assets/lovable/images/Green_Venture_Argentina.webp",
+      "https://cdn.tetr.com/assets/lovable/images/green-venture.webp",
       "/img/immersions/LosgroboGRoup_Argentina.webp",
       "/img/immersions/la_bombonera_stadium_Argentina.webp",
     ],
@@ -410,8 +423,8 @@ export const countries: Country[] = [
     build: "A social channel with an engaged audience. Find your creative niche, turn local stories into content and grow a community brands want to reach.",
     photos: [
       "/media/tetr/Europe.jpg",
-      "/media/tetr/build7/Social_Channel_Europe.jpg",
-      "/media/tetr/locations/social-channel.jpg",
+      "https://cdn.tetr.com/assets/lovable/images/Social_Channel_Europe.webp",
+      "https://cdn.tetr.com/assets/lovable/images/social-channel.webp",
       "/img/immersions/MilanFashionWeek_Europe.webp",
       "/img/immersions/pinacoteca_di_brera_europe.webp",
     ],
@@ -438,22 +451,22 @@ export const countries: Country[] = [
 
 /** Partner wordmarks that have a logo file; others render as text. */
 export const partnerLogos: Record<string, { src: string; aspect: number; h: number }> = {
-  ITC: { src: "/media/partners/itc.svg", aspect: 0.958, h: 34 },
-  LinkedIn: { src: "/media/partners/linkedin.svg", aspect: 3.931, h: 18 },
-  "Nivia Sports": { src: "/media/partners/nivia.svg", aspect: 2.368, h: 22 },
-  "FITT–IIT Delhi": { src: "/media/partners/iitdelhi.svg", aspect: 7.115, h: 17 },
-  Emirates: { src: "/media/partners/emirates.svg", aspect: 1.445, h: 26 },
-  "DP World": { src: "/media/partners/dpworld.svg", aspect: 3.964, h: 17 },
-  Tesla: { src: "/media/partners/tesla.svg", aspect: 1, h: 26 },
-  Alibaba: { src: "/media/partners/alibaba.svg", aspect: 7.804, h: 15 },
-  Tencent: { src: "/media/partners/tencent.svg", aspect: 7.349, h: 16 },
-  Google: { src: "/media/partners/google.svg", aspect: 2.907, h: 19 },
-  "Coca-Cola": { src: "/media/partners/cocacola.svg", aspect: 2.738, h: 22 },
-  Spotify: { src: "/media/partners/spotify.svg", aspect: 1, h: 24 },
-  "Goldman Sachs": { src: "/media/partners/goldmansachs.svg", aspect: 2.114, h: 19 },
-  "JPMorgan Chase": { src: "/media/partners/jpmorgan.svg", aspect: 7.045, h: 17 },
-  "The New York Times": { src: "/media/partners/nyt.svg", aspect: 8.854, h: 15 },
-  Iberdrola: { src: "/media/partners/iberdrola.svg", aspect: 5.528, h: 15 },
+  ITC: { src: "https://cdn.tetr.com/assets/lovable/images/itc.svg", aspect: 0.958, h: 34 },
+  LinkedIn: { src: "https://cdn.tetr.com/assets/lovable/images/linkedin.svg", aspect: 3.931, h: 18 },
+  "Nivia Sports": { src: "https://cdn.tetr.com/assets/lovable/images/nivia.svg", aspect: 2.368, h: 22 },
+  "FITT–IIT Delhi": { src: "https://cdn.tetr.com/assets/lovable/images/iitdelhi.svg", aspect: 7.115, h: 17 },
+  Emirates: { src: "https://cdn.tetr.com/assets/lovable/images/emirates.svg", aspect: 1.445, h: 26 },
+  "DP World": { src: "https://cdn.tetr.com/assets/lovable/images/dpworld.svg", aspect: 3.964, h: 17 },
+  Tesla: { src: "https://cdn.tetr.com/assets/lovable/images/tesla.svg", aspect: 1, h: 26 },
+  Alibaba: { src: "https://cdn.tetr.com/assets/lovable/images/alibaba.svg", aspect: 7.804, h: 15 },
+  Tencent: { src: "https://cdn.tetr.com/assets/lovable/images/tencent.svg", aspect: 7.349, h: 16 },
+  Google: { src: "https://cdn.tetr.com/assets/lovable/images/google.svg", aspect: 2.907, h: 19 },
+  "Coca-Cola": { src: "https://cdn.tetr.com/assets/lovable/images/cocacola.svg", aspect: 2.738, h: 22 },
+  Spotify: { src: "https://cdn.tetr.com/assets/lovable/images/spotify.svg", aspect: 1, h: 24 },
+  "Goldman Sachs": { src: "https://cdn.tetr.com/assets/lovable/images/recruiters-goldmansachs.svg", aspect: 2.114, h: 19 },
+  "JPMorgan Chase": { src: "https://cdn.tetr.com/assets/lovable/images/jpmorgan.svg", aspect: 7.045, h: 17 },
+  "The New York Times": { src: "https://cdn.tetr.com/assets/lovable/images/nyt.svg", aspect: 8.854, h: 15 },
+  Iberdrola: { src: "https://cdn.tetr.com/assets/lovable/images/iberdrola.svg", aspect: 5.528, h: 15 },
 };
 
 /* ───────────────────────────── Programs ───────────────────────────── */
@@ -490,7 +503,7 @@ export const programs: {
   { tab: "Executive", degree: "Executive", titleA: "Executive Program in", titleB: "Family Business", duration: "15 Months", locations: "Hybrid", deadlineLabel: "Round 1 Deadline", deadline: "30th Sept, 2026", image: prog("Family_Business_Executive"), href: "https://programs.tetr.com/family-business" },
   { tab: "High School", degree: "Pre-College", titleA: "High School", titleB: "7-Day Basecamp", duration: "1 Week", locations: "Dubai", deadlineLabel: "Application Deadline", deadline: "30th April, 2026", image: prog("7_-_Day_Basecamp_HighSchool"), href: "https://tetr.com/7_day_basecamp" },
   { tab: "High School", degree: "Cohort", titleA: "High School", titleB: "Tetr Pathfinder", duration: "2 Weeks", locations: "Dubai", deadlineLabel: "Application Deadline", deadline: "30th April, 2026", image: prog("Tetr_-_Pathfinder_-High_School"), href: "https://programs.tetr.com/pathfinder-program" },
-  { tab: "Gap Year", degree: "Gap Year", titleA: "Gap Year", titleB: "Innovation Program", duration: "1 Year", locations: "9 Countries", deadlineLabel: "Application Deadline", deadline: "10th Aug, 2026", image: prog("Gap_Year"), href: "https://tetr.com/gap-year-program" },
+  { tab: "Gap Year", degree: "Gap Year", titleA: "Gap Year", titleB: "Innovation Program", duration: "1 Year", locations: "9 Countries", deadlineLabel: "Application Deadline", deadline: "10th Aug, 2026", image: "https://cdn.tetr.com/assets/lovable/images/Gap_Year.webp", href: "https://tetr.com/gap-year-program" },
 ];
 
 export const universitiesHeading = {
@@ -501,12 +514,12 @@ export const universitiesHeading = {
 };
 
 export const universities: { name: string; logo: string; photo: string; nativeColor?: boolean; logoH: number }[] = [
-  { name: "Cornell University", logo: "/img/unis/white/CORNELL.png", photo: "/media/collab/collab-cornell.jpg", logoH: 62 },
-  { name: "UBI Business School", logo: "/img/unis/white/UBI.png", photo: "/media/collab/collab-ubi.jpg", logoH: 80 },
-  { name: "FITT — IIT Delhi", logo: "/img/unis/white/FIIT.png", photo: "/media/collab/collab-fitt.jpg", logoH: 75 },
-  { name: "Illinois Tech", logo: "/img/unis/white/Illinois.png", photo: "/media/collab/collab-illinois.jpg", logoH: 80 },
-  { name: "INSEAD Executive Education", logo: "/media/unis/insead-logo.png", photo: "/media/collab/collab-insead.jpg", nativeColor: true, logoH: 62 },
-  { name: "Adelphi University", logo: "/img/unis/white/ADELPHI.png", photo: "/media/collab/collab-adelphi.jpg", logoH: 71 },
+  { name: "Cornell University", logo: "https://cdn.tetr.com/assets/lovable/images/CORNELL.webp", photo: "https://cdn.tetr.com/assets/lovable/images/collab-cornell.webp", logoH: 62 },
+  { name: "UBI Business School", logo: "https://cdn.tetr.com/assets/lovable/images/UBI.webp", photo: "https://cdn.tetr.com/assets/lovable/images/collab-ubi.webp", logoH: 80 },
+  { name: "FITT — IIT Delhi", logo: "https://cdn.tetr.com/assets/lovable/images/FIIT.webp", photo: "https://cdn.tetr.com/assets/lovable/images/collab-fitt.webp", logoH: 75 },
+  { name: "Illinois Tech", logo: "https://cdn.tetr.com/assets/lovable/images/Illinois.webp", photo: "https://cdn.tetr.com/assets/lovable/images/collab-illinois.webp", logoH: 80 },
+  { name: "INSEAD Executive Education", logo: "https://cdn.tetr.com/assets/lovable/images/insead-logo.webp", photo: "https://cdn.tetr.com/assets/lovable/images/collab-insead.webp", nativeColor: true, logoH: 62 },
+  { name: "Adelphi University", logo: "https://cdn.tetr.com/assets/lovable/images/ADELPHI.webp", photo: "https://cdn.tetr.com/assets/lovable/images/collab-adelphi.webp", logoH: 71 },
 ];
 
 /** Boarding pass shown once the university collage settles; it zooms into the Outcomes section. */
@@ -534,7 +547,7 @@ export const outcomesHeading = {
   line2b: "$500K+ in Real Revenue",
   byline:
     "Grades Tell You What You Know. Revenue Tells You What You Can Do. Here's What Students Have Built, Term By Term. **91%** students are revenue positive with average revenue $8K. **40%** of Tetr Students Teams have raised funds during demo days",
-  stage: { image: "/media/tetr/pitch/tetr-tank-stage.jpg", alt: "Tetr students and staff on the Tetr Tank stage with the winner cheque" },
+  stage: { image: "https://cdn.tetr.com/assets/lovable/images/tetr-tank-stage.webp", alt: "Tetr students and staff on the Tetr Tank stage with the winner cheque" },
   totals: [
     { label: "Businesses Built", value: "150+" },
     { label: "Revenue Generated", value: "USD 504,000+" },
@@ -636,8 +649,8 @@ export const chapters: Chapter[] = [
       companies: [
         { name: "Six Oppas", cohort: "Class of 2028", image: oc("six-oppas.jpg"), href: "https://www.instagram.com/hwarang.seoul", figures: [{ label: "Revenue", value: "$10,200" }, { label: "Profit Margin", value: "18.35%" }] },
         { name: "Serve", cohort: "Class of 2028", image: oc("serve.jpg"), figures: [{ label: "Revenue", value: "$5,286" }, { label: "Profit Margin", value: "43.2%" }] },
-        { name: "Maison & Co", cohort: "Class of 2028", image: oc("maison-co.jpg"), href: "https://www.instagram.com/maisonandcoofficial", figures: [{ label: "Revenue", value: "$11,402" }, { label: "Profit Margin", value: "28.94%" }] },
-        { name: "Ikrara", cohort: "Class of 2028", image: oc("ikrara.jpg"), href: "https://www.instagram.com/ikrara.official", figures: [{ label: "Revenue", value: "$120,210" }, { label: "Profit Margin", value: "16.99%" }] },
+        { name: "Maison & Co", cohort: "Class of 2028", image: "https://cdn.tetr.com/uploads/03042026/v1/maison.webp", href: "https://www.instagram.com/maisonandcoofficial", figures: [{ label: "Revenue", value: "$11,402" }, { label: "Profit Margin", value: "28.94%" }] },
+        { name: "Ikrara", cohort: "Class of 2028", image: "https://cdn.tetr.com/uploads/03042026/v1/Ikrara.webp", href: "https://www.instagram.com/ikrara.official", figures: [{ label: "Revenue", value: "$120,210" }, { label: "Profit Margin", value: "16.99%" }] },
         { name: "Knotcultured", cohort: "Class of 2028", image: oc("knotcultured.jpg"), href: "https://www.instagram.com/knotcultured", figures: [{ label: "Revenue", value: "$11,460" }, { label: "Profit Margin", value: "61.78%" }] },
       ],
     },
@@ -663,11 +676,11 @@ export const chapters: Chapter[] = [
     showcase: {
       kind: "thumbnails",
       thumbnails: [
-        { name: "ClickBuddy", image: oc("clickbuddy-v2.jpg"), cohort: "Class of 2028", video: oc("Clickbuddy.mp4") },
-        { name: "Meridian", image: oc("meridian-v2.jpg"), cohort: "Class of 2028", video: oc("Meridian.mp4") },
-        { name: "Kando", image: oc("kando-v2.jpg"), cohort: "Class of 2028", video: oc("Kando.mp4") },
-        { name: "Critter Chaos", image: oc("critter-chaos-v2.jpg"), cohort: "Class of 2028" },
-        { name: "Slide Pass", image: oc("slide-pass-v2.jpg"), cohort: "Class of 2028" },
+        { name: "ClickBuddy", image: "https://cdn.tetr.com/assets/lovable/images/clickbuddy-v2.webp", cohort: "Class of 2028", video: "https://cdn.tetr.com/assets/ih-images/V2/click-buddy-op.mp4" },
+        { name: "Meridian", image: "https://cdn.tetr.com/assets/lovable/images/meridian-v2.webp", cohort: "Class of 2028", video: "https://cdn.tetr.com/assets/ih-images/V2/meridian-op.mp4" },
+        { name: "Kando", image: "https://cdn.tetr.com/assets/lovable/images/kando-v2.webp", cohort: "Class of 2028", video: "https://cdn.tetr.com/assets/ih-images/V2/kando-op.mp4" },
+        { name: "Critter Chaos", image: "https://cdn.tetr.com/assets/lovable/images/critter-chaos-v2.webp", cohort: "Class of 2028" },
+        { name: "Slide Pass", image: "https://cdn.tetr.com/assets/lovable/images/slide-pass-v2.webp", cohort: "Class of 2028" },
       ],
     },
   },
@@ -684,7 +697,7 @@ export const chapters: Chapter[] = [
     ],
     report: { label: "Download NGO Report", href: "https://online.flippingbook.com/view/111707919/" },
     partB: { line1: "The stories behind the impact" },
-    ventures: [{ name: "Impact Showdown", image: "/media/tetr/startups/Ghana_Impact_Showdown.png", static: true }],
+    ventures: [{ name: "Impact Showdown", image: "https://cdn.tetr.com/assets/lovable/images/Ghana_Impact_Showdown.webp", static: true }],
     showcase: {
       kind: "stories",
       stories: [
@@ -693,7 +706,7 @@ export const chapters: Chapter[] = [
         { name: "Akoma", image: oc("akoma.webp"), index: "03", figure: { value: "611", label: "Lives touched" }, description: "Transforming science from something students memorise into something they experience." },
         { name: "RealGH", image: oc("realgh.webp"), index: "04", figure: { value: "1,425", label: "Lives touched" }, description: "Helping local artisans bring their craftsmanship to new markets." },
         { name: "Outboxed", image: oc("outboxed.webp"), index: "05", figure: { value: "550", label: "Lives touched" }, description: "Connecting Bukom’s boxing talent with sponsors and a stronger sporting future." },
-        { name: "HerMoney", image: oc("hermoney.webp"), index: "06", figure: { value: "367", label: "Lives touched" }, description: "Building financial confidence for women growing their own businesses." },
+        { name: "HerMoney", image: "https://cdn.tetr.com/assets/lovable/images/hermoney.webp", index: "06", figure: { value: "367", label: "Lives touched" }, description: "Building financial confidence for women growing their own businesses." },
       ],
     },
   },
@@ -709,13 +722,13 @@ export const chapters: Chapter[] = [
       line2: "Pitch your AI startup to the investors who back the world's biggest tech companies.",
       line3: "Every team takes its AI product to leading investors and ecosystem builders from Silicon Valley.",
     },
-    ventures: [{ name: "AI Showdown", image: "/media/tetr/startups/USA_Met_Group.png", static: true }],
+    ventures: [{ name: "AI Showdown", image: "https://cdn.tetr.com/assets/lovable/images/USA_Met_Group.webp", static: true }],
     showcase: {
       kind: "startups",
       startups: [
-        { name: "Blüm", logo: oc("usa-blum-logo.png"), description: "Unlocking a longer, more vibrant life through one private, holistic guide to your health." },
-        { name: "Buffer", logo: oc("usa-buffer-logo.png"), logoBare: true, description: "Turning the seconds you spend waiting on AI into real rewards, so no moment goes to waste." },
-        { name: "Acceify", logo: oc("usa-acceify-logo.png"), description: "Empowering college counselors to guide more students toward their dream universities, with AI handling the busywork." },
+        { name: "Blüm", logo: "https://cdn.tetr.com/assets/lovable/images/usa-blum-logo.webp", description: "Unlocking a longer, more vibrant life through one private, holistic guide to your health." },
+        { name: "Buffer", logo: "https://cdn.tetr.com/assets/lovable/images/usa-buffer-logo.webp", logoBare: true, description: "Turning the seconds you spend waiting on AI into real rewards, so no moment goes to waste." },
+        { name: "Acceify", logo: "https://cdn.tetr.com/assets/lovable/images/usa-acceify-logo.webp", description: "Empowering college counselors to guide more students toward their dream universities, with AI handling the busywork." },
         { name: "Tend", description: "Freeing finance teams from chasing receipts, with expenses submitted on WhatsApp and reviewed by AI." },
       ],
     },
@@ -730,7 +743,7 @@ export const launchpad = {
   titleB: "Was",
   titleAccent: "Already Waiting for You?",
   body: "Behind every business you build at Tetr sits a $10 million fund reserved for Tetr students. When your idea shows real promise, Launchpad backs it with capital, mentorship, and a global network of investors and operators who've done this before. You bring the idea, and we'll help you take it further.",
-  image: "/media/design/launchpad-pitch.jpg",
+  image: "https://cdn.tetr.com/assets/lovable/images/launchpad-pitch.webp",
   imageAlt: "Tetr students holding their Brand Wars investment cheques",
   cta: { label: "Explore Launchpad", href: "https://tetr.com/launchpad" },
   secondary: { label: "Still in high school? Pitch to Launchpad", href: "https://tetr.com/launchpad" },
@@ -746,7 +759,7 @@ export const careerLabs = {
     "One year into college, **70% of our students** had already secured internships, with **stipends of up to $4,000**. Through Career Labs, you'll unlock internships across **23 countries**, from Google and Formula 1 to BlackRock, eBay, and high-growth startups.",
   mapTitle: "Where Tetr Students Interned",
   report: { label: "Download career lab report", href: "https://online.flippingbook.com/view/1040912480/" },
-  map: { src: "/img/design/placement-map.jpg", alt: "World map of where Tetr students interned" },
+  map: { src: "https://cdn.tetr.com/assets/lovable/images/placement-map.webp", alt: "World map of where Tetr students interned" },
   stats: [
     { label: "Year One", value: "70%", text: "of students secured internships before their second year" },
     { label: "Internships", value: "314", text: "placements in the 2025-26 academic year" },
@@ -754,15 +767,15 @@ export const careerLabs = {
     { label: "Stipends", value: "$204K+", text: "cumulative stipends earned by the cohort" },
   ],
   interns: [
-    { company: "Formula 1", founder: "Anshika Agarwal · Class of 2029", photo: "/media/tetr/careerlabs-v11/tetr-cl11-f1-anshika.jpg" },
-    { company: "Google", founder: "Loris De Rosso · Class of 2028", photo: "/media/tetr/careerlabs-v11/tetr-cl11-google-loris.jpg" },
-    { company: "eBay", founder: "Tanisha Gureja · Class of 2028", photo: "/media/tetr/careerlabs-v11/tetr-cl11-ebay-tanisha.jpg" },
-    { company: "DIFC", founder: "Weronika Leśniak · Class of 2028", photo: "/media/tetr/careerlabs-v11/tetr-cl11-difc-weronika.jpg" },
-    { company: "Emeritus", founder: "Nicoleta Dicusar · Class of 2028", photo: "/media/tetr/careerlabs-v11/tetr-cl11-emeritus-nicoleta.jpg" },
-    { company: "CertiK", founder: "Lucas Ceccon · Class of 2028", photo: "/media/tetr/careerlabs-v11/tetr-cl11-certik-lucas.jpg" },
-    { company: "Jio BlackRock", founder: "Antriksh Gupta · Class of 2029", photo: "/media/tetr/careerlabs-v11/tetr-cl11-blackrock-antriksh.jpg" },
-    { company: "noon", founder: "Santiago Vaca · Class of 2029", photo: "/media/tetr/careerlabs-v11/tetr-cl11-noon-santiago.jpg" },
-    { company: "AXA", founder: "Judy Ayman · Class of 2028", photo: "/media/tetr/careerlabs-v11/tetr-cl11-axa-judy.jpg" },
+    { company: "Formula 1", founder: "Anshika Agarwal · Class of 2029", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-f1-anshika.webp" },
+    { company: "Google", founder: "Loris De Rosso · Class of 2028", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-google-loris.webp" },
+    { company: "eBay", founder: "Tanisha Gureja · Class of 2028", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-ebay-tanisha.webp" },
+    { company: "DIFC", founder: "Weronika Leśniak · Class of 2028", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-difc-weronika.webp" },
+    { company: "Emeritus", founder: "Nicoleta Dicusar · Class of 2028", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-emeritus-nicoleta.webp" },
+    { company: "CertiK", founder: "Lucas Ceccon · Class of 2028", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-certik-lucas.webp" },
+    { company: "Jio BlackRock", founder: "Antriksh Gupta · Class of 2029", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-blackrock-antriksh.webp" },
+    { company: "noon", founder: "Santiago Vaca · Class of 2029", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-noon-santiago.webp" },
+    { company: "AXA", founder: "Judy Ayman · Class of 2028", photo: "https://cdn.tetr.com/assets/lovable/images/tetr-cl11-axa-judy.webp" },
   ],
   tiles: [
     { value: "$204K+", label: "Cumulative stipends earned by the cohort across the year", tone: "deep" },
@@ -774,16 +787,16 @@ export const careerLabs = {
   cta: { headline: "Career Labs", body: "Read the full Career Labs Report 2025-26.", label: "Read the report", href: "https://online.flippingbook.com/view/1040912480/" },
   recruitersLabel: "Recruiting organizations",
   recruiters: [
-    { name: "HP", src: "/media/recruiters/hp.svg", aspect: 1, h: 26 },
-    { name: "McKinsey", src: "/media/recruiters/mckinsey.svg", aspect: 8.821, h: 16 },
-    { name: "Reckitt", src: "/media/recruiters/reckitt.svg", aspect: 2.846, h: 18 },
-    { name: "Toyota", src: "/media/recruiters/toyota.svg", aspect: 1.471, h: 24 },
-    { name: "Goldman Sachs", src: "/media/recruiters/goldmansachs.svg", aspect: 2.326, h: 20 },
-    { name: "Deloitte", src: "/media/recruiters/deloitte.svg", aspect: 5.355, h: 18 },
-    { name: "Uber", src: "/media/recruiters/uber.svg", aspect: 2.976, h: 18 },
-    { name: "Nestlé", src: "/media/recruiters/nestle.svg", aspect: 3.661, h: 22 },
-    { name: "Pepsi", src: "/media/recruiters/pepsi.svg", aspect: 1, h: 24 },
-    { name: "Siemens", src: "/media/recruiters/siemens.svg", aspect: 6.024, h: 18 },
+    { name: "HP", src: "https://cdn.tetr.com/assets/lovable/images/hp.svg", aspect: 1, h: 26 },
+    { name: "McKinsey", src: "https://cdn.tetr.com/assets/lovable/images/mckinsey.svg", aspect: 8.821, h: 16 },
+    { name: "Reckitt", src: "https://cdn.tetr.com/assets/lovable/images/reckitt.svg", aspect: 2.846, h: 18 },
+    { name: "Toyota", src: "https://cdn.tetr.com/assets/lovable/images/toyota.svg", aspect: 1.471, h: 24 },
+    { name: "Goldman Sachs", src: "https://cdn.tetr.com/assets/lovable/images/recruiters-goldmansachs.svg", aspect: 2.326, h: 20 },
+    { name: "Deloitte", src: "https://cdn.tetr.com/assets/lovable/images/deloitte.svg", aspect: 5.355, h: 18 },
+    { name: "Uber", src: "https://cdn.tetr.com/assets/lovable/images/uber.svg", aspect: 2.976, h: 18 },
+    { name: "Nestlé", src: "https://cdn.tetr.com/assets/lovable/images/nestle.svg", aspect: 3.661, h: 22 },
+    { name: "Pepsi", src: "https://cdn.tetr.com/assets/lovable/images/pepsi.svg", aspect: 1, h: 24 },
+    { name: "Siemens", src: "https://cdn.tetr.com/assets/lovable/images/siemens.svg", aspect: 6.024, h: 18 },
   ],
 };
 
@@ -816,15 +829,15 @@ export const faculty: {
   interestLabel: string;
   interest: string;
 }[] = [
-  { name: "Mr. Faverie Stephane", title: "Executive Group President", image: "/img/faculty/faverie.png", group: "industry", org: "Estée Lauder", logo: "/img/faculty/logo-estee.png", interestLabel: "Area of Interest", interest: "Global Markets and Customer Dynamics" },
-  { name: "Dr. Lan Ma", title: "Academician Adjunct Professor of Business", image: "/img/faculty/lanma.png", group: "fulltime", org: "NYU Shanghai", logo: "/img/faculty/logo-nyu.png", interestLabel: "Teaching", interest: "How to market strategically in the real world" },
-  { name: "Dr. Edward Rogers", title: "Former Chief Knowledge Officer", image: "/img/faculty/rogers.png", group: "industry", org: "NASA", logo: "/img/faculty/logo-nasa.png", interestLabel: "Teaching", interest: "How to Manage Complexities" },
-  { name: "Dr. Zal Phiroz", title: "Adjunct Professor", image: "/img/faculty/zal.png", group: "visiting", org: "Harvard University", logo: "/img/faculty/logo-harvard.png", interestLabel: "Teaching", interest: "How companies manage supply chain to procure & ship globally" },
-  { name: "Mr. Nitin Gaur", title: "Former Advisory Board Member", image: "/img/faculty/nitin.png", group: "industry", org: "Stanford University", logo: "/img/faculty/logo-stanford.png", interestLabel: "Area of Interest", interest: "How to Innovate in Fintech" },
-  { name: "Dr. Daniel Garett Van Der Vliet", title: "Executive Director", image: "/img/faculty/daniel.png", group: "visiting", org: "Cornell University", logo: "/img/faculty/logo-cornell.png", interestLabel: "Area of Interest", interest: "Leadership & Family Business" },
-  { name: "Dr. Zvi Gilula", title: "Professor", image: "/img/faculty/zvi.png", group: "fulltime", org: "Chicago Booth", logo: "/img/faculty/logo-chicago.png", interestLabel: "Area of Interest", interest: "Statistics and Marketing" },
-  { name: "Dr. James Hayton", title: "Professor", image: "/img/faculty/hayton.png", group: "fulltime", org: "Warwick Business School", logo: "/img/faculty/logo-warwick.png", interestLabel: "Area of Interest", interest: "Innovation and Entrepreneurship" },
-  { name: "Dr. Shad Morris", title: "Former Faculty Fellow", image: "/img/faculty/shad.png", group: "visiting", org: "MIT Sloan", logo: "/img/faculty/logo-mit.png", interestLabel: "Teaching", interest: "How to work effectively in teams" },
+  { name: "Mr. Faverie Stephane", title: "Executive Group President", image: "https://cdn.tetr.com/assets/lovable/images/faverie.webp", group: "industry", org: "Estée Lauder", logo: "https://cdn.tetr.com/assets/lovable/images/logo-estee.webp", interestLabel: "Area of Interest", interest: "Global Markets and Customer Dynamics" },
+  { name: "Dr. Lan Ma", title: "Academician Adjunct Professor of Business", image: "https://cdn.tetr.com/assets/lovable/images/lanma.webp", group: "fulltime", org: "NYU Shanghai", logo: "https://cdn.tetr.com/assets/lovable/images/logo-nyu.webp", interestLabel: "Teaching", interest: "How to market strategically in the real world" },
+  { name: "Dr. Edward Rogers", title: "Former Chief Knowledge Officer", image: "https://cdn.tetr.com/assets/lovable/images/rogers.webp", group: "industry", org: "NASA", logo: "https://cdn.tetr.com/assets/lovable/images/logo-nasa.webp", interestLabel: "Teaching", interest: "How to Manage Complexities" },
+  { name: "Dr. Zal Phiroz", title: "Adjunct Professor", image: "https://cdn.tetr.com/assets/lovable/images/zal.webp", group: "visiting", org: "Harvard University", logo: "https://cdn.tetr.com/assets/lovable/images/logo-harvard.webp", interestLabel: "Teaching", interest: "How companies manage supply chain to procure & ship globally" },
+  { name: "Mr. Nitin Gaur", title: "Former Advisory Board Member", image: "https://cdn.tetr.com/assets/lovable/images/nitin.webp", group: "industry", org: "Stanford University", logo: "https://cdn.tetr.com/assets/lovable/images/logo-stanford.webp", interestLabel: "Area of Interest", interest: "How to Innovate in Fintech" },
+  { name: "Dr. Daniel Garett Van Der Vliet", title: "Executive Director", image: "https://cdn.tetr.com/assets/lovable/images/daniel.webp", group: "visiting", org: "Cornell University", logo: "https://cdn.tetr.com/assets/lovable/images/logo-cornell.webp", interestLabel: "Area of Interest", interest: "Leadership & Family Business" },
+  { name: "Dr. Zvi Gilula", title: "Professor", image: "https://cdn.tetr.com/assets/lovable/images/zvi.webp", group: "fulltime", org: "Chicago Booth", logo: "https://cdn.tetr.com/assets/lovable/images/logo-chicago.webp", interestLabel: "Area of Interest", interest: "Statistics and Marketing" },
+  { name: "Dr. James Hayton", title: "Professor", image: "https://cdn.tetr.com/assets/lovable/images/hayton.webp", group: "fulltime", org: "Warwick Business School", logo: "https://cdn.tetr.com/assets/lovable/images/logo-warwick.webp", interestLabel: "Area of Interest", interest: "Innovation and Entrepreneurship" },
+  { name: "Dr. Shad Morris", title: "Former Faculty Fellow", image: "https://cdn.tetr.com/assets/lovable/images/shad.webp", group: "visiting", org: "MIT Sloan", logo: "https://cdn.tetr.com/assets/lovable/images/logo-mit.webp", interestLabel: "Teaching", interest: "How to work effectively in teams" },
 ];
 
 export const masterclasses = {
@@ -832,10 +845,10 @@ export const masterclasses = {
   titleB: "and Ivy League Faculty",
   body: "Your classroom is powered by top CXOs and Ivy League faculty, from Harvard to NASA, from Cornell to Estée Lauder. Our faculty don't just teach the playbook. They wrote it.",
   items: [
-    { title: "Should Economics Be Scrapped From B-Schools?", image: "/media/masterclasses/Professors_Thumbnails_15.webp" },
-    { title: "Your Ideas Don't Matter Unless People Listen", image: "/media/masterclasses/Professors_Thumbnails_17.webp" },
-    { title: "You're Using AI Wrong", image: "/media/masterclasses/Kate_Busby1.1.png" },
-    { title: "What Does It Take to Scale Tech?", image: "/media/masterclasses/Donn_Koh_Vertical_2b.png" },
+    { title: "Should Economics Be Scrapped From B-Schools?", image: "https://cdn.tetr.com/assets/lovable/images/Professors_Thumbnails_15.webp" },
+    { title: "Your Ideas Don't Matter Unless People Listen", image: "https://cdn.tetr.com/assets/lovable/images/Professors_Thumbnails_17.webp" },
+    { title: "You're Using AI Wrong", image: "https://cdn.tetr.com/assets/lovable/images/Kate_Busby1.1.webp" },
+    { title: "What Does It Take to Scale Tech?", image: "https://cdn.tetr.com/assets/lovable/images/Donn_Koh_Vertical_2b.webp" },
   ],
 };
 
@@ -850,10 +863,10 @@ export const creatorsHeading = {
 
 export const creators = [
   { title: "He created the world's coolest college", guest: "Daniel Mac", image: "/media/tetr/creators/Creator_DanielMac_v2.jpg", instagram: "DUtX_imkRWa" },
-  { title: "The luckiest students in the world", guest: "Luisito Comunica", image: "/media/tetr/creators/Creator_Luisito_Refresh.jpg", instagram: "DPlyKI3jo5z" },
-  { title: "7 countries, 7 real businesses, one degree", guest: "Haley Baylee", image: "/media/tetr/creators/Creator_HaleyBaylee_v3.jpg", instagram: "DVy5FaHj9Fm" },
-  { title: "Something cool for you guys", guest: "Niko Omilana", image: "/media/tetr/creators/Creator_Grefg.jpg", instagram: "DXrnwFmjPtT" },
-  { title: "He'll go to 7 countries for free?", guest: "Aburob", image: "/media/tetr/creators/Creator_Aburob_Refresh.jpg", instagram: "DRYQyA3CbT3" },
+  { title: "The luckiest students in the world", guest: "Luisito Comunica", image: "https://cdn.tetr.com/assets/lovable/images/Creator_Luisito_Refresh.webp", instagram: "DPlyKI3jo5z" },
+  { title: "7 countries, 7 real businesses, one degree", guest: "Haley Baylee", image: "https://cdn.tetr.com/assets/lovable/images/Creator_HaleyBaylee_v3.webp", instagram: "DVy5FaHj9Fm" },
+  { title: "Something cool for you guys", guest: "Niko Omilana", image: "https://cdn.tetr.com/assets/lovable/images/Creator_Grefg.webp", instagram: "DXrnwFmjPtT" },
+  { title: "He'll go to 7 countries for free?", guest: "Aburob", image: "https://cdn.tetr.com/assets/lovable/images/Creator_Aburob_Refresh.webp", instagram: "DRYQyA3CbT3" },
 ];
 
 /* ───────────────────────────── Immersions ───────────────────────────── */
@@ -874,7 +887,7 @@ export const immersions: {
   images: string[];
 }[] = [
   {
-    name: "India", accent: "#57B26B", tag: "Term 01 · The Density Test", bg: im("INDIA_BG2.jpg"),
+    name: "India", accent: "#57B26B", tag: "Term 01 · The Density Test", bg: "https://cdn.tetr.com/assets/lovable/images/INDIA_BG2.webp",
     notes: [
       { kind: "business", title: "ITC", desc: "Explore how ITC balances FMCG, hospitality, and agribusiness." },
       { kind: "cultural", title: "Parliament House Visit", desc: "Step inside the seat of Indian democracy." },
@@ -884,7 +897,7 @@ export const immersions: {
     images: [im("LinkedIn_India.webp"), im("Parliament_India.webp"), im("ITC_India.webp"), im("TajMAhal_Inida.webp")],
   },
   {
-    name: "Dubai", accent: "#D9A441", tag: "Term 02 · The Trade Hub", bg: im("DUBAI_BG.webp"),
+    name: "Dubai", accent: "#D9A441", tag: "Term 02 · The Trade Hub", bg: "https://cdn.tetr.com/assets/lovable/images/DUBAI_BG.webp",
     notes: [
       { kind: "business", title: "EMAAR", desc: "Learn how iconic developments are built and scaled globally." },
       { kind: "cultural", title: "Gold Souk", desc: "Explore gold trading and craftsmanship in Dubai's iconic market." },
@@ -894,7 +907,7 @@ export const immersions: {
     images: [im("Emirates_Dubai.webp"), im("GoldSouk_Dubai.webp"), im("Emaar_Dubai.webp"), im("Desert_Safari_Dubai.webp")],
   },
   {
-    name: "China", accent: "#D8443C", tag: "Term 03 · The Factory Floor", bg: im("SHANGHAI_BG.webp"),
+    name: "China", accent: "#D8443C", tag: "Term 03 · The Factory Floor", bg: "https://cdn.tetr.com/assets/lovable/images/SHANGHAI_BG.webp",
     notes: [
       { kind: "cultural", title: "The Great Wall", desc: "Hike the restored section of this global icon with panoramic views." },
       { kind: "business", title: "Tencent HQ", desc: "See how China's super-app ecosystem fuels business and culture." },
@@ -904,7 +917,7 @@ export const immersions: {
     images: [im("Tesla_China.webp"), im("Tencent_China.webp"), im("Great_Wall_China.webp"), im("Yu_GArden_China.webp")],
   },
   {
-    name: "Ghana", accent: "#57B26B", tag: "Term 04 · The Impact Term", bg: im("Ghana_BG.webp"),
+    name: "Ghana", accent: "#57B26B", tag: "Term 04 · The Impact Term", bg: "https://cdn.tetr.com/assets/lovable/images/Ghana_BG.webp",
     notes: [
       { kind: "business", title: "Google AI Research Centre", desc: "Explore how AI research is solving Africa's challenges." },
       { kind: "cultural", title: "Safari Valley Eco Park", desc: "Explore wildlife, ecosystems, and eco-tourism in Ghana." },
@@ -914,7 +927,7 @@ export const immersions: {
     images: [im("CocalCola_GHana.webp"), im("Safari_Valley_Eco_Park_Ghana.webp"), im("Google_Ghana.webp"), im("Accra_Ghana.webp")],
   },
   {
-    name: "United States", accent: "#4E8BD6", tag: "Term 05 · The Software Term", bg: im("US_BG.webp"),
+    name: "United States", accent: "#4E8BD6", tag: "Term 05 · The Software Term", bg: "https://cdn.tetr.com/assets/lovable/images/US_BG.webp",
     notes: [
       { kind: "business", title: "Spotify HQ", desc: "Explore how data, algorithms, and storytelling shape the future of audio." },
       { kind: "business", title: "Nasdaq", desc: "See how public markets price ambition, listing by listing." },
@@ -924,24 +937,24 @@ export const immersions: {
     images: [im("JP_Morgan_US.webp"), im("NASDAQ_US.webp"), im("Spotify_US.webp"), im("Penatagon_US.webp")],
   },
   {
-    name: "Argentina", accent: "#63B6D8", tag: "Term 06 · The Scale Term", bg: im("ARGENTINA_BG.webp"),
+    name: "Argentina", accent: "#63B6D8", tag: "Term 06 · The Scale Term", bg: "https://cdn.tetr.com/assets/lovable/images/ARGENTINA_BG.webp",
     notes: [
       { kind: "business", title: "Grupo Los Grobo", desc: "Understand how agribusiness runs on data, futures, and land at scale." },
       { kind: "cultural", title: "Agricultural Heartland", desc: "Experience gaucho traditions across the pampas that feed the world." },
       { kind: "cultural", title: "La Bombonera", desc: "Feel how football fandom becomes one of Argentina's strongest brands." },
       { kind: "business", title: "Distrito Arcos", desc: "Study how heritage rail arches were rebuilt into retail demand." },
     ],
-    images: [im("DisitroArcos_Argentina.webp"), im("AgriculturalHEartland_Argentina.webp"), im("LosgroboGRoup_Argentina.webp"), im("la_bombonera_stadium_Argentina.webp")],
+    images: ["https://cdn.tetr.com/assets/lovable/images/DisitroArcos_Argentina.webp", "https://cdn.tetr.com/assets/lovable/images/AgriculturalHEartland_Argentina.webp", im("LosgroboGRoup_Argentina.webp"), im("la_bombonera_stadium_Argentina.webp")],
   },
   {
-    name: "Europe", accent: "#9B7CD8", tag: "Term 07 · The Premium Term", bg: im("LONDON_BG.webp"),
+    name: "Europe", accent: "#9B7CD8", tag: "Term 07 · The Premium Term", bg: "https://cdn.tetr.com/assets/lovable/images/LONDON_BG.webp",
     notes: [
       { kind: "business", title: "Milan Fashion Week", desc: "Learn why craft, not cost, sets the price of luxury." },
       { kind: "business", title: "Italian Grand Prix", desc: "See how motorsport turns engineering into a global sponsorship engine." },
       { kind: "cultural", title: "Pinacoteca di Brera", desc: "Read centuries of patronage as the original brand economy." },
       { kind: "cultural", title: "Grande Braderie de Lille", desc: "Trade in Europe's largest flea market, street by street." },
     ],
-    images: [im("grande_braderie_de_lille_europe.webp"), im("Italian_Grand_Prix_Europe.webp"), im("MilanFashionWeek_Europe.webp"), im("pinacoteca_di_brera_europe.webp")],
+    images: ["https://cdn.tetr.com/assets/lovable/images/grande_braderie_de_lille_europe.webp", "https://cdn.tetr.com/assets/lovable/images/Italian_Grand_Prix_Europe.webp", im("MilanFashionWeek_Europe.webp"), im("pinacoteca_di_brera_europe.webp")],
   },
 ];
 
@@ -963,9 +976,21 @@ export const cohortStats = [
   { label: "Athletes", value: "10%", text: "National-level" },
 ];
 
+const tribeImage: Record<string, string> = {
+  Andrea: "https://cdn.tetr.com/uploads/09032026/v1/AndreaVenezuela.webp",
+  Anuska: "https://cdn.tetr.com/assets/ih-images/V2/tribeAnuska.webp",
+  Jeet: "/media/tribe/tribe-Jeet-v2.jpg",
+  Kayla: "https://cdn.tetr.com/uploads/20112025/v1/kaylaWithoutLine.webp",
+  Linda: "https://cdn.tetr.com/assets/lovable/images/linda-2.webp",
+  Brandon: "https://cdn.tetr.com/uploads/20112025/v1/brandonWithoutLine.webp",
+  Isaac: "https://cdn.tetr.com/uploads/20112025/v1/isaacWithoutLine.webp",
+  Songheon: "/media/tribe/tribe-Songheon-v2.jpg",
+  Juan: "/media/tribe/tribe-Juan-v2.jpg",
+};
+
 export const tribe = ["Andrea", "Anuska", "Jeet", "Kayla", "Linda", "Brandon", "Isaac", "Songheon", "Juan"].map((name) => ({
   name,
-  image: `/media/tribe/tribe-${name}-${name === "Isaac" ? "v3" : "v2"}.jpg`,
+  image: tribeImage[name],
 }));
 
 /* ───────────────────────────── Podcast ───────────────────────────── */
@@ -980,16 +1005,16 @@ export type Episode = { title: string; guest: string; image: string; youtube?: s
 export const podcastTabs = ["Podcasts", "Admissions", "Term Wrap-Up"] as const;
 export const podcasts: Record<(typeof podcastTabs)[number], Episode[]> = {
   Podcasts: [
-    { title: "Kevin O’Leary: How to Build a Million-Dollar Business (And Why Most Startups Fail)", guest: "Kevin O'Leary", image: "/media/tetr/podcasts/podcast-kevin-v3.jpg", youtube: "xgKajEQf21c", featured: true },
-    { title: "Why rich families stay rich? | Author of Psychology of Money shares wealth secrets | Morgan Housel", guest: "Morgan Housel", image: "/media/tetr/podcasts/podcast-morgan-v3.jpg", youtube: "SFhlibQJvYM" },
-    { title: "71 MUST WATCH minutes to think like the top 1% | Bestselling author of Hooked | Nir Eyal", guest: "Nir Eyal", image: "/media/tetr/podcasts/podcast-nir-refresh.jpg", youtube: "VBLkaW9Eb7Y" },
-    { title: "This is the dark side of family businesses | Old money secrets spilled in 55 mins", guest: "Daniel G. Van Der Vliet", image: "/media/tetr/podcasts/podcast-daniel-v3.jpg", youtube: "Nydbs4e4Iwo" },
-    { title: "In Conversation With David A. Sinclair, Longevity Scientist", guest: "David A. Sinclair", image: "/media/tetr/podcasts/podcast-david-v3.jpg" },
+    { title: "Kevin O’Leary: How to Build a Million-Dollar Business (And Why Most Startups Fail)", guest: "Kevin O'Leary", image: "https://cdn.tetr.com/assets/lovable/images/podcast-kevin-v3.webp", youtube: "xgKajEQf21c", featured: true },
+    { title: "Why rich families stay rich? | Author of Psychology of Money shares wealth secrets | Morgan Housel", guest: "Morgan Housel", image: "https://cdn.tetr.com/assets/lovable/images/podcast-morgan-v3.webp", youtube: "SFhlibQJvYM" },
+    { title: "71 MUST WATCH minutes to think like the top 1% | Bestselling author of Hooked | Nir Eyal", guest: "Nir Eyal", image: "https://cdn.tetr.com/assets/lovable/images/podcast-nir-refresh.webp", youtube: "VBLkaW9Eb7Y" },
+    { title: "This is the dark side of family businesses | Old money secrets spilled in 55 mins", guest: "Daniel G. Van Der Vliet", image: "https://cdn.tetr.com/assets/lovable/images/podcast-daniel-v3.webp", youtube: "Nydbs4e4Iwo" },
+    { title: "In Conversation With David A. Sinclair, Longevity Scientist", guest: "David A. Sinclair", image: "https://cdn.tetr.com/assets/lovable/images/podcast-david-v3.webp" },
   ],
   Admissions: [
-    { title: "Inside Tetr: Admissions & Beyond | Ep 1 ft. Pratham Mittal, Tarun Gangwar & Malvika Khajuria", guest: "Pratham Mittal, Tarun Gangwar & Malvika Khajuria", image: "/media/tetr/admissions/Admissions_InsideTetr.jpg", youtube: "AJjQyEcFMgU", featured: true },
-    { title: "What is Tetr College's Masters in Management of Technology programme?", guest: "Tetr College of Business", image: "/media/tetr/admissions/Admissions_MiM.jpg", youtube: "EAvAvOmYRJY" },
-    { title: "From Applicants to Insiders: The Student POV", guest: "Tetr Students", image: "/media/tetr/admissions/Admissions_StudentPOV.jpg", youtube: "XlMQ7ySphQA" },
+    { title: "Inside Tetr: Admissions & Beyond | Ep 1 ft. Pratham Mittal, Tarun Gangwar & Malvika Khajuria", guest: "Pratham Mittal, Tarun Gangwar & Malvika Khajuria", image: "https://cdn.tetr.com/assets/lovable/images/Admissions_InsideTetr.webp", youtube: "AJjQyEcFMgU", featured: true },
+    { title: "What is Tetr College's Masters in Management of Technology programme?", guest: "Tetr College of Business", image: "https://cdn.tetr.com/assets/lovable/images/Admissions_MiM.webp", youtube: "EAvAvOmYRJY" },
+    { title: "From Applicants to Insiders: The Student POV", guest: "Tetr Students", image: "https://cdn.tetr.com/assets/lovable/images/Admissions_StudentPOV.webp", youtube: "XlMQ7ySphQA" },
   ],
   "Term Wrap-Up": [],
 };
@@ -1027,11 +1052,23 @@ export const campusViews = [
 /** Views with no photo in the reference (they render disabled). */
 export const campusMissing = new Set(["usa-campus", "argentina-campus"]);
 export const campusPhoto = (city: string, view: string) =>
-  campusMissing.has(`${city}-${view}`) ? null : `/media/tetr/homes/${city}-${view}.jpg`;
+  campusMissing.has(`${city}-${view}`) ? null : `${CDN}${city}-${view}.webp`;
 
 /* ───────────────────────────── Press ───────────────────────────── */
 
 export const pressHeading = { line1: "The World's Paying Attention,", line2: "Here's What They're Saying" };
+
+/** Article screenshots on the CDN; Thailand Reporter and CNN Brasil have no CDN copy yet. */
+const pressImage: Record<string, string> = {
+  "press-forbes-india": "https://cdn.tetr.com/assets/ih-images/news-page/INDIA/news11.webp",
+  "press-clarin": "https://cdn.tetr.com/assets/ih-images/news-page/LATAM/news1.webp",
+  "press-hankyung": "https://cdn.tetr.com/assets/lovable/images/news-hankyung.webp",
+  "press-ict-japan": "https://cdn.tetr.com/assets/ih-images/news-page/SAE/news20.webp",
+  "press-european-business": "https://cdn.unionstack.in/uploads/23072026/v1/EuropeanBusinessMagazine.webp",
+  "press-grit-daily": "https://cdn.unionstack.in/uploads/23072026/v1/GritDaily.webp",
+  "press-authority": "https://cdn.unionstack.in/uploads/23072026/v1/AuthorityMagazine.webp",
+  "press-aprendemas": "https://cdn.unionstack.in/uploads/23072026/v1/Aprendemas.webp",
+};
 
 export const press = [
   ["Forbes India", "press-forbes-india"],
@@ -1044,7 +1081,7 @@ export const press = [
   ["Authority Magazine", "press-authority"],
   ["aprendemas", "press-aprendemas"],
   ["CNN Brasil", "press-cnn-brasil"],
-].map(([name, f]) => ({ name, image: `/media/press/${f}.jpg` }));
+].map(([name, f]) => ({ name, image: pressImage[f] ?? `/media/press/${f}.jpg` }));
 
 /* ───────────────────────────── Events ───────────────────────────── */
 
@@ -1119,8 +1156,8 @@ export const footer = {
   },
   email: "info@tetr.org",
   stores: [
-    { label: "Get it on Google Play", href: "https://play.google.com/store/apps/details?id=com.tetr", badge: "/media/stores/google-play.svg" },
-    { label: "Download on the App Store", href: "https://apps.apple.com/in/app/tetr/id6756342725", badge: "/media/stores/app-store.svg" },
+    { label: "Get it on Google Play", href: "https://play.google.com/store/apps/details?id=com.tetr", badge: "https://cdn.tetr.com/assets/lovable/images/google-play-badge.svg" },
+    { label: "Download on the App Store", href: "https://apps.apple.com/in/app/tetr/id6756342725", badge: "https://cdn.tetr.com/assets/lovable/images/app-store-badge.svg" },
   ],
   legal: [
     { label: "CONTACT US", href: "https://tetr.com/contact-us" },

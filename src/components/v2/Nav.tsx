@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 import { LOGO, v2Nav } from "@/data/v2";
 
@@ -10,8 +10,13 @@ import { LOGO, v2Nav } from "@/data/v2";
  */
 export default function Nav() {
   const [solid, setSolid] = useState(false);
+  const bar = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const on = () => setSolid(window.scrollY > window.innerHeight * 0.8);
+    const on = () => {
+      setSolid(window.scrollY > window.innerHeight * 0.8);
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+    };
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
@@ -45,6 +50,8 @@ export default function Nav() {
           {v2Nav.cta.label}
         </a>
       </div>
+      {/* how far down the page you are */}
+      <div ref={bar} aria-hidden className="absolute inset-x-0 -bottom-px h-[2px] origin-left bg-gold" style={{ transform: "scaleX(0)" }} />
     </header>
   );
 }

@@ -16,8 +16,8 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
  */
 
 /** ink: main engraving line · soft: faint lines · a / b: two accents · dash: dotted detail (fades, never draws) */
-type Tone = "ink" | "soft" | "a" | "b" | "dash";
-type Stroke = [d: string, tone?: Tone];
+export type Tone = "ink" | "soft" | "a" | "b" | "dash";
+export type Stroke = [d: string, tone?: Tone];
 type Doodle = {
   greeting: string;
   /** Stamp colours: the paper it is printed on, the engraving ink, and what the two accents map to */
@@ -31,7 +31,7 @@ type Doodle = {
 const GROUND: Stroke = ["M12 150 C 80 147, 220 153, 288 149", "soft"];
 
 /** Landmarks drawn on a 300×170 canvas; they are scaled to half inside the stamp. */
-const DOODLES: Record<string, Doodle> = {
+export const DOODLES: Record<string, Doodle> = {
   Dubai: {
     greeting: "marhaba",
     field: "var(--color-gold)",

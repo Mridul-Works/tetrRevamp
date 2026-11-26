@@ -76,8 +76,8 @@ export const v2Hero = {
   /** The stage: one wide frame and two smaller prints that drift toward the pointer. */
   photos: {
     main: { src: hero.images[1], alt: "Tetr students on the move between base camps" },
-    a: { src: "/img/immersions/TajMAhal_Inida.webp", alt: "Students at the Taj Mahal", place: "New Delhi" },
-    b: { src: "/img/immersions/NASDAQ_US.webp", alt: "Students at Nasdaq, New York", place: "New York" },
+    a: { src: immersions[0].images[3], alt: "Students at the Taj Mahal", place: "New Delhi" },
+    b: { src: immersions[4].images[1], alt: "Students at Nasdaq, New York", place: "New York" },
   },
   stops: ["New Delhi", "Dubai", "Shanghai", "Accra", "New York", "Buenos Aires", "Madrid"],
   badgeAlt: hero.badgeAlt,
@@ -122,17 +122,46 @@ export type V2Country = {
   famous: string[];
   sets: { time: string; act: string; stage: string; tag: string }[];
   build: string;
+  /** lat / lng of the base camp, for the globe */
+  coords: [number, number];
+  /** How you are greeted there */
+  greeting: string;
+  /** The playable thing for this stop: which toy, what it is called, and the one-line brief */
+  toy: { key: ToyKey; title: string; hint: string };
 };
 
+export type ToyKey = "chai" | "burj" | "factory" | "kente" | "bell" | "penalty" | "lights";
+
 /** Curated "famous for" per stop, keyed by the immersions name. */
-const famousFor: Record<string, { city: string; landmarkIdx: number; famous: string[] }> = {
-  India: { city: "New Delhi", landmarkIdx: 3, famous: ["Taj Mahal", "Chai & street food", "Cricket", "1.4bn consumers"] },
-  Dubai: { city: "Dubai", landmarkIdx: 1, famous: ["Burj Khalifa", "Gold Souk", "Desert safari", "Ports & airlines"] },
-  China: { city: "Shanghai", landmarkIdx: 2, famous: ["The Great Wall", "Shenzhen factories", "Super-apps", "High-speed rail"] },
-  Ghana: { city: "Accra", landmarkIdx: 3, famous: ["Kente cloth", "Cocoa", "Highlife music", "Accra art district"] },
-  "United States": { city: "New York", landmarkIdx: 1, famous: ["Wall Street", "Silicon Valley", "Nasdaq bell", "Broadway"] },
-  Argentina: { city: "Buenos Aires", landmarkIdx: 3, famous: ["Tango", "Asado", "La Bombonera", "The pampas"] },
-  Europe: { city: "Madrid", landmarkIdx: 2, famous: ["Milan Fashion Week", "Tapas & the Prado", "Formula 1", "Flea markets of Lille"] },
+const famousFor: Record<string, { city: string; landmarkIdx: number; famous: string[]; greeting: string; toy: V2Country["toy"] }> = {
+  India: {
+    city: "New Delhi", landmarkIdx: 3, famous: ["Taj Mahal", "Chai & street food", "Cricket", "1.4bn consumers"], greeting: "namaste",
+    toy: { key: "chai", title: "Run a chai stall", hint: "Set the price of a cup. 1.4 billion customers decide if you got it right." },
+  },
+  Dubai: {
+    city: "Dubai", landmarkIdx: 1, famous: ["Burj Khalifa", "Gold Souk", "Desert safari", "Ports & airlines"], greeting: "marhaba",
+    toy: { key: "burj", title: "Build the Burj", hint: "Press and hold. It is 828 metres to the top." },
+  },
+  China: {
+    city: "Shanghai", landmarkIdx: 2, famous: ["The Great Wall", "Shenzhen factories", "Super-apps", "High-speed rail"], greeting: "ni hao",
+    toy: { key: "factory", title: "Run the factory line", hint: "Push the line speed. Watch what happens to quality." },
+  },
+  Ghana: {
+    city: "Accra", landmarkIdx: 3, famous: ["Kente cloth", "Cocoa", "Highlife music", "Accra art district"], greeting: "akwaaba",
+    toy: { key: "kente", title: "Weave your Kente", hint: "Pick a thread and paint the loom. Every pattern means something." },
+  },
+  "United States": {
+    city: "New York", landmarkIdx: 1, famous: ["Wall Street", "Silicon Valley", "Nasdaq bell", "Broadway"], greeting: "howdy",
+    toy: { key: "bell", title: "Ring the opening bell", hint: "Ring it and watch TETR trade." },
+  },
+  Argentina: {
+    city: "Buenos Aires", landmarkIdx: 3, famous: ["Tango", "Asado", "La Bombonera", "The pampas"], greeting: "che, hola",
+    toy: { key: "penalty", title: "Penalty at La Bombonera", hint: "Pick a corner. The keeper is guessing too." },
+  },
+  Europe: {
+    city: "Madrid", landmarkIdx: 2, famous: ["Milan Fashion Week", "Tapas & the Prado", "Formula 1", "Flea markets of Lille"], greeting: "hola, ciao",
+    toy: { key: "lights", title: "Lights out at Monza", hint: "Five red lights. When they go out, hit it." },
+  },
 };
 
 const byTerm = [...countries].sort((a, b) => a.term - b.term);
@@ -156,10 +185,27 @@ export const v2Countries: V2Country[] = immersions.map((im, i) => {
       { time: "Wk 13", act: "Demo day", stage: "Main stage", tag: "Earn" },
     ],
     build: c?.build ?? "",
+    coords: c?.coords ?? [0, 0],
+    greeting: f.greeting,
+    toy: f.toy,
   };
 });
 
 export const v2CountryBelt: BeltItem[] = v2Countries.map((c) => ({ k: c.name, v: `${c.city} · ${c.famous[0]}`, image: c.landmark.image }));
+
+export const v2World = {
+  eyebrow: "(The route)",
+  title: "Seven countries.",
+  accent: "Play each one.",
+  sub: "Every term is a new country and a different game. Pick a stop, then try the thing it is famous for.",
+  cta: { label: "Get the term-by-term guide", href: "#lead" },
+  stats: [
+    { value: cohortStats[0].value, label: "Students on the route" },
+    { value: cohortStats[1].value, label: "Nationalities" },
+    { value: outcomesHeading.totals[0].value, label: "Businesses built" },
+    { value: "$500K+", label: "Earned by students" },
+  ],
+};
 
 /** The route, laid out like a festival schedule: one column per term. */
 export const v2Route = {
