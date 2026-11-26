@@ -5,7 +5,7 @@ import Image from "next/image";
 import { events, eventsHeading, eventsLink } from "@/data/content";
 import Heading from "@/components/ui/Heading";
 import { NavArrows } from "@/components/ui/Button";
-import { ArrowUpRight, Calendar, Clock, MapPin } from "@/components/ui/icons";
+import { ArrowUpRight, Clock, MapPin } from "@/components/ui/icons";
 import { cn } from "@/lib/cn";
 
 const PER_PAGE = 3;
@@ -27,46 +27,71 @@ export default function Events() {
           <NavArrows name="events" tone="light" onPrev={() => setPage((p) => p - 1)} onNext={() => setPage((p) => p + 1)} prevDisabled={page === 0} nextDisabled={page >= pages - 1} />
         </Heading>
 
-        <div key={page} className="mt-12 grid gap-5 md:grid-cols-3">
-          {list.map((e, i) => (
-            <article
-              key={e.title}
-              className="group flex flex-col overflow-hidden rounded-[20px] border border-ink/10 bg-snow transition-shadow duration-500 [animation:rise-in_.7s_var(--ease-out-expo)_both] hover:shadow-[0_30px_60px_rgba(8,18,14,.12)]"
-              style={{ animationDelay: `${i * 90}ms` }}
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <Image src={e.image} alt={e.title} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                <span className={cn("absolute left-4 top-4 rounded-md px-3 py-1 text-[12.5px] font-semibold", status[e.status])}>{e.status}</span>
-              </div>
-              <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-[20px] font-semibold leading-snug">{e.title}</h3>
-                <p className="mt-2 text-[14px] leading-[1.6] text-byline-light">{e.desc}</p>
-                <div className="mt-auto flex items-end justify-between gap-4 border-t border-ink/10 pt-5">
-                  <ul className="space-y-1.5 text-[13px] text-ink/80">
+        <div key={page} className="mt-12 grid gap-6 md:grid-cols-3">
+          {list.map((e, i) => {
+            // "Sat, Jan 24, 2026" → weekday / month / day / year for the stub's date block
+            const [dow = "", md = "", year = ""] = e.date.split(", ");
+            const [month = "", day = ""] = md.split(" ");
+            const past = e.status === "Past Event";
+            return (
+              <article
+                key={e.title}
+                className="group flex flex-col drop-shadow-[0_14px_30px_rgba(8,18,14,.10)] transition-[translate,filter] duration-500 ease-out-expo [animation:rise-in_.7s_var(--ease-out-expo)_both] hover:-translate-y-2 hover:drop-shadow-[0_30px_50px_rgba(8,18,14,.18)]"
+                style={{ animationDelay: `${i * 90}ms` }}
+              >
+                {/* pass body */}
+                <div className="flex flex-1 flex-col rounded-t-[20px] bg-snow p-3 pb-5">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-[12px]">
+                    <Image
+                      src={e.image}
+                      alt={e.title}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className={cn("object-cover transition-transform duration-700 group-hover:scale-105", past && "grayscale-[55%]")}
+                    />
+                    <span className={cn("absolute left-3 top-3 rounded-full px-3 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.12em]", status[e.status])}>
+                      {e.status}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 px-3 text-[20px] font-semibold leading-snug">{e.title}</h3>
+                  <p className="mt-2 line-clamp-3 px-3 text-[14px] leading-[1.6] text-byline-light">{e.desc}</p>
+                </div>
+
+                {/* perforation: the stub below tears away on hover */}
+                <div className="relative h-0">
+                  <span className="absolute -left-3 top-0 z-10 size-6 -translate-y-1/2 rounded-full bg-paper" />
+                  <span className="absolute -right-3 top-0 z-10 size-6 -translate-y-1/2 rounded-full bg-paper" />
+                  <span className="absolute inset-x-6 top-0 z-10 border-t-2 border-dashed border-ink/15" />
+                </div>
+
+                {/* stub */}
+                <div className="flex origin-top-left items-center gap-4 rounded-b-[20px] bg-snow px-6 pb-5 pt-5 transition-transform duration-500 ease-out-expo group-hover:translate-y-1.5 group-hover:rotate-[1.4deg]">
+                  <div className={cn("grid w-[62px] shrink-0 overflow-hidden rounded-[12px] text-center", past ? "bg-ink/50 text-snow" : "bg-ink text-snow")}>
+                    <span className={cn("py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.14em]", past ? "bg-ink/40" : "bg-deep text-mint")}>{month}</span>
+                    <span className="pt-1 text-[26px] font-semibold leading-none">{day}</span>
+                    <span className="pb-1.5 pt-0.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-snow/60">{dow} · {year.slice(-2)}</span>
+                  </div>
+                  <ul className="min-w-0 flex-1 space-y-1.5 text-[13px] text-ink/80">
                     <li className="flex items-center gap-2">
-                      <Clock width={15} height={15} className="text-deep" />
-                      {e.time}
+                      <Clock width={14} height={14} className="shrink-0 text-deep" />
+                      <span className="truncate">{e.time}</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <Calendar width={15} height={15} className="text-deep" />
-                      {e.date}
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <MapPin width={15} height={15} className="text-deep" />
-                      {e.place}
+                      <MapPin width={14} height={14} className="shrink-0 text-deep" />
+                      <span className="truncate">{e.place}</span>
                     </li>
                   </ul>
                   <a
                     href={eventsLink}
                     aria-label={`Open ${e.title}`}
-                    className="grid size-11 shrink-0 place-items-center rounded-full bg-deep text-snow transition-transform duration-300 group-hover:rotate-45 hover:bg-gold hover:text-gold-ink"
+                    className="grid size-11 shrink-0 place-items-center rounded-full bg-deep text-snow transition-[transform,background-color,color] duration-300 group-hover:rotate-45 hover:bg-gold hover:text-gold-ink"
                   >
                     <ArrowUpRight width={16} height={16} />
                   </a>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -70,7 +70,10 @@ export const hero = {
   handbook: { label: "Download Handbook", href: "https://online.flippingbook.com/view/313823554/" },
   film: "Watch Film",
   filmTitle: "Tetr: The Film",
-  images: Array.from({ length: 10 }, (_, i) => `/media/tetr/hero/tetr-hero-${String(i + 1).padStart(2, "0")}.jpg`),
+  eyebrow: "Tetr College of Business",
+  scrollCue: "Scroll to begin the route",
+  /** People first: classroom, students on the move, then campuses and wins. */
+  images: [4, 8, 5, 1, 9, 6, 2, 10, 7, 3].map((n) => `/media/tetr/hero/tetr-hero-${String(n).padStart(2, "0")}.jpg`),
 };
 
 /* ───────────────────────────── 10 Things ───────────────────────────── */

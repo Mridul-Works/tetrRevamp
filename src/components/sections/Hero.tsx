@@ -35,7 +35,9 @@ export default function Hero() {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline({ delay: 0.15 });
+      // starts as the intro curtain (see <Intro />) lifts
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const tl = gsap.timeline({ delay: reduced ? 0.1 : 1.15 });
       tl.from("[data-word]", { yPercent: 115, duration: 1.3, ease: "expo.out", stagger: 0.05 })
         .from("[data-hero-fade]", { y: 28, opacity: 0, duration: 1.1, ease: "power3.out", stagger: 0.1 }, "-=0.9")
         .from("[data-hero-rule]", { scaleX: 0, duration: 1.4, ease: "expo.out" }, "<");
@@ -62,28 +64,43 @@ export default function Hero() {
         <div className={cn("absolute inset-0 transition-opacity duration-1000", glReady ? "opacity-100" : "opacity-0")}>
           <HeroSlides images={hero.images} index={index} active={inView} onReady={onReady} />
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/45 to-ink/10" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/70 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/15" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/20 to-transparent" />
         <div className="grain pointer-events-none absolute inset-0" />
       </div>
 
       <div data-hero-content className="container-x relative z-10 flex h-full flex-col justify-end pb-10 md:pb-12">
-        <h1 className="max-w-[1080px] text-[clamp(38px,4.2vw,64px)] font-semibold leading-[1.08] tracking-[-0.01em] text-snow">
-          <Words text={hero.titleA} />
-          <br />
-          <Words text={hero.titleB} className="accent" />
+        <p data-hero-fade className="eyebrow mb-6 flex items-center gap-3 text-mint">
+          <span className="h-px w-10 bg-mint" />
+          {hero.eyebrow}
+        </p>
+        <h1 className="text-[clamp(40px,6.4vw,104px)] font-semibold leading-[0.98] tracking-[-0.035em] text-snow">
+          {hero.titleA.split(" by ").map((line, i) => (
+            <span key={line} className="block">
+              <Words text={i ? `by ${line}` : line} />
+            </span>
+          ))}
+          <span className="block pt-[0.06em] tracking-[-0.01em]">
+            <Words text={hero.titleB} className="accent text-mint" />
+          </span>
         </h1>
-        <p data-hero-fade className="mt-6 max-w-[640px] text-[16px] leading-[1.6] text-snow/85 md:text-[18px]">
+        <p data-hero-fade className="mt-7 max-w-[560px] text-[15.5px] leading-[1.65] text-snow/80 md:text-[17px]">
           {hero.body}
         </p>
 
-        <div data-hero-rule className="mt-9 h-px origin-left bg-snow/20" />
+        <div data-hero-rule className="mt-8 h-px origin-left bg-snow/20" />
 
         <div className="mt-7 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div data-hero-fade className="flex items-center gap-5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={QS_BADGE} alt={hero.badgeAlt} className="h-[64px] w-auto md:h-[72px]" />
             <SlideCounter index={index} total={hero.images.length} />
+            <span className="hidden items-center gap-2 border-l border-snow/15 pl-5 font-mono text-[11px] uppercase tracking-[0.16em] text-snow/55 xl:flex">
+              <span className="relative block h-7 w-px overflow-hidden bg-snow/20">
+                <span className="absolute inset-x-0 top-0 h-1/2 bg-mint [animation:cue_1.8s_var(--ease-out-expo)_infinite]" />
+              </span>
+              {hero.scrollCue}
+            </span>
           </div>
           <div data-hero-fade className="flex flex-wrap gap-3">
             <GoldButton href={hero.handbook.href} icon={<Download width={16} height={16} />}>

@@ -43,6 +43,27 @@
     from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  @keyframes deal-in {
+    from { opacity: 0; transform: translate3d(-60px, 40px, 0) rotate(-9deg); }
+    to { opacity: 1; transform: translate3d(0, 0, 0) rotate(var(--tilt, 0deg)); }
+  }
+  @keyframes cue {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(200%); }
+  }
+  @keyframes intro-out {
+    0%, 62% { clip-path: inset(0 0 0 0); }
+    100% { clip-path: inset(0 0 100% 0); visibility: hidden; }
+  }
+  @keyframes intro-bar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+  @keyframes intro-mark {
+    0% { opacity: 0; transform: translateY(14px); }
+    25%, 60% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-40px); }
+  }
   @keyframes wipe-in {
     from { clip-path: inset(0 0 0 100%); }
     to { clip-path: inset(0 0 0 0); }
@@ -97,9 +118,10 @@
     font-size: 1.06em;
   }
   .section-title {
-    font-size: clamp(30px, 3.2vw, 50px);
-    line-height: 1.12;
-    letter-spacing: -0.015em;
+    font-size: clamp(30px, 3.5vw, 56px);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
     font-weight: 600;
   }
   .eyebrow {
@@ -147,6 +169,26 @@
   }
   .mask-fade-x {
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+
+  /* Opening curtain */
+  .intro {
+    animation: intro-out 1.75s cubic-bezier(0.76, 0, 0.24, 1) both;
+  }
+  .intro-mark {
+    animation: intro-mark 1.75s var(--ease-out-expo) both;
+  }
+  .intro-bar {
+    animation: intro-bar 1s cubic-bezier(0.65, 0, 0.35, 1) both;
+  }
+
+  /* Programme boarding passes rest at a slight tilt and straighten + lift on hover */
+  .pass {
+    rotate: 0deg;
+  }
+  .pass:hover {
+    translate: 0 -10px;
+    rotate: calc(var(--tilt, 0deg) * -1);
   }
 
   /* Partner-university collage. Tiles carry --x --y --w --h on a 1440×892 stage;

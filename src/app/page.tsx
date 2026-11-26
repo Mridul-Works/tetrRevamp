@@ -16,10 +16,13 @@ import Press from "@/components/sections/Press";
 import Events from "@/components/sections/Events";
 import Apply from "@/components/sections/Apply";
 import Footer from "@/components/sections/Footer";
+import Rise from "@/components/ui/Rise";
+import Intro from "@/components/ui/Intro";
 
 export default function Home() {
   return (
     <>
+      <Intro />
       <Header />
       <main>
         <Hero />
@@ -27,17 +30,31 @@ export default function Home() {
         <Route />
         <Programs />
         <Outcomes />
-        <Launchpad />
+        <Rise from="bg-paper">
+          <Launchpad />
+        </Rise>
         <CareerLabs />
-        <Faculty />
-        <Creators />
+        <Rise from="bg-ink">
+          <Faculty />
+        </Rise>
+        <Rise from="bg-cream">
+          <Creators />
+        </Rise>
         <Immersions />
         <Cohort />
-        <Podcast />
-        <Campus />
+        <Rise from="bg-forest">
+          <Podcast />
+        </Rise>
+        <Rise from="bg-paper">
+          <Campus />
+        </Rise>
         <Press />
-        <Events />
-        <Apply />
+        <Rise from="bg-forest">
+          <Events />
+        </Rise>
+        <Rise from="bg-paper">
+          <Apply />
+        </Rise>
       </main>
       <Footer />
     </>
