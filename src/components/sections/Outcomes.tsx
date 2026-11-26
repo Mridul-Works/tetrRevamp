@@ -273,7 +273,7 @@ function Companies({ list }: { list: Company[] }) {
               <dl className="mt-auto grid grid-cols-2 gap-2 border-t border-snow/12 pt-3.5">
                 {co.figures.slice(0, 2).map((f, n) => (
                   <div key={f.label} className={cn("flex min-w-0 flex-col-reverse", n === 1 && "border-l border-snow/12 pl-3")}>
-                    <dt className="truncate text-[10px] font-semibold uppercase tracking-[0.08em] text-snow/55">{f.label}</dt>
+                    <dt className="text-[9.5px] font-semibold uppercase leading-tight tracking-[0.06em] text-snow/55">{f.label}</dt>
                     <dd className="text-[16px] font-semibold tracking-tight md:text-[18px]">{f.value}</dd>
                   </div>
                 ))}
@@ -360,7 +360,7 @@ function Startups({ list }: { list: Startup[] }) {
           key={s.name}
           className="group relative overflow-hidden rounded-[14px] border border-ink/10 bg-snow p-6 transition-colors duration-500 hover:border-deep"
         >
-          <span className="pointer-events-none absolute -right-3 -top-6 font-serif text-[110px] italic leading-none text-ink/[0.05] transition-colors duration-500 group-hover:text-mint/20">
+          <span className="pointer-events-none absolute -bottom-8 -right-2 font-serif text-[110px] italic leading-none text-ink/[0.05] transition-colors duration-500 group-hover:text-mint/25">
             {String(i + 1).padStart(2, "0")}
           </span>
           <div className="flex h-10 items-center justify-between">

@@ -175,7 +175,7 @@ export default function CareerLabs() {
                   alt={`${r.name} logo`}
                   loading="lazy"
                   style={{ height: r.h * 1.15, width: Math.round(r.h * 1.15 * r.aspect) }}
-                  className="opacity-75 transition-opacity hover:opacity-100"
+                  className="wordmark-white opacity-70 transition-opacity hover:opacity-100"
                 />
               </span>
             ))}

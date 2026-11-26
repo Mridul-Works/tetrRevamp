@@ -5,8 +5,8 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-[#0a2a1c] pt-16 text-[#e8efe9]">
       <div className="container-x">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.1fr_0.7fr_0.8fr_1fr_1.2fr_1.3fr]">
-          <div className="flex items-end justify-between gap-4 sm:col-span-2 sm:block lg:col-span-1">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.1fr_0.7fr_0.8fr_1fr_1.2fr_1.3fr]">
+          <div className="col-span-2 flex items-end justify-between gap-4 sm:block lg:col-span-1">
             <a href="https://tetr.com" target="_blank" rel="noopener">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={LOGO} alt="TETR College of Business" className="w-[130px] md:w-[170px]" />
@@ -32,7 +32,7 @@ export default function Footer() {
             </nav>
           ))}
 
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="col-span-2 lg:col-span-1">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={QS_BADGE} alt="QS Gold Winner badge" className="w-[220px] md:w-[260px]" />
             <div className="mt-6 flex items-center gap-4">

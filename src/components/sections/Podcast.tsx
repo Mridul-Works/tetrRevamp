@@ -76,7 +76,7 @@ function Stage({ list }: { list: Episode[] }) {
         >
           <Image key={ep.image} src={ep.image} alt="" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-cover transition-transform duration-1000 [animation:fade-in_.6s_ease] group-hover:scale-[1.03]" />
           <span className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-          <span className="absolute left-1/2 top-1/2 grid size-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-snow/15 text-snow backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-gold-ink">
+          <span className="absolute bottom-5 left-5 grid size-16 place-items-center rounded-full bg-ink/40 text-snow backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:bg-gold group-hover:text-gold-ink">
             <Play width={26} height={26} />
           </span>
         </button>
@@ -103,10 +103,10 @@ function Stage({ list }: { list: Episode[] }) {
         </div>
       </div>
 
-      <div data-lenis-prevent className="grid max-h-[640px] content-start gap-4 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-1">
+      <div data-lenis-prevent className="no-scrollbar flex max-h-[640px] flex-col gap-4 overflow-y-auto">
         {list.map((e, n) =>
           n === i ? null : (
-            <div key={e.title} className="group relative aspect-video overflow-hidden rounded-[16px] bg-deep">
+            <div key={e.title} className="group relative aspect-video w-full shrink-0 overflow-hidden rounded-[16px] bg-deep">
               <button type="button" onClick={() => setI(n)} aria-label={`Show ${e.title} with ${e.guest}`} className="absolute inset-0">
                 <Image src={e.image} alt="" fill sizes="(min-width: 1024px) 30vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                 <span className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />

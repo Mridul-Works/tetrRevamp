@@ -20,13 +20,13 @@ export default function Press() {
             {row.map((p) => (
               <figure
                 key={p.name}
-                className="group relative mx-2 aspect-[4/3] w-[300px] shrink-0 overflow-hidden rounded-[16px] border border-snow/10 bg-cream transition-transform duration-500 hover:-translate-y-1 md:w-[400px]"
+                className="group relative mx-2 aspect-square w-[240px] shrink-0 overflow-hidden rounded-[16px] border border-snow/10 bg-snow transition-transform duration-500 hover:-translate-y-1 md:w-[300px]"
               >
                 <Image
                   src={p.image}
                   alt={`${p.name} coverage of Tetr`}
                   fill
-                  sizes="400px"
+                  sizes="300px"
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               </figure>

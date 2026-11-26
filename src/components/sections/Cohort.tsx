@@ -55,15 +55,13 @@ export default function Cohort() {
           {tribe.map((t, i) => (
             <figure
               key={t.name}
-              className="group relative aspect-[3/4] w-[70vw] shrink-0 overflow-hidden rounded-[20px] bg-slab sm:w-[340px] lg:w-[min(30vw,420px)]"
-              style={{ marginTop: i % 2 ? "6vh" : 0 }}
+              className="group relative aspect-[9/16] w-[62vw] shrink-0 overflow-hidden rounded-[20px] bg-slab sm:w-[300px] lg:h-[72vh] lg:w-auto"
+              style={{ marginTop: i % 2 ? "5vh" : 0 }}
             >
+              {/* names are printed on the portraits themselves */}
               <div data-portrait-img className="absolute -inset-x-[10%] inset-y-0">
-                <Image src={t.image} alt={`${t.name}, Tetr student`} fill sizes="(min-width: 1024px) 30vw, 70vw" className="object-cover" />
+                <Image src={t.image} alt={`${t.name}, Tetr student`} fill sizes="(min-width: 1024px) 25vw, 62vw" className="object-cover" />
               </div>
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 to-transparent p-5 pt-16">
-                <span className="font-serif text-[28px] italic">{t.name}</span>
-              </figcaption>
             </figure>
           ))}
         </div>

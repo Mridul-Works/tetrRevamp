@@ -67,7 +67,7 @@ export default function Creators() {
                   pointerEvents: far ? "none" : "auto",
                   transform: `translate(-50%, -50%) translateX(${d * 62}%) translateZ(${-Math.abs(d) * 140}px) rotateY(${-d * 14}deg) rotate(${d * 2}deg) scale(${center ? 1 : 0.86})`,
                 }}
-                className="absolute left-1/2 top-1/2 aspect-[9/16] h-full overflow-hidden rounded-[22px] bg-forest shadow-[0_40px_80px_rgba(0,0,0,.55)] transition-[transform,opacity,filter] duration-700 ease-out-expo"
+                className="absolute left-1/2 top-1/2 aspect-[729/980] h-full overflow-hidden rounded-[22px] bg-forest shadow-[0_40px_80px_rgba(0,0,0,.55)] transition-[transform,opacity,filter] duration-700 ease-out-expo"
               >
                 <Image src={c.image} alt="" fill sizes="360px" draggable={false} className="object-cover" />
                 <span className={`absolute inset-0 bg-ink transition-opacity duration-700 ${center ? "opacity-0" : "opacity-45"}`} />

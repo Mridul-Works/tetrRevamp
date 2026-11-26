@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Html, Line } from "@react-three/drei";
+import { Line } from "@react-three/drei";
 import * as THREE from "three";
 
 const R = 1;
@@ -42,8 +42,8 @@ const atmosphereShader = {
   fragmentShader: /* glsl */ `
     varying vec3 vNormal;
     void main() {
-      float i = pow(0.72 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 3.0);
-      gl_FragColor = vec4(0.48, 0.82, 0.61, 1.0) * i;
+      float i = pow(0.62 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 3.2);
+      gl_FragColor = vec4(0.48, 0.82, 0.61, 1.0) * i * 0.55;
     }`,
 };
 
@@ -73,25 +73,15 @@ function Arc({ from, to, active }: { from: THREE.Vector3; to: THREE.Vector3; act
   );
 }
 
-function Marker({ pos, label, active, onClick }: { pos: THREE.Vector3; label: string; active: boolean; onClick: () => void }) {
+function Marker({ pos, active }: { pos: THREE.Vector3; active: boolean }) {
   const ring = useRef<THREE.Mesh>(null);
-  const labelRef = useRef<HTMLButtonElement>(null);
-  const world = useMemo(() => new THREE.Vector3(), []);
   const quat = useMemo(() => new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), pos.clone().normalize()), [pos]);
 
   useFrame(({ clock }) => {
-    if (ring.current) {
-      const s = 1 + ((clock.elapsedTime * 0.8) % 1) * 2.2;
-      ring.current.scale.setScalar(s);
-      (ring.current.material as THREE.MeshBasicMaterial).opacity = 0.8 * (1 - ((clock.elapsedTime * 0.8) % 1));
-    }
-    // fade labels on the far side of the globe
-    if (labelRef.current && ring.current) {
-      ring.current.getWorldPosition(world);
-      const facing = THREE.MathUtils.clamp((world.z - 0.15) * 3, 0, 1);
-      labelRef.current.style.opacity = String(facing);
-      labelRef.current.style.pointerEvents = facing > 0.4 ? "auto" : "none";
-    }
+    if (!ring.current) return;
+    const t = (clock.elapsedTime * 0.8) % 1;
+    ring.current.scale.setScalar(1 + t * 2.2);
+    (ring.current.material as THREE.MeshBasicMaterial).opacity = 0.8 * (1 - t);
   });
 
   return (
@@ -104,28 +94,18 @@ function Marker({ pos, label, active, onClick }: { pos: THREE.Vector3; label: st
         <ringGeometry args={[0.02, 0.026, 32]} />
         <meshBasicMaterial color={active ? GOLD : MINT} transparent side={THREE.DoubleSide} />
       </mesh>
-      <Html center zIndexRange={[20, 0]} style={{ transform: "translateY(-22px)" }}>
-        <button
-          ref={labelRef}
-          type="button"
-          onClick={onClick}
-          className={
-            "whitespace-nowrap rounded-full px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.14em] transition-colors duration-300 " +
-            (active ? "bg-gold text-gold-ink" : "bg-ink/70 text-snow/80 backdrop-blur hover:text-snow")
-          }
-        >
-          {label}
-        </button>
-      </Html>
     </group>
   );
 }
 
-function Globe({ points, labels, active, onSelect }: { points: [number, number][]; labels: string[]; active: number; onSelect: (i: number) => void }) {
+type LabelRefs = React.RefObject<(HTMLButtonElement | null)[]>;
+
+function Globe({ points, active, labelRefs }: { points: [number, number][]; active: number; labelRefs: LabelRefs }) {
   const group = useRef<THREE.Group>(null);
   const dots = useDots(3200);
   const vecs = useMemo(() => points.map(([la, ln]) => toVec(la, ln, R * 1.003)), [points]);
   const pointer = useRef(new THREE.Vector2());
+  const tmp = useMemo(() => new THREE.Vector3(), []);
 
   useEffect(() => {
     const onMove = (e: PointerEvent) => pointer.current.set((e.clientX / window.innerWidth) * 2 - 1, (e.clientY / window.innerHeight) * 2 - 1);
@@ -133,19 +113,34 @@ function Globe({ points, labels, active, onSelect }: { points: [number, number][
     return () => window.removeEventListener("pointermove", onMove);
   }, []);
 
-  useFrame(({ clock }) => {
+  useFrame(({ clock, camera, size }) => {
     const g = group.current;
     if (!g) return;
+    // ease the active country round to face the camera
     const v = vecs[active];
     const targetY = -Math.atan2(v.x, v.z);
-    const [lat] = points[active];
-    const targetX = THREE.MathUtils.degToRad(lat) * 0.85;
-    // shortest path around the y axis
+    const targetX = THREE.MathUtils.degToRad(points[active][0]) * 0.85;
     let dy = targetY - g.rotation.y;
-    dy = Math.atan2(Math.sin(dy), Math.cos(dy));
+    dy = Math.atan2(Math.sin(dy), Math.cos(dy)); // shortest way round
     const sway = Math.sin(clock.elapsedTime * 0.35) * 0.04;
     g.rotation.y += (dy + sway * 0.2 + pointer.current.x * 0.12) * 0.045;
     g.rotation.x += (targetX + pointer.current.y * 0.08 - g.rotation.x) * 0.045;
+    g.updateMatrixWorld();
+
+    // place the DOM labels over their markers; fade those on the far side
+    vecs.forEach((p, i) => {
+      const el = labelRefs.current?.[i];
+      if (!el) return;
+      tmp.copy(p).applyMatrix4(g.matrixWorld);
+      const facing = THREE.MathUtils.clamp((tmp.z - 0.15) * 3, 0, 1);
+      tmp.project(camera);
+      const x = (tmp.x * 0.5 + 0.5) * size.width;
+      const y = (-tmp.y * 0.5 + 0.5) * size.height;
+      el.style.transform = `translate(-50%, -100%) translate(${x.toFixed(1)}px, ${(y - 12).toFixed(1)}px)`;
+      el.style.opacity = facing.toFixed(2);
+      el.style.pointerEvents = facing > 0.4 ? "auto" : "none";
+      el.style.zIndex = String(Math.round(facing * 10) + (i === active ? 10 : 0));
+    });
   });
 
   return (
@@ -161,7 +156,7 @@ function Globe({ points, labels, active, onSelect }: { points: [number, number][
         <Arc key={i} from={v} to={vecs[i + 1]} active={i === active || i + 1 === active} />
       ))}
       {vecs.map((v, i) => (
-        <Marker key={labels[i]} pos={v} label={labels[i]} active={i === active} onClick={() => onSelect(i)} />
+        <Marker key={i} pos={v} active={i === active} />
       ))}
     </group>
   );
@@ -193,20 +188,38 @@ export default function RouteGlobe({
   onSelect: (i: number) => void;
   running: boolean;
 }) {
+  const labelRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
   return (
-    <Canvas camera={{ position: [0, 0, 3.1], fov: 38 }} dpr={[1, 2]} frameloop={running ? "always" : "never"} gl={{ antialias: true, alpha: true }}>
-      <Fit />
-      <Globe points={points} labels={labels} active={active} onSelect={onSelect} />
-      <mesh scale={1.18}>
-        <sphereGeometry args={[R, 64, 64]} />
-        <shaderMaterial
-          {...atmosphereShader}
-          blending={THREE.AdditiveBlending}
-          side={THREE.BackSide}
-          transparent
-          depthWrite={false}
-        />
-      </mesh>
-    </Canvas>
+    <div className="relative size-full">
+      <Canvas camera={{ position: [0, 0, 3.1], fov: 38 }} dpr={[1, 2]} frameloop={running ? "always" : "never"} gl={{ antialias: true, alpha: true }}>
+        <Fit />
+        <Globe points={points} active={active} labelRefs={labelRefs} />
+        <mesh scale={1.16}>
+          <sphereGeometry args={[R, 64, 64]} />
+          <shaderMaterial {...atmosphereShader} blending={THREE.AdditiveBlending} side={THREE.BackSide} transparent depthWrite={false} />
+        </mesh>
+      </Canvas>
+      {/* DOM labels, positioned every frame by <Globe> */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {labels.map((label, i) => (
+          <button
+            key={label}
+            ref={(el) => {
+              labelRefs.current[i] = el;
+            }}
+            type="button"
+            onClick={() => onSelect(i)}
+            style={{ opacity: 0 }}
+            className={
+              "absolute left-0 top-0 whitespace-nowrap rounded-full px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.14em] transition-colors duration-300 will-change-transform " +
+              (i === active ? "bg-gold text-gold-ink" : "bg-ink/70 text-snow/80 backdrop-blur hover:text-snow")
+            }
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
