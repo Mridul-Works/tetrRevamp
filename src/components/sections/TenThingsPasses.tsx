@@ -115,9 +115,10 @@ export default function TenThingsPasses() {
           {tenThings.map((t, i) => {
             const stats = t.stats.length ? t.stats : (FALLBACK_STATS[t.tag] ?? []);
             return (
-              <li key={t.tag} data-pass className="sticky mb-8 transition-[top] duration-500 ease-out-expo last:mb-0" style={{ top: `min(calc(var(--hdr, 0px) + var(--pass-top, 180px) + ${i * PEEK}px), calc(100svh - var(--h, 0px) - 16px))`, zIndex: i + 1 }}>
+              <li key={t.tag} data-pass className="sticky mb-8 drop-shadow-[0_-10px_22px_rgba(0,0,0,0.35)] transition-[top] duration-500 ease-out-expo last:mb-0" style={{ top: `min(calc(var(--hdr, 0px) + var(--pass-top, 180px) + ${i * PEEK}px), calc(100svh - var(--h, 0px) - 16px))`, zIndex: i + 1 }}>
                 <div
                   data-pass-inner
+                 
                   role="button"
                   tabIndex={0}
                   aria-label={`Pass ${pad(i + 1)}, seat ${seat(i)}. ${t.tag}: ${plain(t.title)}. Watch the story`}
@@ -128,68 +129,119 @@ export default function TenThingsPasses() {
                       watch(i);
                     }
                   }}
-                  className="group relative grid origin-top cursor-pointer grid-cols-[minmax(0,1fr)_104px] rounded-[22px] bg-snow text-ink shadow-[0_-20px_60px_rgba(0,0,0,.5)] will-change-transform sm:grid-cols-[minmax(0,1fr)_200px] md:min-h-[clamp(380px,calc(100svh-400px),480px)]"
+                  className="pass-ticket group relative grid origin-top cursor-pointer grid-cols-[minmax(0,1fr)_120px] bg-snow text-ink will-change-transform sm:grid-cols-[minmax(0,1fr)_220px]"
                 >
-                  {/* punched notches on the tear line, in the section colour */}
-                  <span aria-hidden className="absolute right-[90px] top-0 z-10 size-[28px] -translate-y-1/2 rounded-full bg-ink sm:right-[186px]" />
-                  <span aria-hidden className="absolute bottom-0 right-[90px] z-10 size-[28px] translate-y-1/2 rounded-full bg-ink sm:right-[186px]" />
-
-                  {/* main: photo | story */}
-                  <div className="grid min-w-0 md:grid-cols-[44%_minmax(0,1fr)]">
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-tl-[22px] bg-cream md:aspect-auto md:rounded-bl-[22px]">
-                      <Image
-                        src={t.image}
-                        alt=""
-                        fill
-                        quality={85}
-                        sizes="(min-width: 1024px) 420px, 80vw"
-                        className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.05]"
-                      />
-                      <span className="absolute bottom-4 left-4 grid size-12 place-items-center rounded-sm bg-gold text-gold-ink shadow-md transition-transform duration-300 group-hover:scale-110">
-                        <svg viewBox="0 0 24 24" className="size-4 translate-x-px" fill="currentColor" aria-hidden="true">
-                          <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" />
-                        </svg>
+                  {/* main ticket (the notches on the tear line are cut by .pass-ticket in globals.css) */}
+                  <div className="flex min-w-0 flex-col">
+                    {/* header band: deep green so the ticket's top edge and notch read against the ink section */}
+                    <div className="flex items-center justify-between gap-3 bg-deep px-5 py-3 font-mono text-[10.5px] uppercase tracking-[0.18em] text-snow md:px-7">
+                      <span className="truncate">
+                        <span className="sm:hidden">Pass</span>
+                        <span className="hidden sm:inline">
+                          Boarding pass <span className="text-snow/50">· Tetr College of Business</span>
+                        </span>
                       </span>
+                      <span className="shrink-0 text-mint">Flight TETR {pad(i + 1)}</span>
                     </div>
-                    <div className="flex min-w-0 flex-col p-6 md:p-9">
-                      <span className="truncate font-mono text-[11px] uppercase tracking-[0.16em] text-deep">
-                        Flight TETR {pad(i + 1)} · {t.tag}
-                      </span>
-                      <h3 className="mt-4 text-[clamp(24px,2.3vw,36px)] font-semibold leading-[1.1] tracking-[-0.022em] text-ink [text-wrap:balance] [&_.accent]:text-deep">
-                        <Accented text={t.title} />
-                      </h3>
-                      <p className="mt-4 line-clamp-4 text-[14.5px] leading-[1.6] text-ink/70">{t.body}</p>
-                      {stats.length > 0 && (
-                        <div className="mt-auto flex gap-8 border-t border-ink/10 pt-5">
-                          {stats.map((s) => (
-                            <div key={s.label}>
-                              <b className="block text-[clamp(22px,2vw,30px)] font-semibold leading-none tracking-tight text-deep">{s.value}</b>
-                              <small className="mt-2 block font-mono text-[10px] uppercase tracking-[0.14em] text-ink/55">{s.label}</small>
-                            </div>
-                          ))}
+
+                    <div className="grid min-w-0 flex-1 md:grid-cols-[42%_minmax(0,1fr)]">
+                      <div className="relative aspect-[16/10] overflow-hidden border-b border-ink/15 bg-cream md:aspect-auto md:border-b-0 md:border-r">
+                        <Image
+                          src={t.image}
+                          alt=""
+                          fill
+                          quality={85}
+                          sizes="(min-width: 1024px) 420px, 80vw"
+                          className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.05]"
+                        />
+                        <span className="absolute bottom-0 left-0 grid size-12 place-items-center bg-gold text-gold-ink transition-[width,height] duration-300 group-hover:size-14">
+                          <svg viewBox="0 0 24 24" className="size-4 translate-x-px" fill="currentColor" aria-hidden="true">
+                            <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" />
+                          </svg>
+                        </span>
+                      </div>
+
+                      <div className="flex min-w-0 flex-col">
+                        <div className="p-5 md:p-7">
+                          <span className="block font-mono text-[11px] uppercase tracking-[0.16em] text-deep">{t.tag}</span>
+                          <h3 className="mt-3 text-[clamp(22px,2.2vw,34px)] font-semibold leading-[1.1] tracking-[-0.022em] text-ink [text-wrap:balance] [&_.accent]:text-deep">
+                            <Accented text={t.title} />
+                          </h3>
+                          <p className="mt-3 line-clamp-3 text-[14px] leading-[1.6] text-ink/70">{t.body}</p>
                         </div>
-                      )}
+
+                        {/* ruled field rows, like the printed data on a real pass */}
+                        <dl className="mt-auto grid grid-cols-2 border-t border-ink/15 font-mono text-[10px] uppercase tracking-[0.14em] text-ink/50 sm:grid-cols-3 [&>div]:border-r [&>div]:border-ink/15 [&>div:last-child]:border-r-0 [&>div]:px-5 [&>div]:py-3 md:[&>div]:px-7">
+                          <div>
+                            <dt>Gate</dt>
+                            <dd className="mt-1 text-[14px] font-semibold tracking-normal text-ink">{pad(i + 1)}</dd>
+                          </div>
+                          <div>
+                            <dt>Seat</dt>
+                            <dd className="mt-1 text-[14px] font-semibold tracking-normal text-ink">{seat(i)}</dd>
+                          </div>
+                          <div className="hidden sm:block">
+                            <dt>Status</dt>
+                            <dd className="mt-1 flex items-center gap-1.5 text-[14px] font-semibold tracking-normal text-deep">
+                              <span className="size-1.5 bg-deep" /> Boarding
+                            </dd>
+                          </div>
+                        </dl>
+
+                        {stats.length > 0 ? (
+                          <div className="flex gap-8 border-t border-ink/15 px-5 py-4 md:px-7">
+                            {stats.map((s) => (
+                              <div key={s.label}>
+                                <b className="block text-[clamp(22px,2vw,30px)] font-semibold leading-none tracking-tight text-deep">{s.value}</b>
+                                <small className="mt-1.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-ink/55">{s.label}</small>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="flex items-center justify-between border-t border-ink/15 px-5 py-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ink/60 transition-colors group-hover:text-deep md:px-7">
+                            Watch the story
+                            <span className="h-px w-10 bg-current transition-[width] duration-500 ease-out-expo group-hover:w-16" />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
 
                   {/* stub: the dashed left border is the tear line */}
-                  <div aria-hidden className="flex flex-col justify-between border-l-2 border-dashed border-ink/20 p-4 font-mono uppercase tracking-[0.14em] text-ink/55 sm:p-7">
-                    <span className="text-[11px]">
-                      Seat
-                      <b className="mt-1.5 block font-serif text-[34px] font-normal leading-none tracking-normal text-ink sm:text-[60px]">{seat(i)}</b>
-                    </span>
-                    <span className="text-[12px] tabular-nums text-ink/70">
-                      {pad(i + 1)} / {pad(N)}
-                    </span>
-                    <span className="flex h-12 items-stretch gap-[2px] overflow-hidden opacity-80 sm:h-14">
-                      {BARS.map((w, k) => (
-                        <span key={k} className="shrink-0 bg-ink" style={{ width: w * 1.3 }} />
-                      ))}
-                    </span>
+                  <div aria-hidden className="flex flex-col border-l-2 border-dashed border-ink/25 bg-cream font-mono uppercase tracking-[0.14em] text-ink/55">
+                    <div className="bg-deep px-4 py-3 text-[10.5px] tracking-[0.18em] text-snow sm:px-6">
+                      <span className="text-mint">{pad(i + 1)}</span>
+                      <span className="text-snow/50"> / {pad(N)}</span>
+                    </div>
+                    <div className="flex flex-1 flex-col gap-4 p-4 sm:p-6">
+                      <span className="text-[10.5px]">
+                        Seat
+                        <b className="mt-1 block font-serif text-[34px] font-normal leading-none tracking-normal text-ink sm:text-[56px]">{seat(i)}</b>
+                      </span>
+                      <dl className="grid gap-3 border-t border-ink/15 pt-4 text-[10px]">
+                        <div>
+                          <dt>Flight</dt>
+                          <dd className="mt-0.5 text-[12.5px] tracking-normal text-ink">TETR {pad(i + 1)}</dd>
+                        </div>
+                        <div className="hidden sm:block">
+                          <dt>Gate</dt>
+                          <dd className="mt-0.5 truncate text-[12.5px] normal-case tracking-normal text-ink">{t.tag}</dd>
+                        </div>
+                        <div>
+                          <dt>Class</dt>
+                          <dd className="mt-0.5 text-[12.5px] tracking-normal text-ink">Builder</dd>
+                        </div>
+                      </dl>
+                      <span className="mt-auto flex h-12 items-stretch gap-[2px] overflow-hidden opacity-85 sm:h-14">
+                        {BARS.map((w, k) => (
+                          <span key={k} className="shrink-0 bg-ink" style={{ width: w * 1.3 }} />
+                        ))}
+                      </span>
+                    </div>
                   </div>
 
                   {/* darkens as the next pass covers this one */}
-                  <div data-pass-dim className="pointer-events-none absolute inset-0 rounded-[22px] bg-ink opacity-0" />
+                  <div data-pass-dim className="pointer-events-none absolute inset-0 bg-ink opacity-0" />
                 </div>
               </li>
             );

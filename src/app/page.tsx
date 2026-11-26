@@ -19,11 +19,15 @@ import Apply from "@/components/sections/Apply";
 import Footer from "@/components/sections/Footer";
 import Rise from "@/components/ui/Rise";
 import Intro from "@/components/ui/Intro";
+import ScrollNav from "@/components/ui/ScrollNav";
+import BackToTop from "@/components/ui/BackToTop";
 
 export default function Home() {
   return (
     <>
       <Intro />
+      <ScrollNav />
+      <BackToTop />
       <Header />
       <main>
         <Hero />

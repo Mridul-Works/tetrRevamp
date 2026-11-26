@@ -7,6 +7,7 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/400-italic.css";
+import "@fontsource/anton/400.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { VideoProvider } from "@/components/ui/VideoModal";
 import "./globals.css";

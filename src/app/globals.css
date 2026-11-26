@@ -21,8 +21,19 @@
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-display: "Anton", "Impact", "Arial Narrow", sans-serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Boxy: every corner on the site is square or nearly so */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 3px;
+  --radius-2xl: 3px;
+  --radius-3xl: 3px;
+  --radius-4xl: 3px;
 
   --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
   --animate-progress: progress var(--progress-duration, 6s) linear forwards;
@@ -69,8 +80,8 @@
     to { clip-path: inset(0 0 0 0); }
   }
   @keyframes wipe-up {
-    from { clip-path: inset(100% 0 0 0 round 18px); }
-    to { clip-path: inset(0 0 0 0 round 18px); }
+    from { clip-path: inset(100% 0 0 0 round 3px); }
+    to { clip-path: inset(0 0 0 0 round 3px); }
   }
   @keyframes settle {
     from { transform: scale(1.12); }
@@ -79,6 +90,20 @@
   @keyframes ping-slow {
     0% { transform: scale(1); opacity: 0.7; }
     100% { transform: scale(2.4); opacity: 0; }
+  }
+  /* Rubber stamp slapping onto paper: arrives big and faint, lands with a tiny bounce */
+  @keyframes stamp-in {
+    0% { opacity: 0; transform: scale(1.9) rotate(calc(var(--tilt, -8deg) - 14deg)); }
+    55% { opacity: 1; transform: scale(0.94) rotate(var(--tilt, -8deg)); }
+    75% { transform: scale(1.04) rotate(var(--tilt, -8deg)); }
+    100% { opacity: 1; transform: scale(1) rotate(var(--tilt, -8deg)); }
+  }
+  @keyframes eq {
+    0%, 100% { transform: scaleY(0.3); }
+    50% { transform: scaleY(1); }
+  }
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
   }
 }
 
@@ -171,6 +196,82 @@
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
 
+  /* Pointer tilt (see useTilt): the card rotates toward the pointer and a glare follows it */
+  .tilt {
+    transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.5s var(--ease-out-expo);
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .tilt-glare::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(240px circle at var(--gx, 50%) var(--gy, 50%), rgb(255 255 255 / 0.22), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    mix-blend-mode: soft-light;
+  }
+  .tilt:hover.tilt-glare::after {
+    opacity: 1;
+  }
+  /* Pointer spotlight (see useSpotlight): a mint glow trails the pointer across a dark panel */
+  .spotlight {
+    position: relative;
+  }
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgb(122 209 156 / 0.16), transparent 65%);
+    opacity: var(--spot, 0);
+    transition: opacity 0.6s ease;
+  }
+  .spotlight > * {
+    position: relative;
+  }
+  .stamp-in {
+    animation: stamp-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  /* Equaliser bars that dance while a play card is hovered */
+  .eq > span {
+    transform-origin: bottom;
+    transform: scaleY(0.3);
+    transition: transform 0.4s ease;
+  }
+  .group:hover .eq > span {
+    animation: eq 0.9s ease-in-out infinite;
+  }
+  .group:hover .eq > span:nth-child(2) { animation-delay: -0.3s; }
+  .group:hover .eq > span:nth-child(3) { animation-delay: -0.6s; }
+  .group:hover .eq > span:nth-child(4) { animation-delay: -0.15s; }
+  .group:hover .eq > span:nth-child(5) { animation-delay: -0.45s; }
+  /* Pointer-parallax layers ease back when the pointer leaves */
+  [data-depth] {
+    transition: translate 0.9s var(--ease-out-expo);
+    will-change: translate;
+  }
+  /* Letters of the footer wordmark lift one by one on hover */
+  .wave-text > span {
+    display: inline-block;
+    transition: transform 0.45s var(--ease-out-expo), color 0.3s;
+  }
+  .wave-text:hover > span {
+    color: var(--color-mint);
+    animation: wave-up 0.9s var(--ease-out-expo) both;
+    animation-delay: calc(var(--i) * 28ms);
+  }
+  @keyframes wave-up {
+    0% { transform: translateY(0); }
+    35% { transform: translateY(-0.18em) rotate(-3deg); }
+    100% { transform: translateY(0); }
+  }
+
   /* Opening curtain */
   .intro {
     animation: intro-out 1.75s cubic-bezier(0.76, 0, 0.24, 1) both;
@@ -181,6 +282,40 @@
   .intro-bar {
     animation: intro-bar 1s cubic-bezier(0.65, 0, 0.35, 1) both;
   }
+
+  /* Postcards (see ui/Postcard): rest tilted and offset, straighten + lift on hover/focus */
+  .pc {
+    position: relative;
+    transform: rotate(var(--tilt, 0deg)) translateY(var(--lift, 0px));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.85),
+      0 1px 0 rgb(0 0 0 / 0.25),
+      0 22px 44px -14px rgb(0 0 0 / 0.55);
+    transition: transform 0.55s var(--ease-out-expo), box-shadow 0.55s var(--ease-out-expo);
+    will-change: transform;
+  }
+  .pc:hover,
+  .pc:focus-visible {
+    transform: rotate(0deg) translateY(-8px);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.9),
+      0 1px 0 rgb(0 0 0 / 0.25),
+      0 40px 70px -18px rgb(0 0 0 / 0.65);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pc, .pc:hover, .pc:focus-visible { transform: none; }
+  }
+  /* Postcard rows: snap by card, hide the scrollbar, leave room for the tilt and lift */
+  .pc-row {
+    display: flex;
+    gap: 28px;
+    overflow-x: auto;
+    padding-block: 30px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .pc-row::-webkit-scrollbar { display: none; }
+  .pc-row > li { flex: 0 0 auto; scroll-snap-align: center; }
 
   /* Programme boarding passes rest at a slight tilt and straighten + lift on hover */
   .pass {
@@ -284,5 +419,76 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────────── /v2 — poster-style page (reference: signalfest) ───────────── */
+@layer components {
+  .v2 {
+    --v2-paper: #f6f8f4;
+    --v2-ink: #08120e;
+    --v2-rule: rgb(8 18 14 / 0.14);
+    --v2-mute: rgb(8 18 14 / 0.56);
+    background: var(--v2-paper);
+    color: var(--v2-ink);
+  }
+  .v2-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -0.005em;
+  }
+  .v2-mono {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .v2-rule { border-color: var(--v2-rule); }
+  .v2-mute { color: var(--v2-mute); }
+  /* ticket stub: perforation notches punched into both edges */
+  .v2-ticket {
+    --notch: 14px;
+    -webkit-mask:
+      radial-gradient(circle at 0 50%, transparent calc(var(--notch) - 1px), #000 var(--notch)),
+      radial-gradient(circle at 100% 50%, transparent calc(var(--notch) - 1px), #000 var(--notch));
+    -webkit-mask-composite: source-in;
+    mask:
+      radial-gradient(circle at 0 50%, transparent calc(var(--notch) - 1px), #000 var(--notch)),
+      radial-gradient(circle at 100% 50%, transparent calc(var(--notch) - 1px), #000 var(--notch));
+    mask-composite: intersect;
+  }
+  .v2-perf {
+    height: 1px;
+    background-image: linear-gradient(to right, var(--v2-rule) 55%, transparent 45%);
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+  }
+  .v2-belt { cursor: grab; }
+  .v2-belt:active { cursor: grabbing; }
+}
+
+/* ───────────── Ten Things boarding pass ───────────── */
+@layer components {
+  /* Half-circle notches cut out of the top and bottom edges where the tear line runs.
+     They are holes in the ticket (whatever is behind shows through), not dots painted on it,
+     so they never sit on top of the ticket or on the pass stacked below it.
+     --tear must match the stub column width in TenThingsPasses (120px, 220px from sm). */
+  .pass-ticket {
+    --tear: 120px;
+    --notch: 12px;
+    --notch-x: calc(100% - var(--tear));
+    -webkit-mask:
+      radial-gradient(circle var(--notch) at var(--notch-x) 0, transparent 97%, #000 100%),
+      radial-gradient(circle var(--notch) at var(--notch-x) 100%, transparent 97%, #000 100%);
+    -webkit-mask-composite: source-in;
+    mask:
+      radial-gradient(circle var(--notch) at var(--notch-x) 0, transparent 97%, #000 100%),
+      radial-gradient(circle var(--notch) at var(--notch-x) 100%, transparent 97%, #000 100%);
+    mask-composite: intersect;
+  }
+  @media (width >= 40rem) {
+    .pass-ticket { --tear: 220px; }
   }
 }

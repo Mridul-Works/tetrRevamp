@@ -6,6 +6,7 @@ import { events, eventsHeading, eventsLink } from "@/data/content";
 import Heading from "@/components/ui/Heading";
 import { NavArrows } from "@/components/ui/Button";
 import { ArrowUpRight, Clock, MapPin } from "@/components/ui/icons";
+import Tilt from "@/components/ui/Tilt";
 import { cn } from "@/lib/cn";
 
 const PER_PAGE = 3;
@@ -34,14 +35,14 @@ export default function Events() {
             const [month = "", day = ""] = md.split(" ");
             const past = e.status === "Past Event";
             return (
+              <Tilt key={e.title} max={5} glare={false}>
               <article
-                key={e.title}
-                className="group flex flex-col drop-shadow-[0_14px_30px_rgba(8,18,14,.10)] transition-[translate,filter] duration-500 ease-out-expo [animation:rise-in_.7s_var(--ease-out-expo)_both] hover:-translate-y-2 hover:drop-shadow-[0_30px_50px_rgba(8,18,14,.18)]"
+                className="group flex h-full flex-col drop-shadow-[0_14px_30px_rgba(8,18,14,.10)] transition-[translate,filter] duration-500 ease-out-expo [animation:rise-in_.7s_var(--ease-out-expo)_both] hover:-translate-y-2 hover:drop-shadow-[0_30px_50px_rgba(8,18,14,.18)]"
                 style={{ animationDelay: `${i * 90}ms` }}
               >
                 {/* pass body */}
-                <div className="flex flex-1 flex-col rounded-t-[20px] bg-snow p-3 pb-5">
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-[12px]">
+                <div className="flex flex-1 flex-col rounded-t-sm bg-snow p-3 pb-5">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-sm">
                     <Image
                       src={e.image}
                       alt={e.title}
@@ -49,7 +50,7 @@ export default function Events() {
                       sizes="(min-width: 768px) 33vw, 100vw"
                       className={cn("object-cover transition-transform duration-700 group-hover:scale-105", past && "grayscale-[55%]")}
                     />
-                    <span className={cn("absolute left-3 top-3 rounded-full px-3 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.12em]", status[e.status])}>
+                    <span className={cn("absolute left-3 top-3 rounded-sm px-3 py-1 font-mono text-[10.5px] font-semibold uppercase tracking-[0.12em]", status[e.status])}>
                       {e.status}
                     </span>
                   </div>
@@ -65,8 +66,8 @@ export default function Events() {
                 </div>
 
                 {/* stub */}
-                <div className="flex origin-top-left items-center gap-4 rounded-b-[20px] bg-snow px-6 pb-5 pt-5 transition-transform duration-500 ease-out-expo group-hover:translate-y-1.5 group-hover:rotate-[1.4deg]">
-                  <div className={cn("grid w-[62px] shrink-0 overflow-hidden rounded-[12px] text-center", past ? "bg-ink/50 text-snow" : "bg-ink text-snow")}>
+                <div className="flex origin-top-left items-center gap-4 rounded-b-sm bg-snow px-6 pb-5 pt-5 transition-transform duration-500 ease-out-expo group-hover:translate-y-1.5 group-hover:rotate-[1.4deg]">
+                  <div className={cn("grid w-[62px] shrink-0 overflow-hidden rounded-sm text-center", past ? "bg-ink/50 text-snow" : "bg-ink text-snow")}>
                     <span className={cn("py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.14em]", past ? "bg-ink/40" : "bg-deep text-mint")}>{month}</span>
                     <span className="pt-1 text-[26px] font-semibold leading-none">{day}</span>
                     <span className="pb-1.5 pt-0.5 font-mono text-[9.5px] uppercase tracking-[0.14em] text-snow/60">{dow} · {year.slice(-2)}</span>
@@ -90,6 +91,7 @@ export default function Events() {
                   </a>
                 </div>
               </article>
+              </Tilt>
             );
           })}
         </div>

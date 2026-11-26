@@ -21,9 +21,9 @@ export default function Launchpad() {
       // photo opens from a slit into a wide frame
       gsap.fromTo(
         "[data-lp-frame]",
-        { clipPath: "inset(18% 22% 18% 22% round 28px)" },
+        { clipPath: "inset(18% 22% 18% 22% round 4px)" },
         {
-          clipPath: "inset(0% 0% 0% 0% round 28px)",
+          clipPath: "inset(0% 0% 0% 0% round 4px)",
           ease: "none",
           scrollTrigger: { trigger: root.current, start: "top 85%", end: "top 15%", scrub: true },
         },
@@ -40,7 +40,7 @@ export default function Launchpad() {
   return (
     <section ref={root} id="launchpad" aria-label="Launchpad" className="relative overflow-hidden bg-ink py-[clamp(96px,9vw,144px)]">
       <div className="container-x">
-        <div data-lp-frame className="relative overflow-hidden rounded-[28px]">
+        <div data-lp-frame className="relative overflow-hidden rounded-sm">
           <div className="relative min-h-[640px] md:min-h-[720px]">
             <Image data-lp-img src={launchpad.image} alt={launchpad.imageAlt} fill sizes="100vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/10" />

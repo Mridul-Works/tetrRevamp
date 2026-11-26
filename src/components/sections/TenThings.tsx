@@ -160,7 +160,7 @@ export default function TenThings() {
                     watch(i);
                   }
                 }}
-                className="group relative flex h-[clamp(460px,68svh,600px)] origin-top cursor-pointer flex-col justify-between overflow-hidden rounded-[22px] bg-forest p-5 shadow-[0_-20px_60px_rgba(0,0,0,.5)] ring-1 ring-snow/10 will-change-transform md:p-8"
+                className="group relative flex h-[clamp(460px,68svh,600px)] origin-top cursor-pointer flex-col justify-between overflow-hidden rounded-sm bg-forest p-5 shadow-[0_-20px_60px_rgba(0,0,0,.5)] ring-1 ring-snow/10 will-change-transform md:p-8"
               >
                 <Image
                   src={t.image}
@@ -174,8 +174,8 @@ export default function TenThings() {
 
                 {/* top row */}
                 <div className="relative flex items-start justify-between gap-4">
-                  <span className="inline-flex items-center gap-2.5 rounded-full bg-ink/55 py-1.5 pl-1.5 pr-4 ring-1 ring-snow/15 backdrop-blur-md">
-                    <span className="grid size-7 place-items-center rounded-full bg-mint font-mono text-[11px] font-semibold text-ink">{pad(i + 1)}</span>
+                  <span className="inline-flex items-center gap-2.5 rounded-sm bg-ink/55 py-1.5 pl-1.5 pr-4 ring-1 ring-snow/15 backdrop-blur-md">
+                    <span className="grid size-7 place-items-center rounded-xs bg-mint font-mono text-[11px] font-semibold text-ink">{pad(i + 1)}</span>
                     <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-snow">{t.tag}</span>
                   </span>
                   <span className="font-mono text-[12px] tabular-nums text-snow/80 drop-shadow-[0_1px_8px_rgba(0,0,0,.6)]">

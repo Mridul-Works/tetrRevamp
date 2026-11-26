@@ -4,11 +4,13 @@ import { useState } from "react";
 import Image from "next/image";
 import { campusCities, campusHeading, campusPhoto, campusViews } from "@/data/content";
 import Heading from "@/components/ui/Heading";
+import { useSpotlight } from "@/lib/pointer";
 import { cn } from "@/lib/cn";
 
 export default function Campus() {
   const [city, setCity] = useState(0);
   const [view, setView] = useState(0);
+  const spot = useSpotlight<HTMLDivElement>();
   const c = campusCities[city];
   const views = campusViews.map((v) => ({ ...v, src: campusPhoto(c.slug, v.slug) }));
   const current = views[view]?.src ? views[view] : views.find((v) => v.src)!;
@@ -19,7 +21,22 @@ export default function Campus() {
       <div className="container-x relative">
         <Heading breakLine {...campusHeading} />
 
-        <div className="mt-14 overflow-hidden rounded-sm border border-snow/10 bg-forest/70">
+        <div
+          ref={spot.ref}
+          onPointerMove={spot.onPointerMove}
+          onPointerLeave={spot.onPointerLeave}
+          onKeyDown={(e) => {
+            // arrow keys walk the views; shift+arrows walk the cities
+            const d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+            if (!d) return;
+            e.preventDefault();
+            if (e.shiftKey) {
+              setCity((c) => (c + d + campusCities.length) % campusCities.length);
+              setView(0);
+            } else setView((v) => (v + d + views.length) % views.length);
+          }}
+          className="spotlight mt-14 overflow-hidden rounded-sm border border-snow/10 bg-forest/70"
+        >
           <div role="tablist" aria-label="Cities" className="no-scrollbar flex overflow-x-auto border-b border-snow/10">
             {campusCities.map((ct, i) => (
               <button
@@ -74,6 +91,7 @@ export default function Campus() {
                     key={v.slug}
                     type="button"
                     disabled={!v.src}
+                   
                     aria-pressed={current?.slug === v.slug}
                     onClick={() => setView(n)}
                     className={cn(

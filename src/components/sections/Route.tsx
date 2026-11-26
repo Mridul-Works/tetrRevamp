@@ -36,7 +36,7 @@ export default function Route() {
 
         <Timeline active={active} onSelect={select} />
 
-        <div className="mt-8 grid overflow-hidden rounded-[24px] border border-snow/10 bg-ink/50 backdrop-blur-sm lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <div className="mt-8 grid overflow-hidden rounded-sm border border-snow/10 bg-ink/50 backdrop-blur-sm lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           {/* Globe + photo card */}
           <div ref={ref} className="relative min-h-[420px] border-b border-snow/10 lg:min-h-[640px] lg:border-b-0 lg:border-r">
             <div className="absolute inset-0">
@@ -54,7 +54,7 @@ export default function Route() {
               <h3 className="text-[clamp(36px,4vw,56px)] font-semibold leading-none tracking-tight">{c.name}</h3>
               <div className="flex flex-wrap gap-2">
                 {c.chips.map((chip) => (
-                  <span key={chip} className="rounded-full border border-snow/20 px-3 py-1 text-[12.5px] text-snow/85">
+                  <span key={chip} className="rounded-sm border border-snow/20 px-3 py-1 text-[12.5px] text-snow/85">
                     {chip}
                   </span>
                 ))}
@@ -87,7 +87,7 @@ export default function Route() {
                 items.map((it, i) => (
                   <li
                     key={it.title}
-                    className="group -mx-3 rounded-lg px-3 py-2.5 transition-colors [animation:rise-in_.5s_var(--ease-out-expo)_both] hover:bg-snow/[0.04]"
+                    className="group -mx-3 rounded-sm px-3 py-2.5 transition-colors [animation:rise-in_.5s_var(--ease-out-expo)_both] hover:bg-snow/[0.04]"
                     style={{ animationDelay: `${i * 60}ms` }}
                   >
                     <p className="text-[14.5px] leading-[1.5]">
@@ -99,7 +99,7 @@ export default function Route() {
               )}
             </ul>
 
-            <div className="relative mt-6 overflow-hidden rounded-2xl border border-mint/25 bg-mint/[0.07] py-4 pl-5 pr-4">
+            <div className="relative mt-6 overflow-hidden rounded-sm border border-mint/25 bg-mint/[0.07] py-4 pl-5 pr-4">
               <span className="absolute inset-y-0 left-0 w-[3px] bg-mint" />
               <p className="eyebrow flex items-center gap-2 text-mint">
                 <Star width={15} height={15} /> What You&apos;ll Build
@@ -225,7 +225,7 @@ function PhotoCard({ photos, name }: { photos: string[]; name: string }) {
   }, [photos.length]);
 
   return (
-    <div className="absolute bottom-5 left-5 z-10 w-[min(52%,320px)] overflow-hidden rounded-2xl border border-snow/15 bg-ink shadow-[0_30px_60px_rgba(0,0,0,.5)] [animation:rise-in_.8s_var(--ease-out-expo)_both]">
+    <div className="absolute bottom-5 left-5 z-10 w-[min(52%,320px)] overflow-hidden rounded-sm border border-snow/15 bg-ink shadow-[0_30px_60px_rgba(0,0,0,.5)] [animation:rise-in_.8s_var(--ease-out-expo)_both]">
       <div className="relative aspect-[4/3]">
         {photos.map((src, n) => (
           <Image
@@ -237,7 +237,7 @@ function PhotoCard({ photos, name }: { photos: string[]; name: string }) {
             className={cn("object-cover transition-opacity duration-1000", n === i ? "opacity-100" : "opacity-0")}
           />
         ))}
-        <span className="absolute left-3 top-3 rounded-md bg-ink/70 px-2.5 py-1 text-[12px] font-semibold backdrop-blur">{name}</span>
+        <span className="absolute left-3 top-3 rounded-sm bg-ink/70 px-2.5 py-1 text-[12px] font-semibold backdrop-blur">{name}</span>
       </div>
       <div className="flex justify-center gap-1.5 py-2.5">
         {photos.map((src, n) => (
@@ -246,7 +246,7 @@ function PhotoCard({ photos, name }: { photos: string[]; name: string }) {
             type="button"
             aria-label={`Show photo ${n + 1}`}
             onClick={() => setI(n)}
-            className={cn("h-1.5 rounded-full transition-all", n === i ? "w-6 bg-snow" : "w-1.5 bg-snow/40")}
+            className={cn("h-1.5 transition-all", n === i ? "w-6 bg-snow" : "w-1.5 bg-snow/40")}
           />
         ))}
       </div>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { press, pressHeading } from "@/data/content";
 import Heading from "@/components/ui/Heading";
-import Marquee from "@/components/ui/Marquee";
+import VelocityMarquee from "@/components/ui/VelocityMarquee";
 
 export default function Press() {
   const half = Math.ceil(press.length / 2);
@@ -14,13 +14,14 @@ export default function Press() {
       <div className="container-x">
         <Heading breakLine {...pressHeading} />
       </div>
-      <div className="mt-14 flex flex-col gap-4">
+      <p className="container-x mt-6 font-mono text-[11px] uppercase tracking-[0.16em] text-snow/40">Scroll faster and the presses run faster</p>
+      <div className="mt-8 flex flex-col gap-4">
         {rows.map((row, r) => (
-          <Marquee key={r} duration={48} reverse={r === 1}>
+          <VelocityMarquee key={r} speed={55} reverse={r === 1}>
             {row.map((p) => (
               <figure
                 key={p.name}
-                className="group relative mx-2 aspect-square w-[240px] shrink-0 overflow-hidden rounded-[16px] border border-snow/10 bg-snow transition-transform duration-500 hover:-translate-y-1 md:w-[300px]"
+                className="group relative mx-2 aspect-square w-[240px] shrink-0 overflow-hidden rounded-sm border border-snow/10 bg-snow transition-transform duration-500 hover:-translate-y-1 md:w-[300px]"
               >
                 <Image
                   src={p.image}
@@ -31,7 +32,7 @@ export default function Press() {
                 />
               </figure>
             ))}
-          </Marquee>
+          </VelocityMarquee>
         ))}
       </div>
     </section>

@@ -78,7 +78,9 @@ export default function Universities() {
         // 3 · the pass holds on screen (1.27 → 1.45), then zooms until it fills the screen
         tl.to("[data-ticket-fade], [data-ticket-stamp]", { autoAlpha: 0, duration: 0.1 }, 1.45);
         tl.to(ticket, { rotate: 0, scale: cover, duration: 0.3, ease: "power2.in" }, 1.45);
-        tl.to(el, { backgroundColor: paper, duration: 0.03 }, 1.72);
+        // the stage and the (ink) section behind it both turn paper, so no dark seam can show
+        // at the junction with the paper Outcomes section while the pin releases
+        tl.to([el, el.closest("section")], { backgroundColor: paper, duration: 0.03 }, 1.72);
         tl.to({}, { duration: 0.06 }); // a beat of plain white before the pin lets go
       });
       return () => mm.revert();
@@ -109,7 +111,7 @@ export default function Universities() {
             <article
               key={u.name}
               data-uni-tile
-              className="uni-tile group overflow-hidden rounded-[14px] bg-forest will-change-transform"
+              className="uni-tile group overflow-hidden rounded-sm bg-forest will-change-transform"
               style={{ "--x": x, "--y": y, "--w": w, "--h": h } as React.CSSProperties}
             >
               <Image
@@ -121,7 +123,7 @@ export default function Universities() {
               />
               {/* soft scrim centred behind the logo keeps it legible without dimming the whole photo */}
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_55%_at_center,rgb(8_18_14/0.5),rgb(8_18_14/0.12)_75%,rgb(8_18_14/0.05))] transition-opacity duration-700 group-hover:opacity-70" />
-              <div className="absolute inset-0 rounded-[14px] ring-1 ring-inset ring-snow/10" />
+              <div className="absolute inset-0 rounded-sm ring-1 ring-inset ring-snow/10" />
               <div className="absolute inset-0 grid place-items-center p-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -131,7 +133,7 @@ export default function Universities() {
                   style={{ "--lh": u.logoH } as React.CSSProperties}
                   className={cn(
                     "uni-logo w-auto max-w-[75%] object-contain transition-transform duration-500 group-hover:scale-105",
-                    u.nativeColor && "box-content rounded-md bg-snow px-3 py-2",
+                    u.nativeColor && "box-content rounded-sm bg-snow px-3 py-2",
                   )}
                 />
               </div>
@@ -155,7 +157,7 @@ function BoardingPass() {
     <div className="uni-ticket-wrap" aria-hidden="true">
       <div
         data-ticket
-        className="uni-ticket relative flex w-[min(920px,70vw)] rounded-[26px] bg-paper text-ink shadow-[0_40px_120px_rgba(0,0,0,.55)]"
+        className="uni-ticket relative flex w-[min(920px,70vw)] rounded-sm bg-paper text-ink shadow-[0_40px_120px_rgba(0,0,0,.55)]"
         style={{ "--stub": "clamp(180px,17vw,236px)" } as React.CSSProperties}
       >
         {/* main part */}
@@ -210,7 +212,7 @@ function BoardingPass() {
             <div className="font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink/45">Flight</div>
             <div className="mt-1 font-mono text-[20px] font-semibold">{t.stub.flight}</div>
           </div>
-          <div className="inline-flex w-fit items-center gap-2 rounded-full bg-deep px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-snow">
+          <div className="inline-flex w-fit items-center gap-2 rounded-sm bg-deep px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-snow">
             <span className="size-1.5 rounded-full bg-mint" />
             {t.stub.status}
           </div>

@@ -1077,6 +1077,9 @@ export const apply = {
   imageAlt: "Tetr students talking on the campus lawn",
   primary: { label: "Begin Your Application", href: "https://tetr.com/apply" },
   secondary: { label: "Talk to Admissions", href: "https://tetr.com/contact-us" },
+  /** Round 1 closes 15 Oct 2026, end of day IST */
+  deadline: "2026-10-15T23:59:59+05:30",
+  deadlineLabel: "Round 1 closes in",
 };
 
 /* ───────────────────────────── Footer ───────────────────────────── */

@@ -7,6 +7,8 @@ import Heading, { useWordReveal, Words } from "@/components/ui/Heading";
 import { GoldButton, NavArrows } from "@/components/ui/Button";
 import { ArrowRight } from "@/components/ui/icons";
 import { useCarousel, useDragScroll } from "@/lib/hooks";
+import { useSpotlight } from "@/lib/pointer";
+import Tilt from "@/components/ui/Tilt";
 import { cn } from "@/lib/cn";
 
 export default function Faculty() {
@@ -30,7 +32,7 @@ export default function Faculty() {
               )}
             </div>
             {/* proportion bar */}
-            <div className="mt-4 flex h-2 overflow-hidden rounded-full">
+            <div className="mt-4 flex h-2 overflow-hidden">
               {facultyMix.map((m) => (
                 <span
                   key={m.key}
@@ -73,9 +75,9 @@ export default function Faculty() {
           {/* Faculty grid */}
           <div key={group ?? "all"} className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {list.map((f, i) => (
+              <Tilt key={f.name} max={6} className="rounded-sm">
               <article
-                key={f.name}
-                className="group flex flex-col overflow-hidden rounded-[18px] border border-ink/10 bg-paper [animation:rise-in_.6s_var(--ease-out-expo)_both]"
+                className="group flex h-full flex-col overflow-hidden rounded-sm border border-ink/10 bg-paper [animation:rise-in_.6s_var(--ease-out-expo)_both]"
                 style={{ animationDelay: `${i * 50}ms` }}
               >
                 <div className="relative aspect-[5/4] overflow-hidden bg-gradient-to-b from-deep to-ink">
@@ -100,6 +102,7 @@ export default function Faculty() {
                   <p className="mt-1.5 text-[14.5px] font-medium leading-snug">{f.interest}</p>
                 </div>
               </article>
+              </Tilt>
             ))}
           </div>
         </div>
@@ -114,8 +117,15 @@ function Masterclasses() {
   const car = useCarousel<HTMLDivElement>();
   useDragScroll(car.ref);
   const head = useWordReveal<HTMLDivElement>();
+  const spot = useSpotlight<HTMLDivElement>();
   return (
-    <div aria-label="Masterclasses" className="mt-[clamp(80px,8vw,128px)] grid gap-10 overflow-hidden rounded-[28px] bg-ink p-7 text-snow md:p-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+    <div
+      ref={spot.ref}
+      onPointerMove={spot.onPointerMove}
+      onPointerLeave={spot.onPointerLeave}
+      aria-label="Masterclasses"
+      className="spotlight mt-[clamp(80px,8vw,128px)] grid gap-10 overflow-hidden rounded-sm bg-ink p-7 text-snow md:p-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]"
+    >
       <div ref={head} className="flex flex-col justify-between gap-8">
         <div>
           <h2 className="section-title">
@@ -131,7 +141,7 @@ function Masterclasses() {
       </div>
       <div ref={car.ref} className="no-scrollbar flex cursor-grab snap-x gap-4 overflow-x-auto active:cursor-grabbing">
         {masterclasses.items.map((m) => (
-          <div key={m.title} data-card className="group relative aspect-[9/16] w-[62%] shrink-0 snap-start overflow-hidden rounded-[16px] bg-forest sm:w-[250px]">
+          <div key={m.title} data-card className="group relative aspect-[9/16] w-[62%] shrink-0 snap-start overflow-hidden rounded-sm bg-forest sm:w-[250px]">
             <Image src={m.image} alt={m.title} fill sizes="250px" draggable={false} className="object-cover transition-transform duration-700 group-hover:scale-105" />
           </div>
         ))}

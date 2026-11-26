@@ -122,7 +122,7 @@ export default function Outcomes() {
         </div>
 
         {/* Stage */}
-        <figure data-stage className="relative mt-14 overflow-hidden rounded-[24px] bg-ink">
+        <figure data-stage className="relative mt-14 overflow-hidden rounded-sm bg-ink">
           <div className="relative aspect-[16/9] md:aspect-[21/9]">
             <Image
               data-stage-img
@@ -200,12 +200,12 @@ function ChapterRail({ pos, onSelect }: { pos: number; onSelect: (i: number) => 
   return (
     <div className="relative hidden lg:block">
       {/* track */}
-      <span aria-hidden className="absolute inset-y-0 left-1/2 -ml-[2px] w-1 rounded-full bg-ink/[0.08]" />
+      <span aria-hidden className="absolute inset-y-0 left-1/2 -ml-[2px] w-1 bg-ink/[0.08]" />
       {/* fill, scaled from the top */}
       <span
         data-rail-fill
         aria-hidden
-        className="absolute inset-y-0 left-1/2 -ml-[2px] w-1 origin-top scale-y-0 rounded-full bg-gradient-to-b from-mint via-deep to-deep"
+        className="absolute inset-y-0 left-1/2 -ml-[2px] w-1 origin-top scale-y-0 bg-gradient-to-b from-mint via-deep to-deep"
       />
 
       {/* chapter nodes */}
@@ -277,7 +277,7 @@ function ChapterBlock({ c, last }: { c: Chapter; last: boolean }) {
   return (
     <div data-chapter className="pt-12">
       {/* Feature card */}
-      <div className="grid overflow-hidden rounded-[24px] bg-ink text-snow lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
+      <div className="grid overflow-hidden rounded-sm bg-ink text-snow lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
         <div className="relative flex flex-col p-7 md:p-11">
           <ChapterLabel text={c.chapter} />
           <p className="mt-6 text-[clamp(26px,2.6vw,38px)] font-semibold leading-[1.15] tracking-tight">{c.title}</p>
@@ -362,7 +362,7 @@ function Ventures({ c, onPlay }: { c: Chapter; onPlay: (name: string, yt?: strin
   return (
     <div ref={rail} className="no-scrollbar flex cursor-grab gap-3 overflow-x-auto bg-forest p-4 active:cursor-grabbing md:p-6" aria-label={`${c.country} venture videos`}>
       {c.ventures.map((v) => (
-        <div key={v.name} className="group relative aspect-[9/16] w-[220px] shrink-0 overflow-hidden rounded-xl bg-slab md:w-[240px]">
+        <div key={v.name} className="group relative aspect-[9/16] w-[220px] shrink-0 overflow-hidden rounded-sm bg-slab md:w-[240px]">
           <Image src={v.image} alt={`${v.name} venture`} fill sizes="240px" draggable={false} className="object-cover transition-transform duration-700 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         </div>
@@ -405,7 +405,7 @@ function Companies({ list }: { list: Company[] }) {
           </>
         );
         const cls =
-          "group flex h-full flex-col overflow-hidden rounded-[10px] bg-ink text-snow shadow-[0_18px_40px_rgba(8,18,14,.12)] transition-transform duration-500 hover:-translate-y-1.5";
+          "group flex h-full flex-col overflow-hidden rounded-sm bg-ink text-snow shadow-[0_18px_40px_rgba(8,18,14,.12)] transition-transform duration-500 hover:-translate-y-1.5";
         return (
           <li key={co.name} className="[animation:rise-in_.7s_var(--ease-out-expo)_both]" style={{ animationDelay: `${i * 70}ms` }}>
             {co.href ? (
@@ -429,7 +429,7 @@ function Thumbs({ list }: { list: Thumb[] }) {
       {list.map((t) => (
         <li
           key={t.name}
-          className={cn("group relative aspect-[9/16] overflow-hidden rounded-[10px] bg-deep", t.video && "cursor-pointer")}
+          className={cn("group relative aspect-[9/16] overflow-hidden rounded-sm bg-deep", t.video && "cursor-pointer")}
           onClick={() => t.video && play({ title: t.name, mp4: t.video })}
         >
           <Image src={t.image} alt={`${t.name} video thumbnail`} fill sizes="(min-width: 1024px) 20vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -455,10 +455,10 @@ function Stories({ stories, heading, country }: { stories: Story[]; heading: str
       <ul ref={car.ref} className="no-scrollbar mt-8 flex cursor-grab snap-x gap-4 overflow-x-auto pb-2 active:cursor-grabbing" aria-label="Ghana impact stories">
         {stories.map((s) => (
           <li key={s.name} data-card className="w-[82%] shrink-0 snap-start sm:w-[380px]">
-            <article className="group h-full overflow-hidden rounded-[14px] border border-ink/10 bg-snow">
+            <article className="group h-full overflow-hidden rounded-sm border border-ink/10 bg-snow">
               <div className="relative aspect-[19/10] overflow-hidden bg-cream">
                 <Image src={s.image} alt={`${s.name} team`} fill sizes="380px" draggable={false} className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                <span className="absolute left-3 top-3 rounded-full bg-snow/90 px-2.5 py-0.5 font-mono text-[11px]">{s.index}</span>
+                <span className="absolute left-3 top-3 rounded-sm bg-snow/90 px-2.5 py-0.5 font-mono text-[11px]">{s.index}</span>
               </div>
               <div className="p-5">
                 <h5 className="text-[18px] font-semibold">{s.name}</h5>
@@ -484,7 +484,7 @@ function Startups({ list }: { list: Startup[] }) {
       {list.map((s, i) => (
         <li
           key={s.name}
-          className="group relative overflow-hidden rounded-[14px] border border-ink/10 bg-snow p-6 transition-colors duration-500 hover:border-deep"
+          className="group relative overflow-hidden rounded-sm border border-ink/10 bg-snow p-6 transition-colors duration-500 hover:border-deep"
         >
           <span className="pointer-events-none absolute -bottom-8 -right-2 font-serif text-[110px] italic leading-none text-ink/[0.05] transition-colors duration-500 group-hover:text-mint/25">
             {String(i + 1).padStart(2, "0")}
@@ -497,7 +497,7 @@ function Startups({ list }: { list: Startup[] }) {
                 src={s.logo}
                 alt={`${s.name} logo`}
                 loading="lazy"
-                className={cn("h-9 w-auto max-w-[110px] object-contain", s.logoBare && "rounded-md bg-ink px-1.5 py-1")}
+                className={cn("h-9 w-auto max-w-[110px] object-contain", s.logoBare && "rounded-sm bg-ink px-1.5 py-1")}
               />
             )}
           </div>

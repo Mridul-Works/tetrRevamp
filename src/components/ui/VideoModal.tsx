@@ -52,8 +52,8 @@ export function VideoProvider({ children }: { children: React.ReactNode }) {
             onClick={(e) => e.stopPropagation()}
             className={
               vertical
-                ? "relative h-[min(86vh,820px)] aspect-[9/16] max-w-full overflow-hidden rounded-2xl bg-black"
-                : "relative aspect-video w-[min(1100px,100%)] overflow-hidden rounded-2xl bg-black"
+                ? "relative h-[min(86vh,820px)] aspect-[9/16] max-w-full overflow-hidden rounded-sm bg-black"
+                : "relative aspect-video w-[min(1100px,100%)] overflow-hidden rounded-sm bg-black"
             }
           >
             {video.youtube ? (

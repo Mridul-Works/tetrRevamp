@@ -65,7 +65,7 @@ export default function Header() {
           "relative mx-auto flex h-16 items-center justify-between gap-6 border backdrop-blur-xl transition-all duration-500",
           scrolled
             ? "max-w-none rounded-none border-x-0 border-t-0 border-line bg-ink/85 px-5 md:px-[72px]"
-            : "max-w-[1336px] rounded-xl border-snow/10 bg-ink/40 px-4 md:px-6",
+            : "max-w-[1336px] rounded-sm border-snow/10 bg-ink/40 px-4 md:px-6",
         )}
       >
         <a href="#top" aria-label="Tetr College of Business home" onClick={(e) => (e.preventDefault(), jump("#top"))}>
@@ -133,7 +133,7 @@ export default function Header() {
         {menu && (
           <div
             className={cn(
-              "absolute left-1/2 top-[calc(100%+10px)] hidden w-[min(1180px,calc(100vw-48px))] -translate-x-1/2 rounded-xl border border-snow/10 bg-ink/95 p-8 shadow-2xl backdrop-blur-xl [animation:rise-in_.35s_var(--ease-out-expo)] lg:block",
+              "absolute left-1/2 top-[calc(100%+10px)] hidden w-[min(1180px,calc(100vw-48px))] -translate-x-1/2 rounded-sm border border-snow/10 bg-ink/95 p-8 shadow-2xl backdrop-blur-xl [animation:rise-in_.35s_var(--ease-out-expo)] lg:block",
               menu === "about" && "w-[min(560px,calc(100vw-48px))]",
             )}
           >

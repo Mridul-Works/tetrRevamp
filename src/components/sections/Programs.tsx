@@ -45,18 +45,19 @@ export default function Programs() {
 
         <div
           ref={car.ref}
+         
           className="no-scrollbar -mx-3 mt-4 flex cursor-grab snap-x snap-mandatory gap-6 overflow-x-auto px-3 pb-12 pt-8 active:cursor-grabbing"
         >
           {list.map((p, i) => (
             <article
               key={p.titleA + p.titleB}
               data-card
-              className="pass group relative flex w-[82%] shrink-0 snap-start flex-col rounded-[22px] bg-paper text-ink shadow-[0_24px_60px_rgba(0,0,0,.45)] transition-[translate,rotate,box-shadow] duration-500 ease-out-expo [animation:deal-in_.9s_var(--ease-out-expo)_both] hover:z-10 hover:shadow-[0_36px_80px_rgba(0,0,0,.6)] sm:w-[340px]"
+              className="pass group relative flex w-[82%] shrink-0 snap-start flex-col rounded-sm bg-paper text-ink shadow-[0_24px_60px_rgba(0,0,0,.45)] transition-[translate,rotate,box-shadow] duration-500 ease-out-expo [animation:deal-in_.9s_var(--ease-out-expo)_both] hover:z-10 hover:shadow-[0_36px_80px_rgba(0,0,0,.6)] sm:w-[340px]"
               style={{ animationDelay: `${i * 90}ms`, "--tilt": `${i % 2 ? 1.6 : -1.6}deg` } as React.CSSProperties}
             >
               {/* photo */}
               <div className="p-3 pb-0">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-[14px]">
+                <div className="relative aspect-[16/10] overflow-hidden rounded-sm">
                   <Image
                     src={p.image}
                     alt={`${p.titleA} ${p.titleB}`}
@@ -65,7 +66,7 @@ export default function Programs() {
                     draggable={false}
                     className="object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.06]"
                   />
-                  <span className="absolute left-3 top-3 rounded-full bg-ink/80 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-snow backdrop-blur">{p.degree}</span>
+                  <span className="absolute left-3 top-3 rounded-sm bg-ink/80 px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-snow backdrop-blur">{p.degree}</span>
                 </div>
               </div>
 

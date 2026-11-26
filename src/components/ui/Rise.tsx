@@ -28,7 +28,7 @@ export default function Rise({ from, children }: { from: string; children: React
             return;
           }
           const x = (e * window.innerWidth * 0.06).toFixed(1);
-          const r = (e * 48).toFixed(1);
+          const r = (e * 6).toFixed(1);
           el.style.clipPath = `inset(0 ${x}px 0 ${x}px round ${r}px ${r}px 0 0)`;
         };
         const st = ScrollTrigger.create({

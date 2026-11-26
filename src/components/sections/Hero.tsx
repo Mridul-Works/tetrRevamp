@@ -11,6 +11,7 @@ import { Words } from "@/components/ui/Heading";
 import { Download, Play } from "@/components/ui/icons";
 import { usePlayVideo } from "@/components/ui/VideoModal";
 import { useInView } from "@/lib/hooks";
+import { usePointerParallax } from "@/lib/pointer";
 import { cn } from "@/lib/cn";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -25,6 +26,8 @@ export default function Hero() {
   const play = usePlayVideo();
   const root = useRef<HTMLElement>(null);
   const { ref: viewRef, inView } = useInView<HTMLDivElement>("0px");
+  // photo and copy drift in opposite directions toward the pointer
+  usePointerParallax(root, 30);
 
   useEffect(() => {
     const t = setInterval(() => setIndex((i) => (i + 1) % hero.images.length), INTERVAL);
@@ -44,7 +47,7 @@ export default function Hero() {
 
       // Frame tightens and content drifts up as the hero scrolls away
       const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
-      gsap.to("[data-hero-frame]", { clipPath: "inset(3% 3% 0% 3% round 28px)", ease: "none", scrollTrigger: st });
+      gsap.to("[data-hero-frame]", { clipPath: "inset(3% 3% 0% 3% round 4px)", ease: "none", scrollTrigger: st });
       gsap.to("[data-hero-content]", { yPercent: -18, opacity: 0.2, ease: "none", scrollTrigger: st });
     },
     { scope: root },
@@ -58,23 +61,25 @@ export default function Hero() {
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: "inset(0% 0% 0% 0% round 0px)" }}
       >
-        {/* First photo paints immediately; the WebGL slideshow fades in over it */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={hero.images[0]} alt="" fetchPriority="high" className="absolute inset-0 size-full object-cover" />
-        <div className={cn("absolute inset-0 transition-opacity duration-1000", glReady ? "opacity-100" : "opacity-0")}>
-          <HeroSlides images={hero.images} index={index} active={inView} onReady={onReady} />
+        {/* First photo paints immediately; the WebGL slideshow fades in over it. Oversized so the parallax drift never shows an edge. */}
+        <div data-depth="-0.6" className="absolute -inset-[3%]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={hero.images[0]} alt="" fetchPriority="high" className="absolute inset-0 size-full object-cover" />
+          <div className={cn("absolute inset-0 transition-opacity duration-1000", glReady ? "opacity-100" : "opacity-0")}>
+            <HeroSlides images={hero.images} index={index} active={inView} onReady={onReady} />
+          </div>
         </div>
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/15" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/20 to-transparent" />
         <div className="grain pointer-events-none absolute inset-0" />
       </div>
 
-      <div data-hero-content className="container-x relative z-10 flex h-full flex-col justify-end pb-10 md:pb-12">
+      <div data-hero-content data-depth="0.35" className="container-x relative z-10 flex h-full flex-col justify-end pb-10 md:pb-12">
         <p data-hero-fade className="eyebrow mb-6 flex items-center gap-3 text-mint">
           <span className="h-px w-10 bg-mint" />
           {hero.eyebrow}
         </p>
-        <h1 className="text-[clamp(40px,6.4vw,104px)] font-semibold leading-[0.98] tracking-[-0.035em] text-snow">
+        <h1 className="text-[clamp(34px,5.2vw,84px)] font-semibold leading-[1] tracking-[-0.035em] text-snow">
           {hero.titleA.split(" by ").map((line, i) => (
             <span key={line} className="block">
               <Words text={i ? `by ${line}` : line} />
@@ -91,43 +96,22 @@ export default function Hero() {
         <div data-hero-rule className="mt-8 h-px origin-left bg-snow/20" />
 
         <div className="mt-7 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div data-hero-fade className="flex items-center gap-5">
+          <div data-hero-fade className="flex items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={QS_BADGE} alt={hero.badgeAlt} className="h-[64px] w-auto md:h-[72px]" />
-            <SlideCounter index={index} total={hero.images.length} />
-            <span className="hidden items-center gap-2 border-l border-snow/15 pl-5 font-mono text-[11px] uppercase tracking-[0.16em] text-snow/55 xl:flex">
-              <span className="relative block h-7 w-px overflow-hidden bg-snow/20">
-                <span className="absolute inset-x-0 top-0 h-1/2 bg-mint [animation:cue_1.8s_var(--ease-out-expo)_infinite]" />
-              </span>
-              {hero.scrollCue}
-            </span>
           </div>
           <div data-hero-fade className="flex flex-wrap gap-3">
             <GoldButton href={hero.handbook.href} icon={<Download width={16} height={16} />}>
               {hero.handbook.label}
             </GoldButton>
-            <OutlineButton onClick={() => play({ title: hero.filmTitle })} icon={<Play width={14} height={14} />}>
-              {hero.film}
-            </OutlineButton>
+            <span className="inline-flex">
+              <OutlineButton onClick={() => play({ title: hero.filmTitle })} icon={<Play width={14} height={14} />}>
+                {hero.film}
+              </OutlineButton>
+            </span>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function SlideCounter({ index, total }: { index: number; total: number }) {
-  return (
-    <div className="hidden items-center gap-3 border-l border-snow/15 pl-5 font-mono text-[12px] text-snow/70 sm:flex">
-      <span className="tabular-nums text-snow">{String(index + 1).padStart(2, "0")}</span>
-      <span className="relative h-px w-16 overflow-hidden bg-snow/20">
-        <span
-          key={index}
-          className="absolute inset-0 origin-left animate-progress bg-mint"
-          style={{ "--progress-duration": `${INTERVAL}ms` } as React.CSSProperties}
-        />
-      </span>
-      <span className="tabular-nums">{String(total).padStart(2, "0")}</span>
-    </div>
   );
 }

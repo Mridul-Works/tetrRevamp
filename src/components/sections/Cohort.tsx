@@ -1,25 +1,25 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { cohortHeading, cohortStats, tribe } from "@/data/content";
 import Heading from "@/components/ui/Heading";
 import Counter from "@/components/ui/Counter";
+import Postcard from "@/components/ui/Postcard";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Cohort() {
   const root = useRef<HTMLElement>(null);
   const pin = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
+  const track = useRef<HTMLUListElement>(null);
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      // Desktop: vertical scroll drives the portrait track sideways
+      // Desktop: vertical scroll drives the postcard track sideways
       mm.add("(min-width: 1024px) and (prefers-reduced-motion: no-preference)", () => {
         const t = track.current!;
         const distance = () => t.scrollWidth - window.innerWidth + 80;
@@ -35,8 +35,9 @@ export default function Cohort() {
             invalidateOnRefresh: true,
           },
         });
-        gsap.utils.toArray<HTMLElement>("[data-portrait-img]").forEach((img) => {
-          gsap.fromTo(img, { xPercent: -8 }, { xPercent: 8, ease: "none", scrollTrigger: { trigger: pin.current, start: "top top", end: () => `+=${distance()}`, scrub: true } });
+        // portraits drift inside their wells; scaled up so the pan never shows an edge
+        gsap.utils.toArray<HTMLElement>(".pc__img img").forEach((img) => {
+          gsap.fromTo(img, { xPercent: -5, scale: 1.12 }, { xPercent: 5, scale: 1.12, ease: "none", scrollTrigger: { trigger: pin.current, start: "top top", end: () => `+=${distance()}`, scrub: true } });
         });
       });
       return () => mm.revert();
@@ -45,26 +46,31 @@ export default function Cohort() {
   );
 
   return (
-    <section ref={root} id="cohort" aria-label="The cohort" className="relative bg-forest">
+    <section ref={root} id="cohort" aria-label="The cohort" className="relative overflow-hidden bg-forest">
       <div className="container-x pt-[clamp(96px,9vw,144px)]">
-        <Heading breakLine {...cohortHeading} />
+        <Heading breakLine eyebrow="Postcards from the cohort" {...cohortHeading} />
       </div>
 
-      <div ref={pin} className="relative overflow-hidden py-14 lg:flex lg:h-screen lg:items-center lg:py-0">
-        <div ref={track} className="no-scrollbar flex gap-4 overflow-x-auto px-[clamp(20px,5vw,80px)] lg:overflow-visible">
+      <div ref={pin} className="relative py-10 lg:flex lg:h-screen lg:items-center lg:py-0">
+        <ul ref={track} aria-label="Students of the cohort" className="pc-row px-[clamp(20px,5vw,80px)] lg:overflow-visible">
           {tribe.map((t, i) => (
-            <figure
-              key={t.name}
-              className="group relative aspect-[9/16] w-[62vw] shrink-0 overflow-hidden rounded-[20px] bg-slab sm:w-[300px] lg:h-[72vh] lg:w-auto"
-              style={{ marginTop: i % 2 ? "5vh" : 0 }}
-            >
-              {/* names are printed on the portraits themselves */}
-              <div data-portrait-img className="absolute -inset-x-[10%] inset-y-0">
-                <Image src={t.image} alt={`${t.name}, Tetr student`} fill sizes="(min-width: 1024px) 25vw, 62vw" className="object-cover" />
-              </div>
-            </figure>
+            <li key={t.name}>
+              <Postcard
+                image={t.image}
+                alt={`${t.name}, Tetr student`}
+                quote={t.name}
+                quoted={false}
+                by="Tetr student"
+                cta={`No. ${String(i + 1).padStart(2, "0")} / ${String(tribe.length).padStart(2, "0")}`}
+                stamp={{ top: "TETR", big: "4", bottom: "YEARS" }}
+                mark={{ place: "Cohort", sub: "70+ nations" }}
+                tilt={i % 2 ? 1.8 : -2.4}
+                lift={i % 2 ? 16 : 0}
+                sizes="(min-width: 640px) 300px, 260px"
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       <div className="container-x pb-[clamp(96px,9vw,144px)]">

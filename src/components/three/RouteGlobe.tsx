@@ -212,7 +212,7 @@ export default function RouteGlobe({
             onClick={() => onSelect(i)}
             style={{ opacity: 0 }}
             className={
-              "absolute left-0 top-0 whitespace-nowrap rounded-full px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.14em] transition-colors duration-300 will-change-transform " +
+              "absolute left-0 top-0 whitespace-nowrap rounded-sm px-2.5 py-1 font-mono text-[10.5px] uppercase tracking-[0.14em] transition-colors duration-300 will-change-transform " +
               (i === active ? "bg-gold text-gold-ink" : "bg-ink/70 text-snow/80 backdrop-blur hover:text-snow")
             }
           >

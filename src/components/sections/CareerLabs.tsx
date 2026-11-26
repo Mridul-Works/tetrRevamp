@@ -39,7 +39,7 @@ const tones = { deep: "bg-deep text-snow", mid: "bg-slab text-snow", dark: "bg-p
 function TileCard({ t, ratio }: { t: Tile; ratio: string }) {
   if (t.kind === "intern")
     return (
-      <article className={cn("group relative overflow-hidden rounded-2xl", ratio)}>
+      <article className={cn("group relative overflow-hidden rounded-sm", ratio)}>
         <Image
           src={t.photo}
           alt={`${t.founder} — intern at ${t.company}`}
@@ -51,7 +51,7 @@ function TileCard({ t, ratio }: { t: Tile; ratio: string }) {
     );
   if (t.kind === "stat")
     return (
-      <article className={cn("flex flex-col justify-between rounded-2xl p-4 sm:p-6", ratio, tones[t.tone])}>
+      <article className={cn("flex flex-col justify-between rounded-sm p-4 sm:p-6", ratio, tones[t.tone])}>
         <div>
           <p className="text-[clamp(30px,3.4vw,52px)] font-semibold leading-none tracking-tight">
             <Counter value={t.value} />
@@ -68,7 +68,7 @@ function TileCard({ t, ratio }: { t: Tile; ratio: string }) {
       href={careerLabs.cta.href}
       target="_blank"
       rel="noopener noreferrer"
-      className={cn("group flex flex-col justify-between rounded-2xl bg-mint p-4 text-ink transition-transform duration-500 hover:scale-[1.02] sm:p-6", ratio)}
+      className={cn("group flex flex-col justify-between rounded-sm bg-mint p-4 text-ink transition-transform duration-500 hover:scale-[1.02] sm:p-6", ratio)}
     >
       <div>
         <p className="text-[clamp(24px,2.4vw,34px)] font-semibold leading-none">{careerLabs.cta.headline}</p>
@@ -119,7 +119,7 @@ export default function CareerLabs() {
         <Heading eyebrow={careerLabs.eyebrow} line1={careerLabs.line1} line2={careerLabs.line2} byline={careerLabs.byline} />
 
         {/* Map panel */}
-        <div className="mt-14 overflow-hidden rounded-[24px] border border-snow/10 bg-forest/70">
+        <div className="mt-14 overflow-hidden rounded-sm border border-snow/10 bg-forest/70">
           <div className="flex flex-wrap items-center justify-between gap-5 border-b border-snow/10 p-6 md:p-8">
             <h3 className="text-[clamp(22px,2vw,28px)] font-semibold">{careerLabs.mapTitle}</h3>
             <GoldButton href={careerLabs.report.href} icon={<ArrowRight width={16} height={16} />}>

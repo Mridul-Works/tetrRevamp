@@ -8,12 +8,15 @@ import { useGSAP } from "@gsap/react";
 import { apply } from "@/data/content";
 import { GoldButton, OutlineButton } from "@/components/ui/Button";
 import { useWordReveal, Words } from "@/components/ui/Heading";
+import Countdown from "@/components/ui/Countdown";
+import { useSpotlight } from "@/lib/pointer";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Apply() {
   const root = useRef<HTMLElement>(null);
   const copy = useWordReveal<HTMLDivElement>("top 75%");
+  const spot = useSpotlight<HTMLDivElement>();
 
   useGSAP(
     () => {
@@ -29,7 +32,12 @@ export default function Apply() {
   return (
     <section ref={root} id="scholarships" aria-label="Apply" className="relative overflow-hidden bg-ink py-[clamp(96px,9vw,144px)]">
       <div className="container-x">
-        <div className="grid overflow-hidden rounded-[28px] border border-snow/10 bg-gradient-to-br from-deep via-forest to-ink lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+        <div
+          ref={spot.ref}
+          onPointerMove={spot.onPointerMove}
+          onPointerLeave={spot.onPointerLeave}
+          className="spotlight grid overflow-hidden rounded-sm border border-snow/10 bg-gradient-to-br from-deep via-forest to-ink lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]"
+        >
           <div ref={copy} className="relative flex flex-col justify-center p-8 md:p-14">
             <div className="pointer-events-none absolute -left-24 -top-24 size-72 rounded-full bg-gold/15 blur-[90px]" />
             <h2 className="relative text-[clamp(32px,3.6vw,56px)] font-semibold leading-[1.1] tracking-[-0.015em]">
@@ -44,6 +52,9 @@ export default function Apply() {
               <br />
               Round 1 closes <strong className="text-snow">15th Oct, 2026</strong>.
             </p>
+            <div data-fade className="relative mt-8">
+              <Countdown to={apply.deadline} label={apply.deadlineLabel} />
+            </div>
             <div data-fade className="relative mt-9 flex flex-wrap gap-3">
               <GoldButton href={apply.primary.href} icon={false}>
                 {apply.primary.label}

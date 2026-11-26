@@ -1,10 +1,44 @@
 import { LOGO, QS_BADGE, footer } from "@/data/content";
 import { ArrowUpRight, Instagram, Linkedin, Youtube } from "@/components/ui/icons";
 
+const MOTTO = "Learn by doing.";
+
+/** Rotating round badge: curved text circles a compass rose. */
+function SpinBadge() {
+  return (
+    <svg viewBox="0 0 120 120" aria-hidden className="size-[108px] shrink-0 text-mint [animation:spin-slow_22s_linear_infinite] md:size-[132px]">
+      <defs>
+        <path id="ftr-rim" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0" />
+      </defs>
+      <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" strokeOpacity="0.35" />
+      <text fill="currentColor" fontFamily="var(--font-mono)" fontSize="10.5" fontWeight="600" letterSpacing="2.4">
+        <textPath href="#ftr-rim">ACROSS THE GLOBE · DUBAI · INDIA · GHANA · USA · </textPath>
+      </text>
+      <g fill="currentColor">
+        <path d="M60 36 L64 56 L60 60 L56 56 Z" />
+        <path d="M60 84 L56 64 L60 60 L64 64 Z" opacity="0.45" />
+        <path d="M36 60 L56 56 L60 60 L56 64 Z" opacity="0.45" />
+        <path d="M84 60 L64 64 L60 60 L64 56 Z" opacity="0.45" />
+      </g>
+    </svg>
+  );
+}
+
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden bg-[#0a2a1c] pt-16 text-[#e8efe9]">
       <div className="container-x">
+        {/* motto: letters lift one by one when hovered */}
+        <div className="mb-14 flex flex-wrap items-center justify-between gap-8 border-b border-snow/10 pb-12">
+          <p className="wave-text text-[clamp(40px,7vw,104px)] font-semibold leading-none tracking-[-0.035em] text-snow" aria-label={MOTTO}>
+            {Array.from(MOTTO).map((ch, i) => (
+              <span key={i} aria-hidden style={{ "--i": i } as React.CSSProperties}>
+                {ch === " " ? " " : ch}
+              </span>
+            ))}
+          </p>
+          <SpinBadge />
+        </div>
         <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[1.1fr_0.7fr_0.8fr_1fr_1.2fr_1.3fr]">
           <div className="col-span-2 flex items-end justify-between gap-4 sm:block lg:col-span-1">
             <a href="https://tetr.com" target="_blank" rel="noopener">
@@ -15,7 +49,7 @@ export default function Footer() {
               href={footer.apply.href}
               target="_blank"
               rel="noopener"
-              className="inline-flex items-center gap-2 rounded bg-gold px-5 py-3.5 text-[14px] font-bold tracking-[0.05em] text-gold-ink transition-colors hover:bg-[#ffd75e] sm:mt-10"
+              className="inline-flex items-center gap-2 rounded-sm bg-gold px-5 py-3.5 text-[14px] font-bold tracking-[0.05em] text-gold-ink transition-colors hover:bg-[#ffd75e] sm:mt-10"
             >
               {footer.apply.label}
               <ArrowUpRight width={16} height={16} />
@@ -64,7 +98,7 @@ export default function Footer() {
         </div>
 
         <div
-          className="mt-12 h-[3px] rounded-full opacity-85"
+          className="mt-12 h-[3px] opacity-85"
           style={{
             background:
               "linear-gradient(90deg,#7c3aed 0%,#ffffff 8%,#22d3ee 16%,#0ea5e9 24%,#1e3a8a 32%,#ffffff 42%,#10b981 52%,#ffffff 60%,#f59e0b 70%,#ffffff 78%,#ef4444 86%,#ec4899 94%,#10b981 100%)",
