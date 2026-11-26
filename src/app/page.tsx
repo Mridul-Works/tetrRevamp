@@ -21,13 +21,11 @@ import Rise from "@/components/ui/Rise";
 import Intro from "@/components/ui/Intro";
 import ScrollNav from "@/components/ui/ScrollNav";
 import BackToTop from "@/components/ui/BackToTop";
-import Cursor from "@/components/ui/Cursor";
 
 export default function Home() {
   return (
     <>
       <Intro />
-      <Cursor />
       <ScrollNav />
       <BackToTop />
       <Header />

@@ -110,7 +110,7 @@ export default function Hero() {
               {hero.handbook.label}
             </GoldButton>
             <span className="inline-flex">
-              <OutlineButton onClick={() => play({ title: hero.filmTitle })} icon={<Play width={14} height={14} />} cursor="Play">
+              <OutlineButton onClick={() => play({ title: hero.filmTitle })} icon={<Play width={14} height={14} />}>
                 {hero.film}
               </OutlineButton>
             </span>

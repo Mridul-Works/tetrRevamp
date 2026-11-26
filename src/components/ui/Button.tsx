@@ -20,8 +20,6 @@ type Common = {
   children: React.ReactNode;
   className?: string;
   icon?: React.ReactNode | false;
-  /** Label the page cursor shows while over this button, e.g. "Play". */
-  cursor?: string;
 };
 type AsLink = Common & { href: string; onClick?: never; external?: boolean; disabled?: never };
 type AsButton = Common & { href?: never; onClick: () => void; external?: never; disabled?: boolean };
@@ -88,11 +86,12 @@ function Inner({ children, icon, done }: { children: React.ReactNode; icon?: Rea
 export function GoldButton(props: AsLink | AsButton) {
   const m = useMagnet<HTMLAnchorElement & HTMLButtonElement>();
   const { done, flash } = useDone();
+  // cn() doesn't merge conflicting classes, so the text colour is chosen once here
   const cls = cn(
     pill,
-    "bg-gold text-gold-ink before:bg-ink hover:text-gold hover:shadow-[0_16px_34px_-14px_rgba(242,201,76,0.55)] focus-visible:text-gold",
+    "bg-gold before:bg-ink hover:text-gold hover:shadow-[0_16px_34px_-14px_rgba(242,201,76,0.55)] focus-visible:text-gold",
+    done ? "text-gold before:scale-x-100" : "text-gold-ink",
     props.icon !== false && "pr-2",
-    done && "text-gold before:scale-x-100",
     props.className,
   );
   if (props.href)
@@ -102,7 +101,6 @@ export function GoldButton(props: AsLink | AsButton) {
         href={props.href}
         target={props.external === false ? undefined : "_blank"}
         rel="noopener noreferrer"
-        data-cursor={props.cursor}
         onClick={flash}
         className={cls}
       >
@@ -112,7 +110,7 @@ export function GoldButton(props: AsLink | AsButton) {
       </a>
     );
   return (
-    <button {...m} type="button" onClick={props.onClick} disabled={props.disabled} data-cursor={props.cursor} className={cls}>
+    <button {...m} type="button" onClick={props.onClick} disabled={props.disabled} className={cls}>
       <Inner icon={props.icon}>{props.children}</Inner>
     </button>
   );
@@ -121,12 +119,14 @@ export function GoldButton(props: AsLink | AsButton) {
 export function OutlineButton(props: (AsLink | AsButton) & { tone?: "dark" | "light" }) {
   const m = useMagnet<HTMLAnchorElement & HTMLButtonElement>();
   const { done, flash } = useDone();
+  const light = props.tone === "light";
   const cls = cn(
     pill,
-    props.tone === "light"
-      ? "border border-ink/25 text-ink before:bg-ink hover:border-ink hover:text-snow focus-visible:text-snow"
-      : "border border-snow/35 text-snow before:bg-snow hover:border-snow hover:text-ink focus-visible:text-ink",
-    done && (props.tone === "light" ? "text-snow before:scale-x-100" : "text-ink before:scale-x-100"),
+    light
+      ? "border border-ink/25 before:bg-ink hover:border-ink hover:text-snow focus-visible:text-snow"
+      : "border border-snow/35 before:bg-snow hover:border-snow hover:text-ink focus-visible:text-ink",
+    // cn() doesn't merge conflicting classes, so the text colour is chosen once here
+    done ? (light ? "text-snow" : "text-ink") + " before:scale-x-100" : light ? "text-ink" : "text-snow",
     props.className,
   );
   const content = (
@@ -144,12 +144,12 @@ export function OutlineButton(props: (AsLink | AsButton) & { tone?: "dark" | "li
   );
   if (props.href)
     return (
-      <a {...m} href={props.href} target="_blank" rel="noopener noreferrer" data-cursor={props.cursor} onClick={flash} className={cls}>
+      <a {...m} href={props.href} target="_blank" rel="noopener noreferrer" onClick={flash} className={cls}>
         {content}
       </a>
     );
   return (
-    <button {...m} type="button" onClick={props.onClick} disabled={props.disabled} data-cursor={props.cursor} className={cls}>
+    <button {...m} type="button" onClick={props.onClick} disabled={props.disabled} className={cls}>
       {content}
     </button>
   );

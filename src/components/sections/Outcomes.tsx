@@ -360,7 +360,7 @@ function Ventures({ c, onPlay }: { c: Chapter; onPlay: (name: string, yt?: strin
   }
 
   return (
-    <div ref={rail} data-cursor="Drag" className="no-scrollbar flex cursor-grab gap-3 overflow-x-auto bg-forest p-4 active:cursor-grabbing md:p-6" aria-label={`${c.country} venture videos`}>
+    <div ref={rail} className="no-scrollbar flex cursor-grab gap-3 overflow-x-auto bg-forest p-4 active:cursor-grabbing md:p-6" aria-label={`${c.country} venture videos`}>
       {c.ventures.map((v) => (
         <div key={v.name} className="group relative aspect-[9/16] w-[220px] shrink-0 overflow-hidden rounded-sm bg-slab md:w-[240px]">
           <Image src={v.image} alt={`${v.name} venture`} fill sizes="240px" draggable={false} className="object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -452,7 +452,7 @@ function Stories({ stories, heading, country }: { stories: Story[]; heading: str
           <NavArrows name="impact story" tone="light" onPrev={car.prev} onNext={car.next} prevDisabled={car.edges.start} nextDisabled={car.edges.end} />
         </div>
       </div>
-      <ul ref={car.ref} data-cursor="Drag" className="no-scrollbar mt-8 flex cursor-grab snap-x gap-4 overflow-x-auto pb-2 active:cursor-grabbing" aria-label="Ghana impact stories">
+      <ul ref={car.ref} className="no-scrollbar mt-8 flex cursor-grab snap-x gap-4 overflow-x-auto pb-2 active:cursor-grabbing" aria-label="Ghana impact stories">
         {stories.map((s) => (
           <li key={s.name} data-card className="w-[82%] shrink-0 snap-start sm:w-[380px]">
             <article className="group h-full overflow-hidden rounded-sm border border-ink/10 bg-snow">
