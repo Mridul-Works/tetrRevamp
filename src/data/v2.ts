@@ -63,21 +63,34 @@ export const v2Nav = {
 };
 
 export const v2Hero = {
-  eyebrow: "Tetr College of Business · QS Gold Winner 2025",
+  eyebrow: "Tetr College of Business",
+  intake: "Aug ’26 intake",
   /** Three display lines; the middle one is set in the italic serif accent. */
-  title: { a: "Learn business", accent: "by doing business", b: "in 7 countries." },
-  body: "A global Bachelor’s or Master’s where every term is a new country and a real company you run. You’re graded on revenue, not case studies.",
-  proof: [
-    { value: "$500K+", label: "earned by students" },
-    { value: "7", label: "countries, one degree" },
-    { value: "70+", label: "nationalities in class" },
-  ],
+  title: { a: "Learn business", accent: "by doing business", b: "in 7 countries" },
+  body: "A new country every term. A real company you run. Graded on revenue.",
+  cta: { label: "Get fees & scholarships", href: "#lead" },
+  film: { label: "Watch the film", title: hero.filmTitle },
   deadline: v2Deadline,
   deadlineLabel: `${v2DeadlineLabel} closes in`,
-  cta: { label: "Check my eligibility", href: "#lead" },
-  secondary: { label: "Talk to admissions", href: v2Contact.whatsapp },
-  film: hero.images.slice(0, 6),
+  scroll: "Scroll",
+  /** The stage: one wide frame and two smaller prints that drift toward the pointer. */
+  photos: {
+    main: { src: hero.images[1], alt: "Tetr students on the move between base camps" },
+    a: { src: "/img/immersions/TajMAhal_Inida.webp", alt: "Students at the Taj Mahal", place: "New Delhi" },
+    b: { src: "/img/immersions/NASDAQ_US.webp", alt: "Students at Nasdaq, New York", place: "New York" },
+  },
+  stops: ["New Delhi", "Dubai", "Shanghai", "Accra", "New York", "Buenos Aires", "Madrid"],
   badgeAlt: hero.badgeAlt,
+};
+
+export const v2LeadSection = {
+  eyebrow: "(Next step)",
+  title: "Fees, scholarships & the brochure, in one call.",
+  points: [
+    "Admissions calls within 24 hours",
+    "Scholarships up to 100% decided with your offer",
+    "No application fee in this round",
+  ],
 };
 
 export const v2MidCta = {

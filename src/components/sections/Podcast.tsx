@@ -72,7 +72,7 @@ function Stage({ list }: { list: Episode[] }) {
         {/* featured */}
         <button
           type="button"
-         
+          data-cursor="Play"
           onClick={() => start(ep)}
           aria-label={`Play ${ep.title} with ${ep.guest}`}
           className="group relative block aspect-video w-full overflow-hidden rounded-sm bg-forest"

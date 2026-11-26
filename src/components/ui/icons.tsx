@@ -49,6 +49,9 @@ export const Star = (p: P) => (
 export const Mic = (p: P) => (
   <svg {...base(p)}><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></svg>
 );
+export const Check = (p: P) => (
+  <svg {...base({ ...p, strokeWidth: 2.2 })}><path d="m5 12.5 4.5 4.5L19 7.5" /></svg>
+);
 export const Close = (p: P) => (
   <svg {...base(p)}><path d="M6 6l12 12M18 6 6 18" /></svg>
 );

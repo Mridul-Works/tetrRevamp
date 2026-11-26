@@ -1,68 +1,158 @@
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import Postmark from "@/components/ui/Postmark";
+import { PlayButton, usePlayVideo } from "@/components/ui/VideoModal";
+import { usePointerParallax } from "@/lib/pointer";
 import { QS_BADGE, v2Hero } from "@/data/v2";
 import { InlineCountdown } from "./Countdown";
-import LeadForm from "./LeadForm";
 
-/** Lead hero: the Tetr proposition and proof on the left, the form above the fold on the right. */
-export default function Hero() {
+gsap.registerPlugin(ScrollTrigger, useGSAP);
+
+/** Magnetic gold CTA: pulls toward the pointer, arrow slides on hover. */
+function Cta({ href, label }: { href: string; label: string }) {
+  const ref = useRef<HTMLAnchorElement>(null);
   return (
-    <section id="top" className="container-x pt-24 pb-14 md:pt-32 md:pb-20">
-      <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-        <div className="flex flex-col gap-7 lg:col-span-7">
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="bg-forest px-3 py-2">
-              <img src={QS_BADGE} alt={v2Hero.badgeAlt} className="h-[40px] w-auto" />
-            </div>
-            <p className="v2-mono">{v2Hero.eyebrow}</p>
+    <a
+      ref={ref}
+      href={href}
+      onPointerMove={(e) => {
+        const el = ref.current;
+        if (!el || e.pointerType !== "mouse") return;
+        const r = el.getBoundingClientRect();
+        el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.16}px, ${(e.clientY - r.top - r.height / 2) * 0.28}px)`;
+      }}
+      onPointerLeave={() => ref.current && (ref.current.style.transform = "")}
+      className="group/cta v2-mono relative inline-flex h-14 w-full items-center justify-between gap-4 bg-gold pr-3 pl-6 whitespace-nowrap sm:w-auto sm:justify-start sm:pl-7 text-[12.5px] font-semibold text-gold-ink transition-[transform,background-color] duration-500 ease-[var(--ease-out-expo)] hover:bg-[#ffd75e]"
+    >
+      {label}
+      <span className="grid size-9 place-items-center bg-gold-ink/10 transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="square" aria-hidden>
+          <path d="M5 12h14M13 5l7 7-7 7" />
+        </svg>
+      </span>
+    </a>
+  );
+}
+
+/**
+ * The opening frame. One idea, three lines, one button. Headline lines rise out of masks,
+ * the photo stage settles into place, and the whole frame tightens as you scroll away.
+ */
+export default function Hero() {
+  const root = useRef<HTMLElement>(null);
+  const play = usePlayVideo();
+  usePointerParallax(root, 28);
+
+  useGSAP(
+    () => {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduced) {
+        gsap.set("[data-line], [data-fade], [data-photo]", { clearProps: "all" });
+        return;
+      }
+      const tl = gsap.timeline({ delay: 0.15, defaults: { ease: "expo.out" } });
+      tl.from("[data-photo]", { clipPath: "inset(100% 0 0 0)", scale: 1.12, duration: 1.6, stagger: 0.12 })
+        .from("[data-line]", { yPercent: 110, duration: 1.3, stagger: 0.09 }, "-=1.25")
+        .from("[data-fade]", { y: 22, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.08 }, "-=0.9")
+        .from("[data-rule]", { scaleX: 0, transformOrigin: "left", duration: 1.2 }, "<");
+
+      const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
+      gsap.to("[data-frame]", { clipPath: "inset(0 2.5% 6% 2.5% round 4px)", ease: "none", scrollTrigger: st });
+      gsap.to("[data-content]", { yPercent: -14, opacity: 0.15, ease: "none", scrollTrigger: st });
+      gsap.to("[data-stage]", { yPercent: 10, ease: "none", scrollTrigger: st });
+    },
+    { scope: root },
+  );
+
+  return (
+    <section ref={root} id="top" className="relative min-h-[100svh] bg-[var(--v2-paper)]">
+      <div data-frame className="grain relative flex min-h-[100svh] flex-col overflow-hidden bg-forest text-cream" style={{ clipPath: "inset(0 0 0 0)" }}>
+        <div className="grid-lines pointer-events-none absolute inset-0 opacity-70" />
+        {/* soft mint light in the top-left corner */}
+        <div className="pointer-events-none absolute -top-40 -left-40 size-[620px] rounded-full bg-mint/10 blur-3xl" />
+
+        {/* photo stage, right two-fifths on desktop; behind the type on phones */}
+        <div data-stage className="absolute inset-0 lg:left-[52%]">
+          <figure data-photo data-depth="0.35" className="absolute inset-y-[8%] right-0 left-[6%] overflow-hidden lg:inset-y-[10%] lg:right-[6%] lg:left-0" style={{ clipPath: "inset(0 0 0 0)" }}>
+            <img src={v2Hero.photos.main.src} alt={v2Hero.photos.main.alt} fetchPriority="high" className="size-full object-cover object-[68%_center] opacity-45 lg:object-center lg:opacity-90" />
+            <div className="absolute inset-0 bg-gradient-to-r from-forest via-forest/50 to-transparent lg:from-forest/60 lg:via-transparent" />
+          </figure>
+          <figure data-photo data-depth="0.9" className="absolute bottom-[12%] left-[3%] hidden w-[24%] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,.45)] lg:block" style={{ clipPath: "inset(0 0 0 0)" }}>
+            <img src={v2Hero.photos.a.src} alt={v2Hero.photos.a.alt} className="aspect-[4/5] w-full object-cover" />
+            <Postmark place={v2Hero.photos.a.place} color="var(--color-cream)" tilt={-9} className="absolute -top-2 -right-4 w-[120px]" />
+          </figure>
+          <figure data-photo data-depth="0.6" className="absolute top-[15%] right-[3%] hidden w-[21%] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,.45)] lg:block" style={{ clipPath: "inset(0 0 0 0)" }}>
+            <img src={v2Hero.photos.b.src} alt={v2Hero.photos.b.alt} className="aspect-[4/5] w-full object-cover" />
+            <Postmark place={v2Hero.photos.b.place} color="var(--color-gold)" tilt={7} className="absolute -right-3 -bottom-3 w-[120px]" />
+          </figure>
+        </div>
+
+        {/* copy */}
+        <div data-content className="container-x relative z-10 flex flex-1 flex-col justify-center pt-24 pb-16 lg:pt-28">
+          <div className="lg:max-w-[50%]">
+          <div data-fade className="mb-8 flex items-center gap-4">
+            <img src={QS_BADGE} alt={v2Hero.badgeAlt} className="h-8 w-auto" />
+            <p className="v2-mono text-cream/70">
+              <span className="hidden sm:inline">
+                {v2Hero.eyebrow} <span className="mx-2 text-cream/30">/</span>
+              </span>
+              <span className="text-mint">{v2Hero.intake}</span>
+            </p>
           </div>
 
-          <h1 className="v2-display text-[clamp(56px,8.2vw,124px)] leading-[0.88] tracking-[-0.01em]">
-            {v2Hero.title.a}
-            <br />
-            <span className="accent normal-case text-deep" style={{ fontSize: "0.78em" }}>
-              {v2Hero.title.accent}
+          <h1 className="v2-display text-[clamp(40px,5.4vw,96px)] leading-[0.86] whitespace-nowrap text-snow">
+            <span className="block overflow-hidden pb-[0.04em]">
+              <span data-line className="block">{v2Hero.title.a}</span>
             </span>
-            <br />
-            {v2Hero.title.b}
+            <span className="block overflow-hidden py-[0.06em]">
+              <span data-line className="accent block normal-case text-mint" style={{ fontSize: "0.8em", lineHeight: 0.95 }}>
+                {v2Hero.title.accent}
+              </span>
+            </span>
+            <span className="block overflow-hidden pb-[0.06em]">
+              <span data-line className="block">{v2Hero.title.b}</span>
+            </span>
           </h1>
 
-          <p className="max-w-[52ch] text-[clamp(16px,1.3vw,19px)] leading-[1.55] v2-mute">{v2Hero.body}</p>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href={v2Hero.cta.href}
-              className="v2-mono inline-flex h-13 items-center bg-[var(--v2-ink)] px-7 text-[12.5px] font-semibold text-[var(--v2-paper)] transition-colors hover:bg-gold hover:text-[var(--v2-ink)]"
-            >
-              {v2Hero.cta.label}
-            </a>
-            <a href={v2Hero.secondary.href} target="_blank" rel="noreferrer" className="v2-mono inline-flex h-13 items-center border v2-rule px-6 text-[12.5px] transition-colors hover:border-[var(--v2-ink)]">
-              {v2Hero.secondary.label}
-            </a>
-            <InlineCountdown to={v2Hero.deadline} label={v2Hero.deadlineLabel} className="ml-1" />
+          <div className="mt-8 flex flex-col gap-7 lg:mt-10">
+            <p data-fade className="max-w-[30ch] text-[clamp(17px,1.4vw,21px)] leading-[1.4] text-cream/75">{v2Hero.body}</p>
+            <div data-fade className="flex flex-wrap items-center gap-x-8 gap-y-5">
+              <Cta href={v2Hero.cta.href} label={v2Hero.cta.label} />
+              <div className="group/film flex items-center gap-3">
+                <PlayButton label={v2Hero.film.label} onClick={() => play({ title: v2Hero.film.title })} size={48} />
+                <button type="button" onClick={() => play({ title: v2Hero.film.title })} className="v2-mono text-cream/80 underline-offset-4 hover:underline group-hover/film:underline">
+                  {v2Hero.film.label}
+                </button>
+              </div>
+            </div>
           </div>
-
-          <ul className="grid grid-cols-3 border-t v2-rule">
-            {v2Hero.proof.map((p, i) => (
-              <li key={p.label} className={i > 0 ? "border-l v2-rule py-5 pl-5" : "py-5"}>
-                <p className="v2-display text-[clamp(32px,3.6vw,56px)]">{p.value}</p>
-                <p className="v2-mono v2-mute mt-1">{p.label}</p>
-              </li>
-            ))}
-          </ul>
+          </div>
         </div>
 
-        <div id="lead" className="scroll-mt-20 lg:col-span-5" data-leadform>
-          <LeadForm placement="hero" className="lg:sticky lg:top-24" />
-        </div>
-      </div>
-
-      {/* filmstrip: students on the route */}
-      <div className="mt-14 border-y-2 border-forest py-2">
-        <div className="grid grid-cols-3 gap-2 md:grid-cols-6">
-          {v2Hero.film.map((src, i) => (
-            <figure key={src} className={i >= 3 ? "hidden aspect-[4/3] overflow-hidden bg-forest md:block" : "aspect-[4/3] overflow-hidden bg-forest"}>
-              <img src={src} alt="" loading={i === 0 ? "eager" : "lazy"} className="size-full object-cover transition-transform duration-700 hover:scale-105" />
-            </figure>
-          ))}
+        {/* base line: countdown, the seven stops, scroll cue */}
+        <div className="container-x relative z-10 pb-6">
+          <div data-rule className="h-px w-full bg-cream/15" />
+          <div className="flex items-center justify-between gap-6 pt-4">
+            <InlineCountdown to={v2Hero.deadline} label={v2Hero.deadlineLabel} className="text-cream [&>span:first-child]:text-cream/50" />
+            <ul className="v2-mono hidden items-center gap-5 text-cream/45 md:flex">
+              {v2Hero.stops.map((s, i) => (
+                <li key={s} className="flex items-center gap-5">
+                  {i > 0 && <span aria-hidden className="size-1 rounded-full bg-current opacity-60" />}
+                  {s}
+                </li>
+              ))}
+            </ul>
+            <p className="v2-mono flex items-center gap-2 text-cream/50">
+              {v2Hero.scroll}
+              <span className="relative block h-8 w-px overflow-hidden bg-cream/20">
+                <span className="absolute inset-x-0 top-0 h-1/2 bg-mint [animation:cue_1.6s_ease-in-out_infinite]" />
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </section>

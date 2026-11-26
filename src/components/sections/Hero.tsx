@@ -40,10 +40,12 @@ export default function Hero() {
     () => {
       // starts as the intro curtain (see <Intro />) lifts
       const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const tl = gsap.timeline({ delay: reduced ? 0.1 : 1.15 });
-      tl.from("[data-word]", { yPercent: 115, duration: 1.3, ease: "expo.out", stagger: 0.05 })
-        .from("[data-hero-fade]", { y: 28, opacity: 0, duration: 1.1, ease: "power3.out", stagger: 0.1 }, "-=0.9")
-        .from("[data-hero-rule]", { scaleX: 0, duration: 1.4, ease: "expo.out" }, "<");
+      // The copy, badge and buttons come in alongside the headline rather than after it,
+      // so everything in the hero is on screen within about a second of the curtain lifting.
+      const tl = gsap.timeline({ delay: reduced ? 0.1 : 1.0 });
+      tl.from("[data-word]", { yPercent: 115, duration: 1.1, ease: "expo.out", stagger: 0.04 })
+        .from("[data-hero-fade]", { y: 20, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.07 }, 0.2)
+        .from("[data-hero-rule]", { scaleX: 0, duration: 1.2, ease: "expo.out" }, 0.3);
 
       // Frame tightens and content drifts up as the hero scrolls away
       const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: true };
@@ -54,7 +56,7 @@ export default function Hero() {
   );
 
   return (
-    <section ref={root} id="top" aria-label="Introduction" className="relative h-[100svh] min-h-[640px] bg-ink">
+    <section ref={root} id="top" aria-label="Introduction" className="relative min-h-[100svh] bg-ink">
       <div
         ref={viewRef}
         data-hero-frame
@@ -74,12 +76,15 @@ export default function Hero() {
         <div className="grain pointer-events-none absolute inset-0" />
       </div>
 
-      <div data-hero-content data-depth="0.35" className="container-x relative z-10 flex h-full flex-col justify-end pb-10 md:pb-12">
-        <p data-hero-fade className="eyebrow mb-6 flex items-center gap-3 text-mint">
+      {/* Fills the screen with the copy at the bottom, but the top padding clears the fixed header:
+          on short screens the section grows instead of pushing the copy up under the header. */}
+      <div data-hero-content data-depth="0.35" className="container-x relative z-10 flex min-h-[100svh] flex-col justify-end pb-10 pt-[112px] md:pb-12 md:pt-[124px] [@media(max-height:720px)]:pb-8">
+        <p data-hero-fade className="eyebrow mb-6 flex items-center gap-3 text-mint [@media(max-height:720px)]:mb-4">
           <span className="h-px w-10 bg-mint" />
           {hero.eyebrow}
         </p>
-        <h1 className="text-[clamp(34px,5.2vw,84px)] font-semibold leading-[1] tracking-[-0.035em] text-snow">
+        {/* sized by width and height, so a wide but short window doesn't get a giant headline */}
+        <h1 className="text-[clamp(34px,min(5.2vw,9.5svh),84px)] font-semibold leading-[1] tracking-[-0.035em] text-snow">
           {hero.titleA.split(" by ").map((line, i) => (
             <span key={line} className="block">
               <Words text={i ? `by ${line}` : line} />
@@ -89,13 +94,13 @@ export default function Hero() {
             <Words text={hero.titleB} className="accent text-mint" />
           </span>
         </h1>
-        <p data-hero-fade className="mt-7 max-w-[560px] text-[15.5px] leading-[1.65] text-snow/80 md:text-[17px]">
+        <p data-hero-fade className="mt-7 max-w-[560px] text-[15.5px] leading-[1.65] text-snow/80 md:text-[17px] [@media(max-height:720px)]:mt-5">
           {hero.body}
         </p>
 
-        <div data-hero-rule className="mt-8 h-px origin-left bg-snow/20" />
+        <div data-hero-rule className="mt-8 h-px origin-left bg-snow/20 [@media(max-height:720px)]:mt-6" />
 
-        <div className="mt-7 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div className="mt-7 flex flex-col gap-6 md:flex-row md:items-center md:justify-between [@media(max-height:720px)]:mt-5 [@media(max-height:720px)]:gap-4">
           <div data-hero-fade className="flex items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={QS_BADGE} alt={hero.badgeAlt} className="h-[64px] w-auto md:h-[72px]" />
@@ -105,7 +110,7 @@ export default function Hero() {
               {hero.handbook.label}
             </GoldButton>
             <span className="inline-flex">
-              <OutlineButton onClick={() => play({ title: hero.filmTitle })} icon={<Play width={14} height={14} />}>
+              <OutlineButton onClick={() => play({ title: hero.filmTitle })} icon={<Play width={14} height={14} />} cursor="Play">
                 {hero.film}
               </OutlineButton>
             </span>

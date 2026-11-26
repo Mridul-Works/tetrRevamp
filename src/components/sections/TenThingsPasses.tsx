@@ -118,7 +118,7 @@ export default function TenThingsPasses() {
               <li key={t.tag} data-pass className="sticky mb-8 drop-shadow-[0_-10px_22px_rgba(0,0,0,0.35)] transition-[top] duration-500 ease-out-expo last:mb-0" style={{ top: `min(calc(var(--hdr, 0px) + var(--pass-top, 180px) + ${i * PEEK}px), calc(100svh - var(--h, 0px) - 16px))`, zIndex: i + 1 }}>
                 <div
                   data-pass-inner
-                 
+                  data-cursor="Watch"
                   role="button"
                   tabIndex={0}
                   aria-label={`Pass ${pad(i + 1)}, seat ${seat(i)}. ${t.tag}: ${plain(t.title)}. Watch the story`}

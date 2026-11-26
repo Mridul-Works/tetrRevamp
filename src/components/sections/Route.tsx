@@ -38,11 +38,21 @@ export default function Route() {
 
         <div className="mt-8 grid overflow-hidden rounded-sm border border-snow/10 bg-ink/50 backdrop-blur-sm lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
           {/* Globe + photo card */}
-          <div ref={ref} className="relative min-h-[420px] border-b border-snow/10 lg:min-h-[640px] lg:border-b-0 lg:border-r">
+          <div ref={ref} className="relative min-h-[520px] overflow-hidden border-b border-snow/10 bg-[radial-gradient(ellipse_at_50%_60%,rgba(30,77,51,.55),rgba(8,18,14,0)_62%)] lg:min-h-[760px] lg:border-b-0 lg:border-r">
             <div className="absolute inset-0">
               <RouteGlobe points={points} labels={labels} active={active} onSelect={select} running={inView} />
             </div>
             <PhotoCard key={c.name} photos={c.photos} name={c.name} />
+            {/* term badge */}
+            <div key={`badge-${c.name}`} className="pointer-events-none absolute left-5 top-5 flex items-center gap-3 [animation:rise-in_.6s_var(--ease-out-expo)_both]">
+              <span className="grid size-11 place-items-center rounded-sm bg-gold font-mono text-[15px] font-bold text-gold-ink shadow-[0_0_0_4px_rgba(242,201,76,.2)]">
+                {String(c.term).padStart(2, "0")}
+              </span>
+              <span className="leading-tight">
+                <span className="block font-mono text-[10.5px] uppercase tracking-[0.18em] text-mint">Term {c.term} · now landing</span>
+                <span className="block text-[15px] font-semibold text-snow">{c.name}</span>
+              </span>
+            </div>
             <p className="eyebrow pointer-events-none absolute right-5 top-5 text-snow/50">
               {String(active + 1).padStart(2, "0")} / {String(countries.length).padStart(2, "0")}
             </p>
@@ -225,7 +235,7 @@ function PhotoCard({ photos, name }: { photos: string[]; name: string }) {
   }, [photos.length]);
 
   return (
-    <div className="absolute bottom-5 left-5 z-10 w-[min(52%,320px)] overflow-hidden rounded-sm border border-snow/15 bg-ink shadow-[0_30px_60px_rgba(0,0,0,.5)] [animation:rise-in_.8s_var(--ease-out-expo)_both]">
+    <div className="absolute bottom-5 left-5 z-10 w-[min(42%,250px)] overflow-hidden rounded-sm border border-snow/15 bg-ink shadow-[0_30px_60px_rgba(0,0,0,.5)] [animation:rise-in_.8s_var(--ease-out-expo)_both]">
       <div className="relative aspect-[4/3]">
         {photos.map((src, n) => (
           <Image

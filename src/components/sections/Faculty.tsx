@@ -139,7 +139,7 @@ function Masterclasses() {
           <NavArrows name="masterclass" onPrev={car.prev} onNext={car.next} prevDisabled={car.edges.start} nextDisabled={car.edges.end} />
         </div>
       </div>
-      <div ref={car.ref} className="no-scrollbar flex cursor-grab snap-x gap-4 overflow-x-auto active:cursor-grabbing">
+      <div ref={car.ref} data-cursor="Drag" className="no-scrollbar flex cursor-grab snap-x gap-4 overflow-x-auto active:cursor-grabbing">
         {masterclasses.items.map((m) => (
           <div key={m.title} data-card className="group relative aspect-[9/16] w-[62%] shrink-0 snap-start overflow-hidden rounded-sm bg-forest sm:w-[250px]">
             <Image src={m.image} alt={m.title} fill sizes="250px" draggable={false} className="object-cover transition-transform duration-700 group-hover:scale-105" />

@@ -6,7 +6,13 @@ import { LOGO, aboutMenu, programMenu } from "@/data/content";
 import { cn } from "@/lib/cn";
 import { ArrowUpRight, ChevronDown, Close, Menu } from "@/components/ui/icons";
 
-const navLink = "text-[12.5px] uppercase tracking-[0.1em] text-snow/85 transition-colors hover:text-mint";
+/* Nav items: hover draws a mint underline; the item whose section is on screen keeps it (aria-current). */
+const navLink =
+  "relative py-1 text-[12.5px] uppercase tracking-[0.1em] text-snow/85 transition-colors hover:text-mint " +
+  "after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-mint after:transition-transform after:duration-500 after:ease-out-expo hover:after:scale-x-100 " +
+  "aria-[current=true]:text-mint aria-[current=true]:after:scale-x-100 aria-[expanded=true]:text-mint";
+/** Sections that light up a nav item while they're on screen. */
+const NAV_SECTIONS: Record<string, string> = { programs: "programs", faculty: "faculty" };
 const menuRow =
   "group flex items-center justify-between gap-4 border-b border-line py-3 text-[13.5px] text-snow/85 transition-colors last:border-0 hover:text-mint";
 
@@ -15,8 +21,28 @@ export default function Header() {
   const [mobile, setMobile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [section, setSection] = useState<string | null>(null);
   const bar = useRef<HTMLDivElement>(null);
   const last = useRef(0);
+
+  // which nav item is "current": the section under the middle of the screen, if it has one
+  useEffect(() => {
+    const els = Object.keys(NAV_SECTIONS)
+      .map((id) => document.getElementById(id))
+      .filter((e): e is HTMLElement => !!e);
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setSection(NAV_SECTIONS[e.target.id]);
+          else setSection((s) => (s === NAV_SECTIONS[e.target.id] ? null : s));
+        }
+      },
+      { rootMargin: "-40% 0px -50% 0px" },
+    );
+    els.forEach((e) => io.observe(e));
+    return () => io.disconnect();
+  }, []);
 
   const lenis = useLenis(({ scroll, limit }) => {
     setScrolled(scroll > 24);
@@ -78,12 +104,13 @@ export default function Header() {
             type="button"
             className={cn(navLink, "flex items-center gap-1")}
             aria-expanded={menu === "programs"}
+            aria-current={section === "programs" || undefined}
             onMouseEnter={() => setMenu("programs")}
             onClick={() => setMenu(menu === "programs" ? null : "programs")}
           >
             Programs <ChevronDown width={14} height={14} className={cn("transition-transform", menu === "programs" && "rotate-180")} />
           </button>
-          <a href="https://tetr.com/faculty" className={navLink} onMouseEnter={() => setMenu(null)}>
+          <a href="https://tetr.com/faculty" className={navLink} aria-current={section === "faculty" || undefined} onMouseEnter={() => setMenu(null)}>
             Faculty
           </a>
           <a href="https://tetr.com/student-life" className={navLink} onMouseEnter={() => setMenu(null)}>
@@ -104,21 +131,22 @@ export default function Header() {
           <a
             href="#scholarships"
             onClick={(e) => (e.preventDefault(), jump("#scholarships"))}
-            className="hidden h-10 items-center rounded-sm bg-gold px-4 text-[13.5px] font-semibold text-gold-ink transition-colors hover:bg-[#ffd75e] sm:inline-flex"
+            className="hidden h-10 items-center rounded-sm bg-gold px-4 text-[13.5px] font-semibold text-gold-ink transition-[background-color,color,scale,box-shadow] duration-300 ease-out-expo hover:bg-[#ffd75e] hover:shadow-[0_10px_24px_-10px_rgba(242,201,76,0.7)] active:scale-[0.96] active:duration-100 sm:inline-flex"
           >
             Apply now
           </a>
           <a
             href="https://tetr.com/contact-us"
-            className="hidden h-10 items-center rounded-sm border border-snow/25 px-4 text-[13.5px] font-semibold text-snow transition-colors hover:bg-snow hover:text-ink sm:inline-flex"
+            className="hidden h-10 items-center rounded-sm border border-snow/25 px-4 text-[13.5px] font-semibold text-snow transition-[background-color,color,border-color,scale] duration-300 ease-out-expo hover:bg-snow hover:text-ink active:scale-[0.96] active:duration-100 sm:inline-flex"
           >
             Contact us
           </a>
           <button
             type="button"
             aria-label={mobile ? "Close menu" : "Open menu"}
+            aria-expanded={mobile}
             onClick={() => setMobile((m) => !m)}
-            className="grid size-10 place-items-center rounded-sm border border-snow/25 text-snow lg:hidden"
+            className="grid size-10 place-items-center rounded-sm border border-snow/25 text-snow transition-[border-color,background-color,color] duration-300 hover:border-snow aria-expanded:bg-snow aria-expanded:text-ink lg:hidden"
           >
             {mobile ? <Close /> : <Menu />}
           </button>

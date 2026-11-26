@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Nav from "@/components/v2/Nav";
 import Hero from "@/components/v2/Hero";
+import LeadSection from "@/components/v2/LeadSection";
 import Belt from "@/components/v2/Belt";
 import Tickets from "@/components/v2/Tickets";
 import RouteBoard from "@/components/v2/RouteBoard";
@@ -35,6 +36,7 @@ export default function V2() {
       <StickyBar />
       <main>
         <Hero />
+        <LeadSection />
         <Belt caption="At a glance — drag the belt" hint="Auto-slides — drag to browse" />
         <Tickets />
         <RouteBoard />
