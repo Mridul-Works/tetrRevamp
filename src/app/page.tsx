@@ -1,0 +1,45 @@
+import Header from "@/components/sections/Header";
+import Hero from "@/components/sections/Hero";
+import TenThings from "@/components/sections/TenThings";
+import Route from "@/components/sections/Route";
+import Programs from "@/components/sections/Programs";
+import Outcomes from "@/components/sections/Outcomes";
+import Launchpad from "@/components/sections/Launchpad";
+import CareerLabs from "@/components/sections/CareerLabs";
+import Faculty from "@/components/sections/Faculty";
+import Creators from "@/components/sections/Creators";
+import Immersions from "@/components/sections/Immersions";
+import Cohort from "@/components/sections/Cohort";
+import Podcast from "@/components/sections/Podcast";
+import Campus from "@/components/sections/Campus";
+import Press from "@/components/sections/Press";
+import Events from "@/components/sections/Events";
+import Apply from "@/components/sections/Apply";
+import Footer from "@/components/sections/Footer";
+
+export default function Home() {
+  return (
+    <>
+      <Header />
+      <main>
+        <Hero />
+        <TenThings />
+        <Route />
+        <Programs />
+        <Outcomes />
+        <Launchpad />
+        <CareerLabs />
+        <Faculty />
+        <Creators />
+        <Immersions />
+        <Cohort />
+        <Podcast />
+        <Campus />
+        <Press />
+        <Events />
+        <Apply />
+      </main>
+      <Footer />
+    </>
+  );
+}
