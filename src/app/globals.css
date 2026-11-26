@@ -148,6 +148,73 @@
   .mask-fade-x {
     mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
+
+  /* Partner-university collage. Tiles carry --x --y --w --h on a 1440×892 stage;
+     --u scales the whole stage to fit the screen, --ux/--uy let the spacing (not the
+     photos) stretch a little on wider or taller screens so the ring never crowds the heading. */
+  .uni-collage {
+    --u: min(calc(100vw / 1440), calc(100svh / 892));
+    --ux: min(calc(100vw / 1440), calc(var(--u) * 1.28));
+    --uy: min(calc(100svh / 892), calc(var(--u) * 1.15));
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+  }
+  .uni-collage .uni-tile {
+    position: absolute;
+    left: calc(50% + (var(--x) + var(--w) / 2 - 720) * var(--ux) - var(--w) * var(--u) / 2);
+    top: calc(50% + (var(--y) + var(--h) / 2 - 446) * var(--uy) - var(--h) * var(--u) / 2);
+    width: calc(var(--w) * var(--u));
+    height: calc(var(--h) * var(--u));
+  }
+  .uni-collage .uni-ctr-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+  .uni-collage .uni-ctr {
+    width: min(760px, calc(720 * var(--ux)));
+    padding: 20px 16px;
+    pointer-events: auto;
+  }
+  .uni-collage .uni-logo {
+    height: calc(var(--lh) * var(--u) * 0.8);
+  }
+  @media (max-width: 1023px) {
+    .uni-collage {
+      height: auto;
+      overflow: visible;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-inline: clamp(20px, 5vw, 80px);
+    }
+    .uni-collage .uni-tile {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: auto;
+      height: auto;
+      aspect-ratio: 4 / 3;
+    }
+    .uni-collage .uni-ctr-wrap {
+      position: static;
+      grid-column: 1 / -1;
+      display: block;
+      margin-bottom: 28px;
+    }
+    .uni-collage .uni-ctr {
+      width: auto;
+      padding: 0;
+    }
+    .uni-collage .uni-logo {
+      height: clamp(calc(var(--lh) * 0.4px), 8vw, calc(var(--lh) * 0.7px));
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

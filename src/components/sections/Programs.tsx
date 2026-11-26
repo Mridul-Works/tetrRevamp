@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { programTabs, programs, programsHeading, universities, universitiesHeading, type ProgramTab } from "@/data/content";
+import { programTabs, programs, programsHeading, type ProgramTab } from "@/data/content";
 import Heading from "@/components/ui/Heading";
+import Universities from "@/components/sections/Universities";
 import { NavArrows, Pill } from "@/components/ui/Button";
 import { ArrowUpRight, Clock, MapPin } from "@/components/ui/icons";
 import { useCarousel, useDragScroll } from "@/lib/hooks";
-import { cn } from "@/lib/cn";
 
 export default function Programs() {
   const [tab, setTab] = useState<ProgramTab>("Bachelor's");
@@ -92,45 +92,10 @@ export default function Programs() {
             </article>
           ))}
         </div>
-
-        {/* Partner universities */}
-        <div className="mt-[clamp(80px,8vw,128px)]">
-          <Heading {...universitiesHeading} />
-          <div className="mt-12 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3">
-            {universities.map((u, i) => (
-              <article
-                key={u.name}
-                className={cn(
-                  "group relative overflow-hidden rounded-[18px] bg-forest",
-                  i === 0 || i === 4 ? "aspect-[4/3] lg:aspect-auto lg:row-span-1" : "aspect-[4/3]",
-                )}
-              >
-                <Image
-                  src={u.photo}
-                  alt={`${u.name} campus`}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 50vw"
-                  className="object-cover grayscale-[40%] transition-all duration-[1.2s] ease-out-expo group-hover:scale-105 group-hover:grayscale-0"
-                />
-                <div className="absolute inset-0 bg-ink/65 transition-colors duration-700 group-hover:bg-ink/35" />
-                <div className="absolute inset-0 grid place-items-center p-6">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={u.logo}
-                    alt={u.name}
-                    loading="lazy"
-                    style={{ height: `clamp(${Math.round(u.logoH * 0.55)}px, 6vw, ${u.logoH}px)` }}
-                    className={cn(
-                      "w-auto max-w-[75%] object-contain transition-transform duration-500 group-hover:scale-105",
-                      u.nativeColor && "rounded-md bg-snow px-3 py-2",
-                    )}
-                  />
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
       </div>
+
+      {/* Partner universities */}
+      <Universities />
     </section>
   );
 }
