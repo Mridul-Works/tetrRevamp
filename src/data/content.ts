@@ -91,6 +91,8 @@ export const tenThings: {
   body: string;
   image: string;
   stats: { value: string; label: string }[];
+  /** The item's video: set one of these to play it in the lightbox; until then the lightbox shows "coming soon". */
+  video?: { youtube?: string; instagram?: string; mp4?: string };
 }[] = [
   {
     tag: "Built @ Tetr",
