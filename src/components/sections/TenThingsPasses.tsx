@@ -100,9 +100,9 @@ export default function TenThingsPasses() {
 
       <div className="container-x relative flow-root">
         {/* heading: pinned to the top for as long as the passes are on screen */}
-        <div data-pass-head className="sticky top-0 z-20 -mx-4 bg-gradient-to-b from-ink from-70% to-ink/0 px-4 pb-6 pt-5 md:pt-6">
+        <div data-pass-head className="sticky top-[var(--hdr,0px)] z-20 transition-[top] duration-500 ease-out-expo -mx-4 bg-gradient-to-b from-ink from-70% to-ink/0 px-4 pb-6 pt-5 md:pt-6">
           <div ref={head} className="mx-auto max-w-[760px] text-center">
-          <h2 className="section-title text-[42px] text-snow">
+          <h2 className="section-title text-[32px] text-snow sm:text-[42px]">
             <Words text="Ten Things to Know" />
             <br />
             <Words text="Before You Board." className="accent" />
@@ -115,7 +115,7 @@ export default function TenThingsPasses() {
           {tenThings.map((t, i) => {
             const stats = t.stats.length ? t.stats : (FALLBACK_STATS[t.tag] ?? []);
             return (
-              <li key={t.tag} data-pass className="sticky mb-8 last:mb-0" style={{ top: `min(calc(var(--pass-top, 180px) + ${i * PEEK}px), calc(100svh - var(--h, 0px) - 16px))`, zIndex: i + 1 }}>
+              <li key={t.tag} data-pass className="sticky mb-8 transition-[top] duration-500 ease-out-expo last:mb-0" style={{ top: `min(calc(var(--hdr, 0px) + var(--pass-top, 180px) + ${i * PEEK}px), calc(100svh - var(--h, 0px) - 16px))`, zIndex: i + 1 }}>
                 <div
                   data-pass-inner
                   role="button"

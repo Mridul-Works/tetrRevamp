@@ -34,6 +34,12 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Tell sticky elements on the page how much room the header takes right now (0 while it is tucked away).
+  useEffect(() => {
+    const shown = !(hidden && !menu && !mobile);
+    document.documentElement.style.setProperty("--hdr", shown ? "64px" : "0px");
+  }, [hidden, menu, mobile]);
+
   useEffect(() => {
     if (mobile) lenis?.stop();
     else lenis?.start();
