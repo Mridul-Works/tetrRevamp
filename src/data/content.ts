@@ -504,6 +504,23 @@ export const universities: { name: string; logo: string; photo: string; nativeCo
   { name: "Adelphi University", logo: "/img/unis/white/ADELPHI.png", photo: "/media/collab/collab-adelphi.jpg", logoH: 71 },
 ];
 
+/** Boarding pass shown once the university collage settles; it zooms into the Outcomes section. */
+export const onboardTicket = {
+  eyebrow: "Boarding Pass",
+  title: "You're",
+  titleAccent: "Onboard",
+  from: { code: "DXB", city: "Dubai" },
+  to: { code: "MAD", city: "Madrid" },
+  fields: [
+    { label: "Passenger", value: "You" },
+    { label: "Route", value: "7 Countries" },
+    { label: "Gate", value: "Base Camp 01" },
+    { label: "Seat", value: "01A" },
+  ],
+  stamp: "Onboard",
+  stub: { flight: "TETR 01", status: "Now Boarding" },
+};
+
 /* ───────────────────────────── Outcomes ───────────────────────────── */
 
 export const outcomesHeading = {

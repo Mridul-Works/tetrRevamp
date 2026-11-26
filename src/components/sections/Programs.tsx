@@ -16,7 +16,7 @@ export default function Programs() {
   useDragScroll(car.ref);
 
   return (
-    <section id="programs" aria-label="Programs" className="relative overflow-hidden bg-ink py-[clamp(96px,9vw,144px)]">
+    <section id="programs" aria-label="Programs" className="relative overflow-hidden bg-ink py-[clamp(96px,9vw,144px)] lg:motion-safe:pb-0">
       <div className="pointer-events-none absolute right-0 top-0 h-[520px] w-[520px] rounded-full bg-gold/[0.06] blur-[120px]" />
       <div className="container-x relative">
         <Heading {...programsHeading} />

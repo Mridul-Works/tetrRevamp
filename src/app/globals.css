@@ -184,6 +184,24 @@
   .uni-collage .uni-logo {
     height: calc(var(--lh) * var(--u) * 0.8);
   }
+  /* Boarding pass that closes the scene: only part of the pinned desktop animation */
+  .uni-collage .uni-ticket-wrap {
+    display: none;
+  }
+  @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+    .uni-collage .uni-ticket-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+    }
+    .uni-collage .uni-ticket {
+      visibility: hidden;
+      will-change: transform;
+    }
+  }
   @media (max-width: 1023px) {
     .uni-collage {
       height: auto;
